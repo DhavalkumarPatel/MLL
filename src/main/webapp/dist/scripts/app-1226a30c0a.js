@@ -32,6 +32,8 @@
             { text: 'People', href: '/people' },
             { text: 'Music', href: '/misuc' }
         ];
+
+        let a;
     }
 
 })(window.angular);

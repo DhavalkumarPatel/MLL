@@ -7,12 +7,10 @@
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-angular-templatecache": "^1.8.0",
-    "gulp-concat": "^2.6.0",
     "gulp-htmlmin": "^1.3.0",
     "gulp-jshint": "^2.0.0",
     "gulp-minify-css": "^1.2.4",
     "gulp-minify-html": "^1.0.6",
-    "gulp-rename": "^1.2.2",
     "gulp-rev": "^7.0.0",
     "gulp-uglify": "^1.5.3",
     "gulp-usemin": "^0.3.21",
@@ -26,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/soumyasreegajula/MediaLicensingLab.git"
+    "url": "https://github.com/DhavalkumarPatel/MLL.git"
   },
   "keywords": [
     "Northeastern",

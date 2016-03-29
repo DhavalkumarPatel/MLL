@@ -20,7 +20,7 @@ let rev = require('gulp-rev');
     Code Quality Task
 */
 gulp.task('jshint', () => {
-   gulp.src('./source/scripts/**/*.js')
+   gulp.src(['./source/scripts/**/*.js', '!./source/scripts/modules/templates/*.js'])
        .pipe(jshint())
        .pipe(jshint.reporter(stylish));
 });
@@ -28,7 +28,7 @@ gulp.task('jshint', () => {
 /*
     Clean-Up Task
 */
-gulp.task('cleanup', () => del(['./dist', './index.html', './source/scripts/modules/templates/templates.run.js']));
+gulp.task('cleanup', () => del(['./dist', './index.html']));
 
 /*
     Usemin Task
@@ -51,14 +51,12 @@ gulp.task('usemin', ['templates'], function () {
     Template-Cache Task
 */
 gulp.task('templates', () => {
-    let TEMPLATE_HEADER = '"use strict";angular.module("<%= module %>"<%= standalone %>).run(["$templateCache", function($templateCache) {';
-    console.log(1);
     return gulp.src('./source/scripts/**/*.html')
         .pipe(htmlmin({ collapseWhitespace: true }))
         .pipe(templateCache({
             module: 'mllApp.templates',
-            filename: 'templates.run.js',
-            templateHeader: TEMPLATE_HEADER,
+            standalone: true,
+            filename: 'templates.module.js',
             transformUrl: (url) => url.slice(url.lastIndexOf('\\') + 1)
         }))
         .pipe(gulp.dest('./source/scripts/modules/templates/'));
