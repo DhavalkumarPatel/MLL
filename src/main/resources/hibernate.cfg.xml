@@ -29,10 +29,10 @@
   	<!-- Enable Hibernate's automatic session context management -->
  	<property name="current_session_context_class">thread</property>
 
-	<mapping resource="mll/beans/Song.hbm.xml"/>
-	<mapping resource="mll/beans/Artist.hbm.xml"/>
-	<mapping resource="mll/beans/Genre.hbm.xml"/>
-	<mapping resource="mll/beans/Owner.hbm.xml"/>
+	<mapping resource="Song.hbm.xml"/>
+	<mapping resource="Artist.hbm.xml"/>
+	<mapping resource="Genre.hbm.xml"/>
+	<mapping resource="Owner.hbm.xml"/>
 	
 </session-factory>
 </hibernate-configuration>
