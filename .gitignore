@@ -1,5 +1,6 @@
 # ignore node and bower dependency directories
 node_modules/
+bower_components/
 
 # ignore Editor files
 .metadata/
