@@ -17,7 +17,7 @@
                 onSelectHdd: '&',
                 onSelectDropbox: '&'
             },
-            templateUrl: 'source/scripts/modules/picker/components/file-selector.template.html'
+            templateUrl: 'file-selector.template.html'
         };
     }
 })(window.angular);

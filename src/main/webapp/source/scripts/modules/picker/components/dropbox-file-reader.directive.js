@@ -16,7 +16,7 @@
                 formats: '=',
                 onSelect: '&'
             },
-            templateUrl: 'source/scripts/modules/picker/components/dropbox-file-reader.template.html',
+            templateUrl: 'dropbox-file-reader.template.html',
             link: link
         };
 
@@ -24,7 +24,7 @@
             ctrl.select = () => {
                 let options = {
                     success: (files) => {
-                        scope.$apply(() => ctrl.onSelect({ file: files[0] }))
+                        scope.$apply(() => ctrl.onSelect({ file: files[0] }));
                     },
                     linkType: 'direct',
                     multiselect: false,

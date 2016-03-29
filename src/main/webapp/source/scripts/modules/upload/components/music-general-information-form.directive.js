@@ -17,7 +17,7 @@
                 onNext: '&',
                 onPrevious:'&'
             },
-            templateUrl: 'source/scripts/modules/upload/components/music-general-information-form.template.html'
+            templateUrl: 'music-general-information-form.template.html'
         };
     }
 })(window.angular);

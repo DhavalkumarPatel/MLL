@@ -14,7 +14,7 @@
             bindToController: {
                 onNext: '&'
             },
-            templateUrl: 'source/scripts/modules/upload/components/music-agreement-form.template.html'
+            templateUrl: 'music-agreement-form.template.html'
         };
     }
 })(window.angular);

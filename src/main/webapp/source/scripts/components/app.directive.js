@@ -7,11 +7,11 @@
 
     function mllApplication() {
         return {
-            restrict: "AE",
+            restrict: 'AE',
             scope: {},
-            controller: "ApplicationController",
-            controllerAs: "ctrl",
-            templateUrl: "source/scripts/components/app.template.html"
+            controller: 'ApplicationController',
+            controllerAs: 'ctrl',
+            templateUrl: 'app.template.html'
         };
     }
 

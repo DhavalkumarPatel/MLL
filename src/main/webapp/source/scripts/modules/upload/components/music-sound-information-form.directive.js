@@ -18,7 +18,7 @@
                 onNext: '&',
                 onPrevious: '&'
             },
-            templateUrl: 'source/scripts/modules/upload/components/music-sound-information-form.template.html'
+            templateUrl: 'music-sound-information-form.template.html'
         };
     }
 })(window.angular);

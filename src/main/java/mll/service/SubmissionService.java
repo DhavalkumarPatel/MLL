@@ -6,6 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +48,7 @@ public class SubmissionService
 		try
 		{
 			// Validate the request and populate the metadata beans for all songs if request is valid
-			List<Metadata> metadatas = populateMetadataBeans(request);
+			List<Metadata> metadatas = getListOfMetadata();
 						
 			if(null != metadatas && !metadatas.isEmpty())
 			{
@@ -115,6 +116,68 @@ public class SubmissionService
 	    // Populate Song Recorders Information	 
 	    populateSongRecorders(metadata, soundInformation);
 	    
+		metadatas.add(metadata);
+		return metadatas;
+	}
+	
+	private List<Metadata> getListOfMetadata()
+	{
+		List<Metadata> metadatas = new ArrayList<Metadata>();
+		Metadata metadata = new Metadata();
+
+		Song song = new Song();
+		song.setBeatsPerMin((long) 0.10);
+		song.setCopyRightDate(new Date());
+		song.setCopyrightNo("CN1");
+		song.setPro("Dhaval Patel");
+		song.setPublishingCompany("NEU");
+		song.setTitle("title");
+		song.setSourceOfContent("HARDDRIVE"); // "DROPBOX" "GOOGLEDRIVE"
+		Byte[] b = new Byte[1];
+		if (song.getSourceOfContent().equalsIgnoreCase("HARDDRIVE")) {
+			b[0] = 0;
+		} else if (song.getSourceOfContent().equalsIgnoreCase("DROPBOX")) {
+			b[0] = 0;
+		}
+		song.setContent(b);
+		metadata.setSong(song);
+
+		Artist artist1 = new Artist();
+		artist1.setName("Dhaval Patel");
+		artist1.setSkills("Singing");
+		Artist artist2 = new Artist();
+		artist2.setName("Pavel");
+		artist2.setSkills("Musician");
+		metadata.getArtists().add(artist1);
+		metadata.getArtists().add(artist2);
+
+		Owner owner1 = new Owner();
+		owner1.setDivisonOfOwnership("Half");
+		owner1.setName("Dhaval");
+		owner1.setOwnerType("WRITER");
+		owner1.setPrimaryEmail("patel.dha@husky.neu.edu");
+		owner1.setSecondaryEmail(null);
+		owner1.setPrimaryPhone("4572355210");
+		owner1.setSecondaryPhone("1236547891");
+		Owner owner2 = new Owner();
+		owner2.setDivisonOfOwnership("Half");
+		owner2.setName("Pavel");
+		owner2.setOwnerType("RECORDING");
+		owner2.setPrimaryEmail("pavel.chr@husky.neu.edu");
+		owner2.setSecondaryEmail(null);
+		owner2.setPrimaryPhone("4572355210");
+		owner2.setSecondaryPhone("1236547891");
+		metadata.getOwners().add(owner1);
+		metadata.getOwners().add(owner2);
+
+		Genre genre1 = new Genre();
+		genre1.setGenre("Genre1");
+		Genre genre2 = new Genre();
+		genre2.setGenre("Genre2");
+
+		metadata.getGenres().add(genre1);
+		metadata.getGenres().add(genre2);
+
 		metadatas.add(metadata);
 		return metadatas;
 	}

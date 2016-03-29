@@ -51,6 +51,6 @@
             this.forms.data[this.forms.current].isActive = true;
         };
 
-        this.submit = () => alert('FINALLY');
+        this.submit = () => {};
     }
 })(window.angular);

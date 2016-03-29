@@ -17,7 +17,7 @@
                 onNext: '&',
                 onPrevious:'&'
             },
-            templateUrl: 'source/scripts/modules/upload/components/music-owner-information-form.template.html'
+            templateUrl: 'music-owner-information-form.template.html'
         };
     }
 })(window.angular);

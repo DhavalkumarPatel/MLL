@@ -13,7 +13,7 @@
 
         this.validateFormat = (fileName) => {
             return this.formats.includes(fileName.slice(fileName.lastIndexOf('.')));
-        }
+        };
 
         this.validateSize = (size) => size <= this.size;
 

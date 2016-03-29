@@ -15,7 +15,7 @@
             bindToController: {
                 onAgree: '&'
             },
-            templateUrl: 'source/scripts/modules/shared/components/scrollable-agreement.template.html',
+            templateUrl: 'scrollable-agreement.template.html',
             link: link
         };
 
@@ -24,10 +24,10 @@
 
             doc.addEventListener('scroll', onScroll);
 
-            function onScroll(event) {
+            function onScroll() {
                 let ratio = (this.scrollTop + this.offsetHeight) / this.scrollHeight;
 
-                if (ratio == 1) {
+                if (ratio === 1) {
                     scope.$apply(() => { ctrl.isScrolled = true; });
                     this.removeEventListener('scroll', onScroll);
                 }

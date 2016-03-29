@@ -15,7 +15,7 @@
             bindToController: {
                 onSelect: '&'
             },
-            templateUrl: 'source/scripts/modules/picker/components/hdd-file-reader.template.html',
+            templateUrl: 'hdd-file-reader.template.html',
             link: _link
         };
 
@@ -23,7 +23,7 @@
             let input = elem[0].querySelector('input[type="file"]');
 
             input.addEventListener('change', (e) => {
-                scope.$apply(() => ctrl.change(e))
+                scope.$apply(() => ctrl.change(e));
             });
         }
     }

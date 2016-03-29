@@ -1,6 +1,6 @@
 (function (angular) {
     'use strict';
 
-    angular.module('mllApp.shared', ['ui.bootstrap']);
+    angular.module('mllApp.shared', ['mllApp.templates', 'ui.bootstrap']);
 
 })(window.angular);

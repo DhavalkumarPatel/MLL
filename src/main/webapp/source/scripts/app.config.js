@@ -5,7 +5,7 @@
         .module('mllApp')
         .config(config);
 
-    function config($stateProvider) {
+    function config() {
 
     }
 

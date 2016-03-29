@@ -11,7 +11,7 @@
             scope: {},
             controller: 'MusicFileUploaderController',
             controllerAs: 'ctrl',
-            templateUrl: 'source/scripts/modules/upload/components/music-file-uploader.template.html'
+            templateUrl: 'music-file-uploader.template.html'
         };
     }
 })(window.angular);

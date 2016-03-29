@@ -17,7 +17,7 @@
                 onNext: '&',
                 onPrevious: '&'
             },
-            templateUrl: 'source/scripts/modules/upload/components/music-file-form.template.html'
+            templateUrl: 'music-file-form.template.html'
         };
     }
 })(window.angular);

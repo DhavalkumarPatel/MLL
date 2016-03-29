@@ -7,11 +7,11 @@
 
     function mllHeader() {
         return {
-            restrict: "AE",
+            restrict: 'AE',
             scope: {},
-            controller: "HeaderController",
-            controllerAs: "ctrl",
-            templateUrl: "source/scripts/modules/header/components/header.template.html",
+            controller: 'HeaderController',
+            controllerAs: 'ctrl',
+            templateUrl: 'header.template.html',
             bindToController: {
                 navLinks: '=',
                 homeLink: '='

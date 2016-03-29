@@ -14,11 +14,13 @@
         this.removeOwner = (i) => this.data.soundOwners.splice(i, 1);
 
         this.copyOwners = () => {
-            if (this.isIdentical) this.data.soundOwners = angular.copy(this.ownersFn());
+            if (this.isIdentical) {
+                this.data.soundOwners = angular.copy(this.ownersFn());
+            }
         };
 
         this.submit = () => {
-            if (this.soundForm.$invalid) this.soundForm.$submitted = true;
+            if (this.soundForm.$invalid) { this.soundForm.$submitted = true; }
             else this.onNext();
         };
 

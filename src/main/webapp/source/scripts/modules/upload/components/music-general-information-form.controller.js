@@ -8,9 +8,9 @@
     function MusicGeneralInformationFormController() {
 
         this.genres = [
-            "Alternative", "Blues", "Children's Music", "Christian & Gospel", "Comedy", "Classical", "Country", "Dance",
-            "Electronic", "Hip - Hop / Rap", "Pop", "Jazz", "Latino", "R & B / Soul", "Reggae", "Metal", "Rock",
-            "Singer / Songwriter", "Folk / Americana", "Funk"
+            'Alternative', 'Blues', 'Children\'s Music', 'Christian & Gospel', 'Comedy', 'Classical', 'Country', 'Dance',
+            'Electronic', 'Hip - Hop / Rap', 'Pop', 'Jazz', 'Latino', 'R & B / Soul', 'Reggae', 'Metal', 'Rock',
+            'Singer / Songwriter', 'Folk / Americana', 'Funk'
         ];
 
         this.addArtist = () => this.data.artists.push({ name: '' });
