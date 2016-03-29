@@ -1,0 +1,17 @@
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.upload')
+        .directive('mllMusicFileUploader', mllMusicFileUploader);
+
+    function mllMusicFileUploader() {
+        return {
+            restrict: 'AE',
+            scope: {},
+            controller: 'MusicFileUploaderController',
+            controllerAs: 'ctrl',
+            templateUrl: 'source/scripts/modules/upload/components/music-file-uploader.template.html'
+        };
+    }
+})(window.angular);
