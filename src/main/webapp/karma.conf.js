@@ -1,6 +1,3 @@
-// Karma configuration
-// Generated on Fri Mar 25 2016 08:07:40 GMT-0400 (Eastern Daylight Time)
-
 module.exports = function(config) {
     config.set({
         basePath: '',
@@ -8,7 +5,16 @@ module.exports = function(config) {
         frameworks: ['jasmine'],
 
         files: [
-            'tests/**/*.js'
+            './dist/styles/bootstrap-*.css',
+            './dist/styles/styles-*.css',
+
+            './dist/scripts/jquery-*.js',
+            './dist/scripts/bootstrap-*.js',
+            './dist/scripts/angular-*.js',
+            './dist/scripts/app-templates-*.js',
+            './dist/scripts/app-*.js',
+
+            './tests/**/*.js'
         ],
 
         exclude: [
@@ -18,8 +24,8 @@ module.exports = function(config) {
         },
 
         plugins : [
-            'karma-phantomjs-launcher',
             'karma-jasmine',
+            'karma-chrome-launcher',
             'karma-junit-reporter'
         ],
 
@@ -31,14 +37,16 @@ module.exports = function(config) {
 
         autoWatch: false,
 
-        browsers: ['PhantomJS'],
+        browsers: ['Chrome'],
 
         singleRun: true,
 
         concurrency: Infinity,
 
         junitReporter: {
-          outputFile: 'test-results.xml'
+            outputDir: 'dist/',
+            outputFile: 'test-results.xml',
+            useBrowserName: false
         }
     })
 };

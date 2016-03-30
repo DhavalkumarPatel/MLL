@@ -20,16 +20,15 @@
         };
 
         function link(scope, elem, attrs, ctrl) {
-            let doc = elem[0].querySelector('.agreement__document');
+            let doc = elem.find('.agreement__document');
 
-            doc.addEventListener('scroll', onScroll);
+            doc.on('scroll', onScroll);
 
             function onScroll() {
-                let ratio = (this.scrollTop + this.offsetHeight) / this.scrollHeight;
+                let ratio = ($(this).prop('scrollTop') + $(this).prop('offsetHeight')) / $(this).prop('scrollHeight');
 
                 if (ratio === 1) {
                     scope.$apply(() => { ctrl.isScrolled = true; });
-                    this.removeEventListener('scroll', onScroll);
                 }
             }
         }

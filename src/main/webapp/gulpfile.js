@@ -9,12 +9,13 @@ let del = require('del');
 
 let templateCache = require('gulp-angular-templatecache');
 let htmlmin = require('gulp-htmlmin');
-let concat = require('gulp-concat');
 
 let usemin = require('gulp-usemin');
 let uglify = require('gulp-uglify');
 let minifycss = require('gulp-minify-css');
 let rev = require('gulp-rev');
+
+let server = require('karma').Server;
 
 /*
     Code Quality Task
@@ -73,8 +74,18 @@ gulp.task('fonts', () => {
 });
 
 /*
+    Tests Task
+*/
+gulp.task('tests', ['usemin', 'fonts'], function (done) {
+    new server({
+        configFile: __dirname + '/karma.conf.js',
+        singleRun: true
+    }, done).start();
+});
+
+/*
     Default Task
  */
 gulp.task('default', ['cleanup', 'jshint'], function() {
-    gulp.start('usemin', 'fonts');
+    gulp.start('tests');
 });
