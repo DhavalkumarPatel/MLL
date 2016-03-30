@@ -8,6 +8,7 @@ bower_components/
 .settings/
 .classpath
 .project
+target/
 
 # ignore log files and databases
 *.log
