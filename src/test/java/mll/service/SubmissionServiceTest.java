@@ -23,7 +23,9 @@ import mll.beans.Song;
 
 public class SubmissionServiceTest 
 {
-	@Test
+	
+}
+	/*@Test
 	public void test_case_2() 
 	{
 		try 
@@ -170,5 +172,5 @@ public class SubmissionServiceTest
 		return metadatas;
 	}
 }
-
+*/
 	
