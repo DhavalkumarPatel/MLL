@@ -1,5 +1,9 @@
 <div>
-    <mll-hdd-file-reader on-select="ctrl.selectHDD(file)"></mll-hdd-file-reader>
+    <mll-hdd-file-reader on-select="ctrl.selectHdd(file)"></mll-hdd-file-reader>
 
     <mll-dropbox-file-reader formats="ctrl.formats" on-select="ctrl.selectDropbox(file)"></mll-dropbox-file-reader>
+
+    <div class="form-group">
+        <input typ="text" class="form-control" ng-model="ctrl.selectedFile" placeholder="Selected File..." disabled>
+    </div>
 </div>

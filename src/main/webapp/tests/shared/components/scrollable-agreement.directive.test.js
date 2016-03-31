@@ -16,7 +16,7 @@ describe("Scrollable Agreement Directive:", function() {
         elem = angular.element(
             `<mll-scrollable-agreement on-agree="onAgree(isChecked)">
                 ${content}
-            </mll-scrollable-agreement>`
+             </mll-scrollable-agreement>`
         );
 
         angular.element(document).find('body').append(elem);

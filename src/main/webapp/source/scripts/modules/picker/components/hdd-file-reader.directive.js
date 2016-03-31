@@ -20,9 +20,9 @@
         };
 
         function _link(scope, elem, attrs, ctrl) {
-            let input = elem[0].querySelector('input[type="file"]');
+            let input = elem.find('input[type="file"]');
 
-            input.addEventListener('change', (e) => {
+            input.on('change', (e) => {
                 scope.$apply(() => ctrl.change(e));
             });
         }

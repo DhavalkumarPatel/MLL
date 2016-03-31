@@ -5,19 +5,29 @@
         .module('mllApp.upload')
         .controller('MusicFileFormController', MusicFileFormController);
 
-    function MusicFileFormController() {
-        this.form = { invalid: true, submitted: false, errors: { size: false, format: false, required: true } };
+    MusicFileFormController.$inject = ['musicFormats', 'musicSize'];
 
-        this.size = 10 * 1024 * 1024;
-        this.formats = ['.mp3', '.pdf'];
+    function MusicFileFormController(musicFormats, musicSize) {
+        this.size = musicSize;
+        this.formats = musicFormats;
 
-        this.validateFormat = (fileName) => {
-            return this.formats.includes(fileName.slice(fileName.lastIndexOf('.')));
+        // Replication of Angular Form Behaviour
+        this.form = {
+            invalid: true,
+            submitted: false,
+            errors: {
+                size: false,
+                format: false,
+                required: true
+            }
         };
+
+        this.validateFormat = (fileName) =>
+            this.formats.includes(fileName.slice(fileName.lastIndexOf('.')));
 
         this.validateSize = (size) => size <= this.size;
 
-        this.selectHDD = (file) => {
+        this.selectHdd = (file) => {
             this.form.errors.size = !this.validateSize(file.size);
             this.form.errors.format = !this.validateFormat(file.name);
             this.form.errors.required = false;

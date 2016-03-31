@@ -148,9 +148,9 @@
         };
 
         function _link(scope, elem, attrs, ctrl) {
-            let input = elem[0].querySelector('input[type="file"]');
+            let input = elem.find('input[type="file"]');
 
-            input.addEventListener('change', (e) => {
+            input.on('change', (e) => {
                 scope.$apply(() => ctrl.change(e));
             });
         }
@@ -213,9 +213,15 @@
         .controller('FileSelectorController', FileSelectorController);
 
     function FileSelectorController() {
-        this.selectHDD = (file) => this.onSelectHdd({ file: file });
+        this.selectHdd = (file) => {
+            this.selectedFile = file.name;
+            this.onSelectHdd({ file: file });
+        };
 
-        this.selectDropbox = (file) => this.onSelectDropbox({ file: file });
+        this.selectDropbox = (file) => {
+            this.selectedFile = file.name;
+            this.onSelectDropbox({ file: file });
+        };
     }
 })(window.angular);
 (function (angular) {
@@ -247,6 +253,19 @@
     angular.module('mllApp.upload', ['mllApp.picker', 'mllApp.templates', 'ui.bootstrap']);
 
 })(window.angular);
+(function(){
+    'use strict';
+
+    let musicFormats = ['.mp3', '.wav'];
+    let musicGenres = [];
+    let musicSize = 10 * 1024 * 1024;
+
+    angular
+        .module('mllApp.upload')
+        .constant('musicFormats', musicFormats)
+        .constant('musicGenres', musicGenres)
+        .constant('musicSize', musicSize);
+})();
 (function (angular) {
     'use strict';
 
@@ -292,19 +311,29 @@
         .module('mllApp.upload')
         .controller('MusicFileFormController', MusicFileFormController);
 
-    function MusicFileFormController() {
-        this.form = { invalid: true, submitted: false, errors: { size: false, format: false, required: true } };
+    MusicFileFormController.$inject = ['musicFormats', 'musicSize'];
 
-        this.size = 10 * 1024 * 1024;
-        this.formats = ['.mp3', '.pdf'];
+    function MusicFileFormController(musicFormats, musicSize) {
+        this.size = musicSize;
+        this.formats = musicFormats;
 
-        this.validateFormat = (fileName) => {
-            return this.formats.includes(fileName.slice(fileName.lastIndexOf('.')));
+        // Replication of Angular Form Behaviour
+        this.form = {
+            invalid: true,
+            submitted: false,
+            errors: {
+                size: false,
+                format: false,
+                required: true
+            }
         };
+
+        this.validateFormat = (fileName) =>
+            this.formats.includes(fileName.slice(fileName.lastIndexOf('.')));
 
         this.validateSize = (size) => size <= this.size;
 
-        this.selectHDD = (file) => {
+        this.selectHdd = (file) => {
             this.form.errors.size = !this.validateSize(file.size);
             this.form.errors.format = !this.validateFormat(file.name);
             this.form.errors.required = false;
