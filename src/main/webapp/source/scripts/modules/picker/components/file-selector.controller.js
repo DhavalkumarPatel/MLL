@@ -6,14 +6,14 @@
         .controller('FileSelectorController', FileSelectorController);
 
     function FileSelectorController() {
-        this.selectHdd = (file) => {
-            this.selectedFile = file.name;
-            this.onSelectHdd({ file: file });
+        this.selectHdd = (fileInformation) => {
+            this.selectedFile = fileInformation.file.name;
+            this.onSelectHdd({ fileInformation: fileInformation });
         };
 
-        this.selectDropbox = (file) => {
-            this.selectedFile = file.name;
-            this.onSelectDropbox({ file: file });
+        this.selectDropbox = (fileInformation) => {
+            this.selectedFile = fileInformation.file.name;
+            this.onSelectDropbox({ fileInformation: fileInformation });
         };
     }
 })(window.angular);

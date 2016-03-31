@@ -2,8 +2,8 @@
     <legend></legend>
     <div class="container">
         <div>
-            <mll-file-selector formats="ctrl.formats" on-select-hdd="ctrl.selectHdd(file)"
-                               on-select-dropbox="ctrl.selectDropbox(file)"></mll-file-selector>
+            <mll-file-selector formats="ctrl.formats" on-select-hdd="ctrl.selectHdd(fileInformation)"
+                               on-select-dropbox="ctrl.selectDropbox(fileInformation)"></mll-file-selector>
 
             <div class="alert alert-danger" role="alert" ng-show="ctrl.form.invalid && ctrl.form.submitted">
                 <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>

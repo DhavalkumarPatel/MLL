@@ -24,7 +24,8 @@
             ctrl.select = () => {
                 let options = {
                     success: (files) => {
-                        scope.$apply(() => ctrl.onSelect({ file: files[0] }));
+                        scope.$apply(() =>
+                            ctrl.onSelect({ fileInformation : { isDirect: false, file: files[0] } }));
                     },
                     linkType: 'direct',
                     multiselect: false,

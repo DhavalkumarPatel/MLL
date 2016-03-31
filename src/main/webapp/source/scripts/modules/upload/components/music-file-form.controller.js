@@ -27,21 +27,21 @@
 
         this.validateSize = (size) => size <= this.size;
 
-        this.selectHdd = (file) => {
-            this.form.errors.size = !this.validateSize(file.size);
-            this.form.errors.format = !this.validateFormat(file.name);
+        this.selectHdd = (fileInformation) => {
+            this.form.errors.size = !this.validateSize(fileInformation.file.size);
+            this.form.errors.format = !this.validateFormat(fileInformation.file.name);
             this.form.errors.required = false;
 
             this.form.invalid = this.form.errors.size || this.form.errors.format;
 
-            if (!this.form.invalid) this.data = file;
+            if (!this.form.invalid) this.data = fileInformation;
 
         };
 
-        this.selectDropbox = (file) => {
+        this.selectDropbox = (fileInformation) => {
             this.form.invalid = false;
 
-            this.data = file;
+            this.data = fileInformation;
         };
 
         this.submit = () => {

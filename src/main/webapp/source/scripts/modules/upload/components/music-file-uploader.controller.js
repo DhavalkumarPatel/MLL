@@ -5,30 +5,12 @@
         .module('mllApp.upload')
         .controller('MusicFileUploaderController', MusicFileUploaderController);
 
-    function MusicFileUploaderController() {
-        this.forms = {
-            current: 0,
-            data: [
-                { title: 'License Agreement', isActive: true, isDisabled: false },
-                { title: 'Song Selection', isActive: false, isDisabled: true },
-                { title: 'General Information', isActive: false, isDisabled: true },
-                { title: 'Ownership Information', isActive: false, isDisabled: true },
-                { title: 'Sound Ownership Information', isActive: false, isDisabled: true }
-        ]};
+    MusicFileUploaderController.$inject = ['musicForms', 'musicData', 'musicUploadService'];
 
-        this.data = {
-            fileInformation: { name: '', file: null },
-            generalInformation: { title: '', artists: [{ name: '' }], beatRate: 0, genres: [] },
-            ownershipInformation: {
-                songwriters: [ { name: '', primaryEmail: '', primaryPhone: '', secondaryPhone: '' }],
-                copyright: '',
-                pubCompany: '',
-                pbo: ''
-            },
-            soundInformation: {
-                soundOwners: [ { name: '', primaryEmail: '', primaryPhone: '', secondaryPhone: '' }]
-            }
-        };
+    function MusicFileUploaderController(musicForms, musicData, musicUploadService) {
+        this.forms = musicForms;
+
+        this.data = musicData;
 
         this.next = () => {
             if (this.forms.current < this.forms.data.length - 1) {
@@ -51,6 +33,25 @@
             this.forms.data[this.forms.current].isActive = true;
         };
 
-        this.submit = () => {};
+        this.prepare = (data) => {
+            let obj = {
+                generalInformation: data.generalInformation,
+                ownershipInformation: data.ownershipInformation,
+                soundInformation: data.soundInformation
+            };
+
+            obj.isDirect = data.fileInformation.isDirect;
+            obj.file = (obj.isDirect) ? data.fileInformation.file : data.fileInformation.file.link;
+
+            return obj;
+        };
+
+        this.submit = () => {
+            let data = this.prepare(this.data);
+
+            if (data.isDirect) musicUploadService.submitDirect(data);
+
+            else musicUploadService.submitCloud(data);
+        };
     }
 })(window.angular);

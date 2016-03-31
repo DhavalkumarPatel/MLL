@@ -67,32 +67,41 @@ describe("Music File Form Controller:", function() {
     });
 
     it("'selectDropbox' should set 'data' field and mark 'form.invalid' flag as 'false'", function() {
-        let file = { name: 'sample.mp3', size: 5 * 1024 * 1024, type: 'audio/mp3' };
+        let fileInformation = {
+            isDirect: false,
+            file: {name: 'sample.mp3', size: 5 * 1024 * 1024, type: 'audio/mp3'}
+        };
 
-        ctrl.selectDropbox(file);
+        ctrl.selectDropbox(fileInformation);
 
         expect(ctrl.data).toBeDefined();
-        expect(ctrl.data).toEqual(file);
+        expect(ctrl.data).toEqual(fileInformation);
         expect(ctrl.form.invalid).toBeFalsy();
     });
 
     it("'selectHdd' should set 'data' field and mark 'form.invalid' flag as 'false'", function() {
-        let file = { name: 'sample.mp3', size: 5 * 1024 * 1024, type: 'audio/mp3' };
+        let fileInformation = {
+            isDirect: false,
+            file: {name: 'sample.mp3', size: 5 * 1024 * 1024, type: 'audio/mp3'}
+        };
 
-        ctrl.selectHdd(file);
+        ctrl.selectHdd(fileInformation);
 
         expect(ctrl.form.errors.required).toBeFalsy();
         expect(ctrl.form.errors.size).toBeFalsy();
         expect(ctrl.form.errors.format).toBeFalsy();
         expect(ctrl.form.invalid).toBeFalsy();
         expect(ctrl.data).toBeDefined();
-        expect(ctrl.data).toEqual(file);
+        expect(ctrl.data).toEqual(fileInformation);
     });
 
     it("'selectHdd' should not set 'data' field and mark 'form.invalid' flag as 'true'", function() {
-        let file = { name: 'sample.m4a', size: 5 * 1024 * 1024, type: 'audio/m4a' };
+        let fileInformation = {
+            isDirect: false,
+            file: {name: 'sample.m4a', size: 5 * 1024 * 1024, type: 'audio/m4a'}
+        };
 
-        ctrl.selectHdd(file);
+        ctrl.selectHdd(fileInformation);
 
         expect(ctrl.form.errors.required).toBeFalsy();
         expect(ctrl.form.errors.size).toBeFalsy();
@@ -102,9 +111,12 @@ describe("Music File Form Controller:", function() {
     });
 
     it("'selectHdd' should set not 'data' field and mark 'form.invalid' flag as 'true'", function() {
-        let file = { name: 'sample.ogg', size: 111 * 1024 * 1024, type: 'audio/ogg' };
+        let fileInformation = {
+            isDirect: false,
+            file: {name: 'sample.ogg', size: 111 * 1024 * 1024, type: 'audio/ogg'}
+        };
 
-        ctrl.selectHdd(file);
+        ctrl.selectHdd(fileInformation);
 
         expect(ctrl.form.errors.required).toBeFalsy();
         expect(ctrl.form.errors.size).toBeTruthy();

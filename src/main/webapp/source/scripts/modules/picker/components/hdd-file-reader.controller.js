@@ -9,7 +9,7 @@
         this.change = (e) => {
             let file = e.target.files[0];
 
-            this.onSelect({ file: file });
+            this.onSelect({ fileInformation: { isDirect: true, file: file } });
         };
     }
 })(window.angular);

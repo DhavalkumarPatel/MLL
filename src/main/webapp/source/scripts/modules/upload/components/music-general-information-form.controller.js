@@ -5,13 +5,11 @@
         .module('mllApp.upload')
         .controller('MusicGeneralInformationFormController', MusicGeneralInformationFormController);
 
-    function MusicGeneralInformationFormController() {
+    MusicGeneralInformationFormController.$inject = ['musicGenres'];
 
-        this.genres = [
-            'Alternative', 'Blues', 'Children\'s Music', 'Christian & Gospel', 'Comedy', 'Classical', 'Country', 'Dance',
-            'Electronic', 'Hip - Hop / Rap', 'Pop', 'Jazz', 'Latino', 'R & B / Soul', 'Reggae', 'Metal', 'Rock',
-            'Singer / Songwriter', 'Folk / Americana', 'Funk'
-        ];
+    function MusicGeneralInformationFormController(musicGenres) {
+
+        this.genres = musicGenres;
 
         this.addArtist = () => this.data.artists.push({ name: '' });
 

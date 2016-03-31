@@ -121,7 +121,7 @@
         this.change = (e) => {
             let file = e.target.files[0];
 
-            this.onSelect({ file: file });
+            this.onSelect({ fileInformation: { isDirect: true, file: file } });
         };
     }
 })(window.angular);
@@ -193,7 +193,8 @@
             ctrl.select = () => {
                 let options = {
                     success: (files) => {
-                        scope.$apply(() => ctrl.onSelect({ file: files[0] }));
+                        scope.$apply(() =>
+                            ctrl.onSelect({ fileInformation : { isDirect: false, file: files[0] } }));
                     },
                     linkType: 'direct',
                     multiselect: false,
@@ -213,14 +214,14 @@
         .controller('FileSelectorController', FileSelectorController);
 
     function FileSelectorController() {
-        this.selectHdd = (file) => {
-            this.selectedFile = file.name;
-            this.onSelectHdd({ file: file });
+        this.selectHdd = (fileInformation) => {
+            this.selectedFile = fileInformation.file.name;
+            this.onSelectHdd({ fileInformation: fileInformation });
         };
 
-        this.selectDropbox = (file) => {
-            this.selectedFile = file.name;
-            this.onSelectDropbox({ file: file });
+        this.selectDropbox = (fileInformation) => {
+            this.selectedFile = fileInformation.file.name;
+            this.onSelectDropbox({ fileInformation: fileInformation });
         };
     }
 })(window.angular);
@@ -253,19 +254,105 @@
     angular.module('mllApp.upload', ['mllApp.picker', 'mllApp.templates', 'ui.bootstrap']);
 
 })(window.angular);
-(function(){
+(function(angular){
     'use strict';
 
     let musicFormats = ['.mp3', '.wav'];
-    let musicGenres = [];
+
+    let musicGenres = ['Alternative', 'Blues', 'Children\'s Music', 'Christian & Gospel', 'Comedy', 'Classical',
+        'Country', 'Dance', 'Electronic', 'Hip - Hop / Rap', 'Pop', 'Jazz', 'Latino', 'R & B / Soul', 'Reggae',
+        'Metal', 'Rock', 'Singer / Songwriter', 'Folk / Americana', 'Funk' ];
+
+    let musicForms = {
+        current: 0,
+        data: [
+            { title: 'License Agreement', isActive: true, isDisabled: false },
+            { title: 'Song Selection', isActive: false, isDisabled: true },
+            { title: 'General Information', isActive: false, isDisabled: true },
+            { title: 'Ownership Information', isActive: false, isDisabled: true },
+            { title: 'Sound Ownership Information', isActive: false, isDisabled: true }
+        ]
+    };
+
+    let musicData = {
+        fileInformation: { name: '', file: null },
+        generalInformation: {
+            title: '',
+            artists: [
+                { name: '' }
+            ],
+            beatRate: 0,
+            primaryGenre: '',
+            secondaryGenre: ''
+        },
+        ownershipInformation: {
+            songwriters: [
+                { name: '', primaryEmail: '', primaryPhone: '', secondaryPhone: '' }
+            ],
+            copyright: '',
+            pubCompany: '',
+            pro: ''
+        },
+        soundInformation: {
+            soundOwners: [
+                { name: '', primaryEmail: '', primaryPhone: '', secondaryPhone: '' }
+            ]
+        }
+    };
+
     let musicSize = 10 * 1024 * 1024;
+
+    let musicUrl = {
+        direct: '/MediaLicencingLab/SubmissionServlet',
+        cloud: '/MediaLicencingLab/SubmissionServlet'
+    };
 
     angular
         .module('mllApp.upload')
         .constant('musicFormats', musicFormats)
         .constant('musicGenres', musicGenres)
-        .constant('musicSize', musicSize);
-})();
+        .constant('musicForms', musicForms)
+        .constant('musicData', musicData)
+        .constant('musicSize', musicSize)
+        .constant('musicUrl', musicUrl);
+})(window.angular);
+(function(angular){
+    'use strict';
+
+    angular
+        .module('mllApp.upload')
+        .factory('musicUploadService', musicUploadService);
+
+    musicUploadService.$inject = ['$http', 'musicUrl'];
+
+    function musicUploadService($http, musicUrl) {
+        let service = {
+            submitDirect: (data) =>
+                 $http({
+                    url: musicUrl.direct,
+                    method: 'POST',
+                    data:  data,
+                    contentType: 'application/json'
+                 }),
+
+            submitCloud: (data) => {
+                let fd = new FormData();
+
+                Object.keys(data).forEach( (key) => fd.append(key, data[key]));
+
+                return $http.post(musicUrl.cloud, fd, {
+                    transformRequest: angular.identity,
+                    headers: {
+                        'Content-Type': undefined
+                    }
+                });
+            }
+        };
+
+        return service;
+    }
+
+})(window.angular);
 (function (angular) {
     'use strict';
 
@@ -333,21 +420,21 @@
 
         this.validateSize = (size) => size <= this.size;
 
-        this.selectHdd = (file) => {
-            this.form.errors.size = !this.validateSize(file.size);
-            this.form.errors.format = !this.validateFormat(file.name);
+        this.selectHdd = (fileInformation) => {
+            this.form.errors.size = !this.validateSize(fileInformation.file.size);
+            this.form.errors.format = !this.validateFormat(fileInformation.file.name);
             this.form.errors.required = false;
 
             this.form.invalid = this.form.errors.size || this.form.errors.format;
 
-            if (!this.form.invalid) this.data = file;
+            if (!this.form.invalid) this.data = fileInformation;
 
         };
 
-        this.selectDropbox = (file) => {
+        this.selectDropbox = (fileInformation) => {
             this.form.invalid = false;
 
-            this.data = file;
+            this.data = fileInformation;
         };
 
         this.submit = () => {
@@ -388,13 +475,11 @@
         .module('mllApp.upload')
         .controller('MusicGeneralInformationFormController', MusicGeneralInformationFormController);
 
-    function MusicGeneralInformationFormController() {
+    MusicGeneralInformationFormController.$inject = ['musicGenres'];
 
-        this.genres = [
-            'Alternative', 'Blues', 'Children\'s Music', 'Christian & Gospel', 'Comedy', 'Classical', 'Country', 'Dance',
-            'Electronic', 'Hip - Hop / Rap', 'Pop', 'Jazz', 'Latino', 'R & B / Soul', 'Reggae', 'Metal', 'Rock',
-            'Singer / Songwriter', 'Folk / Americana', 'Funk'
-        ];
+    function MusicGeneralInformationFormController(musicGenres) {
+
+        this.genres = musicGenres;
 
         this.addArtist = () => this.data.artists.push({ name: '' });
 
@@ -542,30 +627,12 @@
         .module('mllApp.upload')
         .controller('MusicFileUploaderController', MusicFileUploaderController);
 
-    function MusicFileUploaderController() {
-        this.forms = {
-            current: 0,
-            data: [
-                { title: 'License Agreement', isActive: true, isDisabled: false },
-                { title: 'Song Selection', isActive: false, isDisabled: true },
-                { title: 'General Information', isActive: false, isDisabled: true },
-                { title: 'Ownership Information', isActive: false, isDisabled: true },
-                { title: 'Sound Ownership Information', isActive: false, isDisabled: true }
-        ]};
+    MusicFileUploaderController.$inject = ['musicForms', 'musicData', 'musicUploadService'];
 
-        this.data = {
-            fileInformation: { name: '', file: null },
-            generalInformation: { title: '', artists: [{ name: '' }], beatRate: 0, genres: [] },
-            ownershipInformation: {
-                songwriters: [ { name: '', primaryEmail: '', primaryPhone: '', secondaryPhone: '' }],
-                copyright: '',
-                pubCompany: '',
-                pbo: ''
-            },
-            soundInformation: {
-                soundOwners: [ { name: '', primaryEmail: '', primaryPhone: '', secondaryPhone: '' }]
-            }
-        };
+    function MusicFileUploaderController(musicForms, musicData, musicUploadService) {
+        this.forms = musicForms;
+
+        this.data = musicData;
 
         this.next = () => {
             if (this.forms.current < this.forms.data.length - 1) {
@@ -588,7 +655,26 @@
             this.forms.data[this.forms.current].isActive = true;
         };
 
-        this.submit = () => {};
+        this.prepare = (data) => {
+            let obj = {
+                generalInformation: data.generalInformation,
+                ownershipInformation: data.ownershipInformation,
+                soundInformation: data.soundInformation
+            };
+
+            obj.isDirect = data.fileInformation.isDirect;
+            obj.file = (obj.isDirect) ? data.fileInformation.file : data.fileInformation.file.link;
+
+            return obj;
+        };
+
+        this.submit = () => {
+            let data = this.prepare(this.data);
+
+            if (data.isDirect) musicUploadService.submitDirect(data);
+
+            else musicUploadService.submitCloud(data);
+        };
     }
 })(window.angular);
 (function (angular) {
