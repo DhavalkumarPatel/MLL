@@ -81,7 +81,7 @@ public class SubmissionService
 	* @version 1.0
 	* @since   2016-03-24 
 	*/
-	private List<Metadata> populateMetadataBeans(HttpServletRequest request) throws Exception
+	public List<Metadata> populateMetadataBeans(HttpServletRequest request) throws Exception
 	{
 		List<Metadata> metadatas = new ArrayList<Metadata>();
 		Metadata metadata =  new Metadata();
@@ -159,7 +159,7 @@ public class SubmissionService
 	* @version 1.0
 	* @since   2016-03-25 
 	*/
-	private Metadata populateSong(Metadata metadata, JSONObject mainObject, JSONObject generalInformation, JSONObject ownershipInformation) throws Exception
+	public Metadata populateSong(Metadata metadata, JSONObject mainObject, JSONObject generalInformation, JSONObject ownershipInformation) throws Exception
 	{
 		Song song = new Song();
 	    song.setBeatsPerMin((Long)generalInformation.get("beatRate"));
@@ -204,7 +204,7 @@ public class SubmissionService
 	* @version 1.0
 	* @since   2016-03-25 
 	*/
-	private Metadata populateSongGenres(Metadata metadata, JSONObject generalInformation) throws Exception
+	public Metadata populateSongGenres(Metadata metadata, JSONObject generalInformation) throws Exception
 	{
 		JSONArray genres = (JSONArray) generalInformation.get("genres");
 	    for(int i=0; i<genres.size(); i++)

@@ -20,7 +20,7 @@ public class SubmissionServlet extends HttpServlet
 		subService = new SubmissionService();
 	}
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		// Upload request
 		String responseString = subService.uploadMedia(request, response);
