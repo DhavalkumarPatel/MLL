@@ -12,6 +12,8 @@
 
         this.data = musicData;
 
+        this.uploadService = musicUploadService;
+
         this.next = () => {
             if (this.forms.current < this.forms.data.length - 1) {
                 this.forms.data[this.forms.current].isActive = false;
@@ -49,9 +51,9 @@
         this.submit = () => {
             let data = this.prepare(this.data);
 
-            if (data.isDirect) musicUploadService.submitDirect(data);
+            if (data.isDirect) this.uploadService.submitDirect(data);
 
-            else musicUploadService.submitCloud(data);
+            else this.uploadService.submitCloud(data);
         };
     }
 })(window.angular);
