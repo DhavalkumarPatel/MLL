@@ -77,7 +77,7 @@ public class SubmissionDAOTest
 		song.setPublishingCompany("NEU");
 		song.setTitle("title");
 		song.setSourceOfContent("HARDDRIVE"); // "DROPBOX" "GOOGLEDRIVE"
-		Byte[] b = new Byte[1];
+		byte[] b = new byte[1];
 		if (song.getSourceOfContent().equalsIgnoreCase("HARDDRIVE")) {
 			b[0] = 0;
 		} else if (song.getSourceOfContent().equalsIgnoreCase("DROPBOX")) {
