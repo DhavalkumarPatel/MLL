@@ -15,6 +15,8 @@
 
         this.removeArtist = (i) => this.data.artists.splice(i, 1);
 
+        this.agreement = () => this.onAgree({ isChecked: this.isChecked});
+
         this.selectGenre = (genre) => { if (!genre) this.data.secondaryGenre = null; };
 
         this.submit = () => {

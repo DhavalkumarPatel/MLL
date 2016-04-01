@@ -76,15 +76,30 @@
         </div>
     </div>
 
-    <div class="form-group has-feedback">
-    <label class="col-xs-2">
-        Any Written Agreements:
-    </label>
+    <div class="form-group has-feedback"
+         ng-class="{ 'has-success': ctrl.generalForm.agreement.$valid && ctrl.generalForm.$submitted,
+                     'has-error': ctrl.generalForm.agreement.$invalid && ctrl.generalForm.$submitted }">
+        <label  class="col-xs-3">
+            Any Written Agreements :
+        </label>
 
-        <label class="radio-inline"><input type="radio" name="optradio">Yes</label>
-        <label class="radio-inline"><input type="radio" name="optradio"> No</label>
+        <label class="radio-inline"><input type="radio" name="agreement"
+                                           ng-change="ctrl.agreement()" ng-model="ctrl.isChecked"
+        >Yes</label>
+        <label class="radio-inline"><input type="radio" name="agreement"
+                                           ng-change="ctrl.agreement()" ng-model="ctrl.isChecked"
+        > No</label>
 
+
+        <div class="alert alert-danger" role="alert"
+             ng-show="ctrl.generalForm.agreement.$invalid && ctrl.generalForm.$submitted">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span ng-show="ctrl.generalForm.agreement.$error.required">
+                    Please, Say yes or no
+                </span>
         </div>
+
+    </div>
 
 
     <div class="form-group has-feedback"
