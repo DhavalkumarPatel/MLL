@@ -3,7 +3,7 @@
 describe("Music File Uploader Controller:", function() {
     beforeEach(module('mllApp.upload'));
 
-    let ctrl;
+    let ctrl, q;
 
     let directData = {
         fileInformation: {
@@ -25,8 +25,9 @@ describe("Music File Uploader Controller:", function() {
         soundInformation: {}
     };
 
-    beforeEach(inject(function($controller) {
+    beforeEach(inject(function($controller, $q) {
         ctrl = $controller('MusicFileUploaderController', {}, { });
+        q = $q;
     }));
 
     it("'musicForms' should be injected", function() {
@@ -122,7 +123,7 @@ describe("Music File Uploader Controller:", function() {
     it("'submit' function should trigger 'submitCloud' on 'uploadService'", function () {
         ctrl.data = cloudData;
 
-        spyOn(ctrl.uploadService, 'submitCloud');
+        spyOn(ctrl.uploadService, 'submitCloud').and.returnValue(q.when({}));
 
         ctrl.submit();
 
@@ -132,7 +133,7 @@ describe("Music File Uploader Controller:", function() {
     it("'submit' function should trigger 'submitDirect' on 'uploadService'", function () {
         ctrl.data = directData;
 
-        spyOn(ctrl.uploadService, 'submitDirect');
+        spyOn(ctrl.uploadService, 'submitDirect').and.returnValue(q.when({}));
 
         ctrl.submit();
 

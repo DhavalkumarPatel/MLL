@@ -57,7 +57,7 @@
                         alert('OK');
                         console.dir(response);
                     })
-                    .error((reject) => {
+                    .catch((reject) => {
                         alert('ERROR');
                         console.dir(reject);
                     });
@@ -68,7 +68,7 @@
                         alert('OK');
                         console.dir(response);
                     })
-                    .error((reject) => {
+                    .catch((reject) => {
                         alert('ERROR');
                         console.dir(reject);
                     });

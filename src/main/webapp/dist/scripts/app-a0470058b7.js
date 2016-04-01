@@ -303,8 +303,8 @@
     let musicSize = 10 * 1024 * 1024;
 
     let musicUrl = {
-        direct: '/MediaLicencingLab/SubmissionServlet',
-        cloud: '/MediaLicencingLab/SubmissionServlet'
+        direct: '/MLL/SubmissionServlet',
+        cloud: '/MLL/SubmissionServlet'
     };
 
     angular
@@ -683,7 +683,7 @@
                         alert('OK');
                         console.dir(response);
                     })
-                    .error((reject) => {
+                    .catch((reject) => {
                         alert('ERROR');
                         console.dir(reject);
                     });
@@ -694,7 +694,7 @@
                         alert('OK');
                         console.dir(response);
                     })
-                    .error((reject) => {
+                    .catch((reject) => {
                         alert('ERROR');
                         console.dir(reject);
                     });
