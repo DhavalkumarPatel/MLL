@@ -1,10 +1,6 @@
 package mll.service;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +18,7 @@ import mll.beans.Owner;
 import mll.beans.Song;
 import mll.dao.SubmissionDAO;
 
-public class SubmissionService 
+public class SubmissionService
 {
 	SubmissionDAO dao;
 	
@@ -121,37 +117,6 @@ public class SubmissionService
 	
 	
 	/**
-	* This method takes dropbox url and download the content
-	* on from the given url if its valid.
-	*
-	* @author  Dhaval Patel
-	* @version 1.0
-	* @since   2016-03-25
-	*/
-	private Byte[] getContentFromDropbox(String urlStr) throws Exception
-	{
-		URL url = new URL(urlStr);
-		InputStream in = new BufferedInputStream(url.openStream());
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		byte[] content = new byte[1024];
-		int n = 0;
-		while (-1 != (n = in.read(content))) 
-		{
-		    out.write(content, 0, n);
-		}
-		out.close();
-		in.close();
-		
-		Byte[] byteObjects = new Byte[content.length];
-		int i=0;    
-		for(byte b: content)
-		{
-			byteObjects[i++] = b;
-		}
-		return byteObjects;
-	}
-	
-	/**
 	* This method takes metadata object and json objects as input 
 	* and fetches the song information from those objects.
 	*
@@ -166,10 +131,14 @@ public class SubmissionService
 	    song.setContentURL((String) mainObject.get("file"));
 	    song.setSourceOfContent("DROPBOX");
 	    song.setTitle((String) generalInformation.get("title"));
-	    song.setContent(getContentFromDropbox((String) mainObject.get("file")));
 	    song.setCopyrightNo((String) ownershipInformation.get("copyright"));    
 	    song.setPublishingCompany((String) ownershipInformation.get("pubCompany")); 
 	    song.setPro((String) ownershipInformation.get("pbo")); 
+
+	    //Download from dropbox
+	    DropboxService ds = new DropboxService();
+	    song.setContent(ds.getContentFromDropbox((String) mainObject.get("file")));
+	    
 	    metadata.setSong(song);
 	    
 	    return metadata;
