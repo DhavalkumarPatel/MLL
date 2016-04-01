@@ -30,13 +30,13 @@ describe('Music Upload Service:', function () {
             respondData = data;
         });
 
-        service.submitDirect(directData).then(function (data) {
+        service.submitDirect(directData, 'file').then(function (data) {
             respondData = data;
         });
     }));
 
     it("'submitDirect' should respond with 'ok'", function () {
-        service.submitDirect(directData).then(function (data) {
+        service.submitDirect(directData, 'file').then(function (data) {
             respondData = data;
         });
 

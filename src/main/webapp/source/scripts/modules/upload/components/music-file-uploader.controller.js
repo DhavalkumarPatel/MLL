@@ -51,7 +51,7 @@
         this.submit = () => {
             let data = this.prepare(this.data);
 
-            if (data.isDirect) this.uploadService.submitDirect(data);
+            if (data.isDirect) this.uploadService.submitDirect(data, 'file');
 
             else this.uploadService.submitCloud(data);
         };

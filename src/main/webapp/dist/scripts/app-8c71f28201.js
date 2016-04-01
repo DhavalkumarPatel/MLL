@@ -303,8 +303,8 @@
     let musicSize = 10 * 1024 * 1024;
 
     let musicUrl = {
-        direct: '/MLL/SubmissionServlet',
-        cloud: '/MLL/SubmissionServlet'
+        direct: '/MediaLicencingLab/SubmissionServlet',
+        cloud: '/MediaLicencingLab/SubmissionServlet'
     };
 
     angular
@@ -335,10 +335,11 @@
                     contentType: 'application/json'
                  }),
 
-            submitDirect: (data) => {
+            submitDirect: (data, fileProp) => {
                 let fd = new FormData();
 
-                Object.keys(data).forEach( (key) => fd.append(key, data[key]));
+                Object.keys(data).forEach((key) =>
+                    fd.append(key, (key === fileProp) ? data[key] : JSON.stringify(data[key])));
 
                 return $http.post(musicUrl.cloud, fd, {
                     transformRequest: angular.identity,
@@ -673,7 +674,7 @@
         this.submit = () => {
             let data = this.prepare(this.data);
 
-            if (data.isDirect) this.uploadService.submitDirect(data);
+            if (data.isDirect) this.uploadService.submitDirect(data, 'file');
 
             else this.uploadService.submitCloud(data);
         };

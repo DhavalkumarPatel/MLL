@@ -17,10 +17,11 @@
                     contentType: 'application/json'
                  }),
 
-            submitDirect: (data) => {
+            submitDirect: (data, fileProp) => {
                 let fd = new FormData();
 
-                Object.keys(data).forEach( (key) => fd.append(key, data[key]));
+                Object.keys(data).forEach((key) =>
+                    fd.append(key, (key === fileProp) ? data[key] : JSON.stringify(data[key])));
 
                 return $http.post(musicUrl.cloud, fd, {
                     transformRequest: angular.identity,
