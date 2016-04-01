@@ -15,7 +15,7 @@ public class DropboxService
 	* @version 1.0
 	* @since   2016-03-25
 	*/
-	public Byte[] getContentFromDropbox(String urlStr) throws Exception
+	public byte[] getContentFromDropbox(String urlStr) throws Exception
 	{
 		if(null == urlStr || "".equals(urlStr))
 		{
@@ -35,14 +35,6 @@ public class DropboxService
 		out.close();
 		in.close();
 		
-		Byte[] byteObjects = new Byte[content.length];
-		int i=0;    
-		for(byte b: content)
-		{
-			byteObjects[i++] = b;
-		}
-		
-		System.out.println(byteObjects.length);
-		return byteObjects;
+		return content;
 	}
 }
