@@ -9,13 +9,14 @@
 
     function musicUploadService($http, musicUrl) {
         let service = {
-            submitCloud: (data) =>
-                 $http({
+            submitCloud: (data) => {
+                return $http({
                     url: musicUrl.direct,
                     method: 'POST',
-                    data:  data,
+                    data: data,
                     contentType: 'application/json'
-                 }),
+                });
+            },
 
             submitDirect: (data, fileProp) => {
                 let fd = new FormData();

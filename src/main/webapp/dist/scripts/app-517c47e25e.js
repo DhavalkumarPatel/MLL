@@ -303,8 +303,8 @@
     let musicSize = 10 * 1024 * 1024;
 
     let musicUrl = {
-        direct: '/MLL/SubmissionServlet',
-        cloud: '/MLL/SubmissionServlet'
+        direct: '/MediaLicencingLab/SubmissionServlet',
+        cloud: '/MediaLicencingLab/SubmissionServlet'
     };
 
     angular
@@ -327,13 +327,14 @@
 
     function musicUploadService($http, musicUrl) {
         let service = {
-            submitCloud: (data) =>
-                 $http({
+            submitCloud: (data) => {
+                return $http({
                     url: musicUrl.direct,
                     method: 'POST',
-                    data:  data,
+                    data: data,
                     contentType: 'application/json'
-                 }),
+                });
+            },
 
             submitDirect: (data, fileProp) => {
                 let fd = new FormData();
@@ -485,6 +486,8 @@
         this.addArtist = () => this.data.artists.push({ name: '' });
 
         this.removeArtist = (i) => this.data.artists.splice(i, 1);
+
+        this.agreement = () => this.onAgree({ isChecked: this.isChecked});
 
         this.selectGenre = (genre) => { if (!genre) this.data.secondaryGenre = null; };
 
@@ -674,9 +677,27 @@
         this.submit = () => {
             let data = this.prepare(this.data);
 
-            if (data.isDirect) this.uploadService.submitDirect(data, 'file');
+            if (data.isDirect)
+                this.uploadService.submitDirect(data, 'file')
+                    .then((response) => {
+                        alert('OK');
+                        console.dir(response);
+                    })
+                    .error((reject) => {
+                        alert('ERROR');
+                        console.dir(reject);
+                    });
 
-            else this.uploadService.submitCloud(data);
+            else
+                this.uploadService.submitCloud(data)
+                    .then((response) => {
+                        alert('OK');
+                        console.dir(response);
+                    })
+                    .error((reject) => {
+                        alert('ERROR');
+                        console.dir(reject);
+                    });
         };
     }
 })(window.angular);
