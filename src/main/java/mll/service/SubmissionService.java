@@ -211,6 +211,16 @@ public class SubmissionService
 	*/
 	public Metadata populateSong(Metadata metadata,  JSONObject generalInformation, JSONObject ownershipInformation, String dropboxURL, byte[] hardDriveContent) throws Exception
 	{
+		if(null == metadata)
+		{
+			return null;
+		}
+		
+		if(null == generalInformation || null == ownershipInformation)
+		{
+			return metadata;
+		}
+		
 		Song song = new Song();
 	    song.setBeatsPerMin((Long)generalInformation.get("beatRate"));
 	    song.setTitle((String) generalInformation.get("title"));
@@ -247,8 +257,18 @@ public class SubmissionService
 	* @version 1.0
 	* @since   2016-03-25 
 	*/
-	private Metadata populateSongArtists(Metadata metadata, JSONObject generalInformation) throws Exception
+	public Metadata populateSongArtists(Metadata metadata, JSONObject generalInformation) throws Exception
 	{
+		if(null == metadata)
+		{
+			return null;
+		}
+		
+		if(null == generalInformation)
+		{
+			return metadata;
+		}
+		
 		JSONArray artists= (JSONArray) generalInformation.get("artists");
 	    for(int i=0; i<artists.size(); i++)
 	    {
@@ -270,6 +290,16 @@ public class SubmissionService
 	*/
 	public Metadata populateSongGenres(Metadata metadata, JSONObject generalInformation) throws Exception
 	{
+		if(null == metadata)
+		{
+			return null;
+		}
+		
+		if(null == generalInformation)
+		{
+			return metadata;
+		}
+		
 		Genre primaryGenre = new Genre();
 		primaryGenre.setGenre((String) generalInformation.get("primaryGenre"));
     	metadata.getGenres().add(primaryGenre);
@@ -300,8 +330,18 @@ public class SubmissionService
 	* @version 1.0
 	* @since   2016-03-25 
 	*/
-	private Metadata populateSongWriters(Metadata metadata, JSONObject ownershipInformation) throws Exception
+	public Metadata populateSongWriters(Metadata metadata, JSONObject ownershipInformation) throws Exception
 	{
+		if(null == metadata)
+		{
+			return null;
+		}
+		
+		if(null == ownershipInformation)
+		{
+			return metadata;
+		}
+		
 		JSONArray songwriters = (JSONArray) ownershipInformation.get("songwriters");
 	    for(int i=0; i<songwriters.size(); i++)
 	    {
@@ -330,8 +370,18 @@ public class SubmissionService
 	* @version 1.0
 	* @since   2016-03-25 
 	*/
-	private Metadata populateSongRecorders(Metadata metadata, JSONObject soundInformation) throws Exception
+	public Metadata populateSongRecorders(Metadata metadata, JSONObject soundInformation) throws Exception
 	{
+		if(null == metadata)
+		{
+			return null;
+		}
+		
+		if(null == soundInformation)
+		{
+			return metadata;
+		}
+		
 		JSONArray recorders = (JSONArray) soundInformation.get("soundOwners");
 	    for(int i=0; i<recorders.size(); i++)
 	    {

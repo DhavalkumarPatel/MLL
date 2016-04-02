@@ -22,19 +22,28 @@ public class DropboxService
 			return null;
 		}
 		
-		URL url = new URL(urlStr);
-		InputStream in = new BufferedInputStream(url.openStream());
-		
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		byte[] content = new byte[1024];
-		int n = 0;
-		while (-1 != (n = in.read(content))) 
+		try
 		{
-		    out.write(content, 0, n);
+			URL url = new URL(urlStr);
+			InputStream in = new BufferedInputStream(url.openStream());
+			
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			byte[] content = new byte[1024];
+			int n = 0;
+			while (-1 != (n = in.read(content))) 
+			{
+			    out.write(content, 0, n);
+			}
+			out.close();
+			in.close();
+			
+			return content;
 		}
-		out.close();
-		in.close();
+		catch(Exception e)
+		{
+			return null;
+		}
 		
-		return content;
+		
 	}
 }
