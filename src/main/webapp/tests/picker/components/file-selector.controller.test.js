@@ -4,7 +4,6 @@ describe("File Selector Controller:", function() {
     beforeEach(module('mllApp.picker'));
 
     let ctrl;
-
     let selectedFileInformation;
     let onSelectHdd = (fileInformation) => selectedFileInformation = fileInformation,
         onSelectDropbox = (fileInformation) => selectedFileInformation = fileInformation;

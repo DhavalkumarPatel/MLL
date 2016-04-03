@@ -17,7 +17,7 @@
 
         this.agreement = () => this.onAgree({ isChecked: this.isChecked});
 
-        this.selectGenre = (genre) => { if (!genre) this.data.secondaryGenre = null; };
+        this.selectGenre = (genre) => { if(!genre) this.data.secondaryGenre = null; };
 
         this.submit = () => {
             if (this.generalForm.$invalid) this.generalForm.$submitted = true;
