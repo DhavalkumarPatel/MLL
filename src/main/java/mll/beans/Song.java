@@ -14,7 +14,7 @@ public class Song implements Serializable
 	private Date copyRightDate;
 	private String publishingCompany;
 	private String pro;
-	private Byte[] content;
+	private byte[] content;
 	private String sourceOfContent;
 	private String contentURL;
 	
@@ -61,10 +61,10 @@ public class Song implements Serializable
 	public void setPro(String pro) {
 		this.pro = pro;
 	}
-	public Byte[] getContent() {
+	public byte[] getContent() {
 		return content;
 	}
-	public void setContent(Byte[] content) {
+	public void setContent(byte[] content) {
 		this.content = content;
 	}
 	public String getSourceOfContent() {

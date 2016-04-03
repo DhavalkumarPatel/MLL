@@ -1,9 +1,10 @@
 package mll.dao;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -76,8 +77,8 @@ public class SubmissionDAOTest
 		song.setPro("Dhaval Patel");
 		song.setPublishingCompany("NEU");
 		song.setTitle("title");
-		song.setSourceOfContent("HARDDRIVE"); // "DROPBOX" "GOOGLEDRIVE"
-		Byte[] b = new Byte[1];
+		song.setSourceOfContent("HARDDRIVE");
+		byte[] b = new byte[1];
 		if (song.getSourceOfContent().equalsIgnoreCase("HARDDRIVE")) {
 			b[0] = 0;
 		} else if (song.getSourceOfContent().equalsIgnoreCase("DROPBOX")) {

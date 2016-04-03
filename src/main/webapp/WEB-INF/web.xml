@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
-  <display-name>MLL</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-  </welcome-file-list>
-  <servlet>
-    <description></description>
-    <display-name>SubmissionServlet</display-name>
-    <servlet-name>SubmissionServlet</servlet-name>
-    <servlet-class>mll.servlets.SubmissionServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>SubmissionServlet</servlet-name>
-    <url-pattern>/SubmissionServlet</url-pattern>
-  </servlet-mapping>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>MLL</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<description></description>
+		<display-name>SubmissionServlet</display-name>
+		<servlet-name>SubmissionServlet</servlet-name>
+		<servlet-class>mll.servlets.SubmissionServlet</servlet-class>
+		<multipart-config>
+			<max-file-size>20848820</max-file-size>
+			<max-request-size>418018841</max-request-size>
+			<file-size-threshold>1048576</file-size-threshold>
+		</multipart-config>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SubmissionServlet</servlet-name>
+		<url-pattern>/SubmissionServlet</url-pattern>
+	</servlet-mapping>
 </web-app>

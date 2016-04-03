@@ -20,12 +20,14 @@ public class SubmissionServlet extends HttpServlet
 		subService = new SubmissionService();
 	}
 	
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  
 	{
-		// Upload request
 		String responseString = subService.uploadMedia(request, response);
 		request.setAttribute("responseString", responseString);
-		System.out.println(responseString);
+		response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(responseString);
+        System.out.println(responseString);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException

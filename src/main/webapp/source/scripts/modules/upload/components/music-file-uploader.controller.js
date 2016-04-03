@@ -51,9 +51,27 @@
         this.submit = () => {
             let data = this.prepare(this.data);
 
-            if (data.isDirect) this.uploadService.submitDirect(data, 'file');
+            if (data.isDirect)
+                this.uploadService.submitDirect(data, 'file')
+                    .then((response) => {
+                        alert('OK');
+                        console.dir(response);
+                    })
+                    .catch((reject) => {
+                        alert('ERROR');
+                        console.dir(reject);
+                    });
 
-            else this.uploadService.submitCloud(data);
+            else
+                this.uploadService.submitCloud(data)
+                    .then((response) => {
+                        alert('OK');
+                        console.dir(response);
+                    })
+                    .catch((reject) => {
+                        alert('ERROR');
+                        console.dir(reject);
+                    });
         };
     }
 })(window.angular);

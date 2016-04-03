@@ -15,34 +15,35 @@ public class DropboxService
 	* @version 1.0
 	* @since   2016-03-25
 	*/
-	public Byte[] getContentFromDropbox(String urlStr) throws Exception
+	public byte[] getContentFromDropbox(String urlStr) throws Exception
 	{
 		if(null == urlStr || "".equals(urlStr))
 		{
 			return null;
 		}
 		
-		URL url = new URL(urlStr);
-		InputStream in = new BufferedInputStream(url.openStream());
-		
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		byte[] content = new byte[1024];
-		int n = 0;
-		while (-1 != (n = in.read(content))) 
+		try
 		{
-		    out.write(content, 0, n);
+			URL url = new URL(urlStr);
+			InputStream in = new BufferedInputStream(url.openStream());
+			
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			byte[] content = new byte[1024];
+			int n = 0;
+			while (-1 != (n = in.read(content))) 
+			{
+			    out.write(content, 0, n);
+			}
+			out.close();
+			in.close();
+			
+			return content;
 		}
-		out.close();
-		in.close();
-		
-		Byte[] byteObjects = new Byte[content.length];
-		int i=0;    
-		for(byte b: content)
+		catch(Exception e)
 		{
-			byteObjects[i++] = b;
+			return null;
 		}
 		
-		System.out.println(byteObjects.length);
-		return byteObjects;
+		
 	}
 }
