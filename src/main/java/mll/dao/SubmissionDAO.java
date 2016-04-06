@@ -143,8 +143,4 @@ public class SubmissionDAO
 		return owners;
 	}
 	
-	public int testAutomation(int a, int b)
-	{
-		return a+b;
-	}
 }
