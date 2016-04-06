@@ -26,29 +26,33 @@
             .state('userRegistration', {
                 url: '/user-registration/token/:token',
                 views: {
-                    left: {
-                        template: 'Look, I am a left user registration column!'
-                    },
-                    center: {
-                        template: 'Look, I am a center user registration column!'
-                    },
-                    right: {
-                        template: 'Look, I am a right user registration column!'
-                    }
+                    left: { template: 'Look, I am a left user registration column!' },
+                    center: { template: 'Look, I am a center user registration column!' },
+                    right: { template: 'Look, I am a right user registration column!' }
+                }
+            })
+            .state('user', {
+                url: '/user/id/:id',
+                views: {
+                    left: { template: 'Look, I am a left user column!' },
+                    center: { template: 'Look, I am a center user column!' },
+                    right: { template: 'Look, I am a right user column!' }
                 }
             })
             .state('musicianRegistration', {
                 url: '/user-registration/token/:token',
                 views: {
-                    left: {
-                        template: 'Look, I am a left user registration column!'
-                    },
-                    center: {
-                        template: 'Look, I am a center user registration column!'
-                    },
-                    right: {
-                        template: 'Look, I am a right user registration column!'
-                    }
+                    left: { template: 'Look, I am a left user registration column!' },
+                    center: { template: 'Look, I am a center user registration column!' },
+                    right: { template: 'Look, I am a right user registration column!' }
+                }
+            })
+            .state('musician', {
+                url: '/musician/id/:id',
+                views: {
+                    left: { template: 'Look, I am a left user registration column!' },
+                    center: { template: 'Look, I am a center user registration column!' },
+                    right: { template: 'Look, I am a right user registration column!' }
                 }
             })
             .state('login', {

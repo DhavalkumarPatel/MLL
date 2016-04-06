@@ -1,9 +1,9 @@
 (function(angular){
     'use strict';
 
+    let loginUrl = '/MLL/LoginServlet';
+
     angular
         .module('mllApp.login')
-        .controller('LoginController', LoginController);
-
-    function LoginController() { }
+        .constant('loginUrl', loginUrl);
 })(window.angular);

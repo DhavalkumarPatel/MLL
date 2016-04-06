@@ -2,7 +2,10 @@
     'use strict';
 
     angular.module('mllApp',
-        ['mllApp.shared', 'mllApp.header', 'mllApp.footer', 'mllApp.home', 'mllApp.login', 'mllApp.upload', 'ui.router']);
+        [
+            'mllApp.shared', 'mllApp.header', 'mllApp.footer', 'mllApp.home', 'mllApp.login', 'mllApp.upload',
+            'ui.router'
+        ]);
 })(window.angular);
 (function(angular) {
     'use strict';
@@ -45,29 +48,33 @@
             .state('userRegistration', {
                 url: '/user-registration/token/:token',
                 views: {
-                    left: {
-                        template: 'Look, I am a left user registration column!'
-                    },
-                    center: {
-                        template: 'Look, I am a center user registration column!'
-                    },
-                    right: {
-                        template: 'Look, I am a right user registration column!'
-                    }
+                    left: { template: 'Look, I am a left user registration column!' },
+                    center: { template: 'Look, I am a center user registration column!' },
+                    right: { template: 'Look, I am a right user registration column!' }
+                }
+            })
+            .state('user', {
+                url: '/user/id/:id',
+                views: {
+                    left: { template: 'Look, I am a left user column!' },
+                    center: { template: 'Look, I am a center user column!' },
+                    right: { template: 'Look, I am a right user column!' }
                 }
             })
             .state('musicianRegistration', {
                 url: '/user-registration/token/:token',
                 views: {
-                    left: {
-                        template: 'Look, I am a left user registration column!'
-                    },
-                    center: {
-                        template: 'Look, I am a center user registration column!'
-                    },
-                    right: {
-                        template: 'Look, I am a right user registration column!'
-                    }
+                    left: { template: 'Look, I am a left user registration column!' },
+                    center: { template: 'Look, I am a center user registration column!' },
+                    right: { template: 'Look, I am a right user registration column!' }
+                }
+            })
+            .state('musician', {
+                url: '/musician/id/:id',
+                views: {
+                    left: { template: 'Look, I am a left user registration column!' },
+                    center: { template: 'Look, I am a center user registration column!' },
+                    right: { template: 'Look, I am a right user registration column!' }
                 }
             })
             .state('login', {
@@ -77,9 +84,7 @@
                     center: {
                         controller: 'LoginController as ctrl',
                         templateProvider: function($templateCache) {
-                            let tmpl = $templateCache.get('login-central.view.html');
-
-                            return tmpl;
+                            return $templateCache.get('login-central.view.html');
                         }
                     },
                     right: { template: '' }
@@ -226,12 +231,109 @@
 (function(angular){
     'use strict';
 
+    let loginUrl = '/MLL/LoginServlet';
+
+    angular
+        .module('mllApp.login')
+        .constant('loginUrl', loginUrl);
+})(window.angular);
+(function(angular){
+    'use strict';
+
     angular
         .module('mllApp.login')
         .controller('LoginController', LoginController);
 
-    function LoginController() {
-        this.dummyData = 'ПРИВЕТ, СУЧКИ!';
+    function LoginController() { }
+})(window.angular);
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.login')
+        .factory('loginService', loginService);
+
+    loginService.$inject = ['$http', 'authenticationService', 'loginUrl'];
+
+    function loginService($http, authenticationService, loginUrl) {
+        return {
+            login: login
+        };
+
+        function login(data) {
+            return $http({
+                method: 'POST',
+                url: loginUrl,
+                data: data
+            }).then((response) => {
+                if (response.data.isValidUser) {
+                    authenticationService.login(response.data);
+                }
+
+                return response.data;
+            }).catch((rejection) => {
+                return rejection;
+            });
+
+        }
+    }
+})(window.angular);
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.login')
+        .controller('CommonLoginFormController', CommonLoginFormController);
+
+    CommonLoginFormController.$inject = ['$state', 'loginService'];
+
+    function CommonLoginFormController($state, loginService) {
+        this.service = loginService;
+
+        this.login = () => {
+            if (this.loginForm.$invalid) this.loginForm.$submitted = true;
+
+            else {
+                this.service.login(this.data)
+                    .then((data) => {
+                        this.processResponse(data);
+                    })
+                    .catch(() => { });
+            }
+        };
+
+        this.processResponse = (data) => {
+            if (data.isValidUser) this.redirect(data.userId, data.type);
+
+            else this.displayError(data.errorMessage);
+        };
+
+        this.redirect = (id, type) => {
+            $state.go(type, { id: id });
+        };
+
+        this.displayError = (errorMessage) => {
+            this.loginForm.$serverError = true;
+            this.errorMessage = errorMessage;
+        };
+    }
+})(window.angular);
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.login')
+        .directive('mllCommonLoginForm', mllCommonLoginForm);
+
+    function mllCommonLoginForm() {
+        return {
+            restrict: 'AE',
+            replace: true,
+            scope: {},
+            controller: 'CommonLoginFormController',
+            controllerAs: 'ctrl',
+            templateUrl: 'common-login-form.template.html'
+        };
     }
 })(window.angular);
 (function(angular){
