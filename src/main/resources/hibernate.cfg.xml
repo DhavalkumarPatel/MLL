@@ -33,6 +33,10 @@
 	<mapping resource="Artist.hbm.xml"/>
 	<mapping resource="Genre.hbm.xml"/>
 	<mapping resource="Owner.hbm.xml"/>
-	
+	<mapping resource="User.hbm.xml"/>
+	<mapping resource="AdminUser.hbm.xml"/>
+	<mapping resource="Musician.hbm.xml"/>
+	<mapping resource="Token.hbm.xml"/>
+		
 </session-factory>
 </hibernate-configuration>

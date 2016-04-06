@@ -2,8 +2,23 @@
     'use strict';
 
     angular.module('mllApp',
-        ['mllApp.shared', 'mllApp.header', 'mllApp.footer', 'mllApp.upload', 'ui.router']);
+        [
+            'mllApp.shared', 'mllApp.header', 'mllApp.footer', 'mllApp.home', 'mllApp.login', 'mllApp.upload',
+            'ui.router'
+        ]);
+})(window.angular);
+(function(angular) {
+    'use strict';
 
+    angular
+        .module('mllApp')
+        .run(run);
+
+    run.$inject = ['authenticationService'];
+
+    function run(authenticationService) {
+        authenticationService.check();
+    }
 })(window.angular);
 (function(angular) {
     'use strict';
@@ -12,12 +27,104 @@
         .module('mllApp')
         .config(config);
 
-    function config() {
+    function config($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise('/');
 
+        $stateProvider
+            .state('home', {
+                url: '/',
+                views: {
+                    left: {
+                        template: 'Look, I am a left column!'
+                    },
+                    center: {
+                        template: 'Look, I am a center column!'
+                    },
+                    right: {
+                        template: 'Look, I am a right column!'
+                    }
+                }
+            })
+            .state('userRegistration', {
+                url: '/user-registration/token/:token',
+                views: {
+                    left: { template: 'Look, I am a left user registration column!' },
+                    center: { template: 'Look, I am a center user registration column!' },
+                    right: { template: 'Look, I am a right user registration column!' }
+                }
+            })
+            .state('user', {
+                url: '/user/id/:id',
+                views: {
+                    left: { template: 'Look, I am a left user column!' },
+                    center: { template: 'Look, I am a center user column!' },
+                    right: { template: 'Look, I am a right user column!' }
+                }
+            })
+            .state('musicianRegistration', {
+                url: '/user-registration/token/:token',
+                views: {
+                    left: { template: 'Look, I am a left user registration column!' },
+                    center: { template: 'Look, I am a center user registration column!' },
+                    right: { template: 'Look, I am a right user registration column!' }
+                }
+            })
+            .state('musician', {
+                url: '/musician/id/:id',
+                views: {
+                    left: { template: 'Look, I am a left user registration column!' },
+                    center: { template: 'Look, I am a center user registration column!' },
+                    right: { template: 'Look, I am a right user registration column!' }
+                }
+            })
+            .state('login', {
+                url: '/login',
+                views: {
+                    left: { template: '' },
+                    center: {
+                        controller: 'LoginController as ctrl',
+                        templateProvider: function($templateCache) {
+                            return $templateCache.get('login-central.view.html');
+                        }
+                    },
+                    right: { template: '' }
+                }
+            })
+            .state('music', {
+                url: '/music',
+                views: {
+                    left: {
+                        template: 'Look, I am a left login column!'
+                    },
+                    center: {
+                        template: 'Look, I am a center login column!'
+                    },
+                    right: {
+                        template: 'Look, I am a right login column!'
+                    }
+                },
+                resolve: {
+                    data: function($state, $q, $timeout, authenticationService) {
+                        let deferred = $q.defer();
+
+                        $timeout(() => {
+                            if (!authenticationService.details.isAuthenticated) {
+                                $state.go('login');
+                                deferred.reject();
+                            }
+
+                            else {
+                                deferred.resolve([]);
+                            }
+                        }, 0);
+
+                        return deferred.promise;
+                    }
+                }
+            });
     }
 
 })(window.angular);
-
 (function (angular) {
     'use strict';
 
@@ -29,8 +136,8 @@
         this.homeLink = { text: 'Home', href: '/profile' };
 
         this.navigationLinks = [
-            { text: 'People', href: '/people' },
-            { text: 'Music', href: '/misuc' }
+            { text: 'People', href: 'people' },
+            { text: 'Music', href: 'music' }
         ];
     }
 
@@ -58,7 +165,18 @@
     'use strict';
 
     angular.module('mllApp.header', ['mllApp.shared', 'mllApp.templates']);
+})(window.angular);
+(function(angular){
+    'use strict';
 
+    let loginLink = { text: 'Log In', href: 'login' };
+
+    let logoutLink = { text: 'Log Out', href: 'logout' };
+
+    angular
+        .module('mllApp.header')
+        .constant('loginLink', loginLink)
+        .constant('logoutLink', logoutLink);
 })(window.angular);
 (function (angular){
     'use strict';
@@ -67,13 +185,14 @@
         .module('mllApp.header')
         .controller('HeaderController', HeaderController);
 
-    function HeaderController() {
-        this.authLinks = [
-            { text: 'Log In', href: '/login' },
-            { text: 'Log Out', href: '/logout' }
-        ];
-    }
+    HeaderController.$inject = ['loginLink', 'logoutLink', 'authenticationService'];
 
+    function HeaderController(loginLink, logoutLink, authenticationService) {
+        this.authService = authenticationService;
+
+        this.loginLink = loginLink;
+        this.logoutLink = logoutLink;
+    }
 })(window.angular);
 
 (function (angular){
@@ -103,6 +222,216 @@
 
     angular.module('mllApp.footer', ['mllApp.templates']);
 
+})(window.angular);
+(function (angular) {
+    'use strict';
+
+    angular.module('mllApp.login', ['mllApp.shared', 'mllApp.templates']);
+})(window.angular);
+(function(angular){
+    'use strict';
+
+    let loginUrl = '/MLL/LoginServlet';
+
+    angular
+        .module('mllApp.login')
+        .constant('loginUrl', loginUrl);
+})(window.angular);
+(function(angular){
+    'use strict';
+
+    angular
+        .module('mllApp.login')
+        .controller('LoginController', LoginController);
+
+    function LoginController() { }
+})(window.angular);
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.login')
+        .factory('loginService', loginService);
+
+    loginService.$inject = ['$http', 'authenticationService', 'loginUrl'];
+
+    function loginService($http, authenticationService, loginUrl) {
+        return {
+            login: login
+        };
+
+        function login(data) {
+            return $http({
+                method: 'POST',
+                url: loginUrl,
+                data: data
+            }).then((response) => {
+                if (response.data.isValidUser) {
+                    authenticationService.login(response.data);
+                }
+
+                return response.data;
+            }).catch((rejection) => {
+                return rejection;
+            });
+
+        }
+    }
+})(window.angular);
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.login')
+        .controller('CommonLoginFormController', CommonLoginFormController);
+
+    CommonLoginFormController.$inject = ['$state', 'loginService'];
+
+    function CommonLoginFormController($state, loginService) {
+        this.service = loginService;
+
+        this.login = () => {
+            if (this.loginForm.$invalid) this.loginForm.$submitted = true;
+
+            else {
+                this.service.login(this.data)
+                    .then((data) => {
+                        this.processResponse(data);
+                    })
+                    .catch(() => { });
+            }
+        };
+
+        this.processResponse = (data) => {
+            if (data.isValidUser) this.redirect(data.userId, data.type);
+
+            else this.displayError(data.errorMessage);
+        };
+
+        this.redirect = (id, type) => {
+            $state.go(type, { id: id });
+        };
+
+        this.displayError = (errorMessage) => {
+            this.loginForm.$serverError = true;
+            this.errorMessage = errorMessage;
+        };
+    }
+})(window.angular);
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.login')
+        .directive('mllCommonLoginForm', mllCommonLoginForm);
+
+    function mllCommonLoginForm() {
+        return {
+            restrict: 'AE',
+            replace: true,
+            scope: {},
+            controller: 'CommonLoginFormController',
+            controllerAs: 'ctrl',
+            templateUrl: 'common-login-form.template.html'
+        };
+    }
+})(window.angular);
+(function (angular) {
+    'use strict';
+
+    angular.module('mllApp.registration', ['mllApp.shared', 'mllApp.templates']);
+})(window.angular);
+(function(angular){
+    'use strict';
+
+    let registrationUrl = '/MLL/RegistrationServlet';
+
+    angular
+        .module('mllApp.registration')
+        .constant('registrationUrl', registrationUrl);
+})(window.angular);
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.registration')
+        .factory('registrationService', registrationService);
+
+    registrationService.$inject = ['$http', 'authenticationService', 'registrationUrl'];
+
+    function registrationService($http, authenticationService, registrationUrl) {
+        return {
+            register: register
+        };
+
+        function createConfig(data, type) {
+            data.type = type;
+
+            let httpConfig = {
+                method: 'POST',
+                url: registrationUrl,
+                data: data
+            };
+
+            return httpConfig;
+        }
+
+        function register(data) {
+            return $http(createConfig(data, type)).then((response) => {
+                if (response.data.isRegistered) {
+                    authenticationService.register(response.data);
+                }
+
+                return response.data;
+            }).catch((rejection) => {
+                return rejection;
+            });
+        }
+    }
+})(window.angular);
+
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.registration')
+        .controller('UserRegistrationFormController', UserRegistrationFormController);
+
+
+
+    function UserRegistrationFormController() {
+
+        this.submit = () => {
+            if (this.generalForm.$invalid) this.generalForm.$submitted = true;
+            else this.onNext();
+        };
+
+
+    }
+})(window.angular);
+
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.registration')
+        .directive('mllUserRegistrationForm', mllUserRegistrationForm);
+
+    function mllUserRegistrationForm() {
+        return {
+            restrict: 'AE',
+            replace: true,
+            scope: {},
+            controller: 'UserRegistrationFormController',
+            controllerAs: 'ctrl',
+            templateUrl: 'user-registration-form.template.html'
+        };
+    }
+})(window.angular);
+(function(angular){
+    'use strict';
+
+    angular.module('mllApp.home', []);
 })(window.angular);
 (function (angular) {
     'use strict';
@@ -489,7 +818,7 @@
 
         this.agreement = () => this.onAgree({ isChecked: this.isChecked});
 
-        this.selectGenre = (genre) => { if (!genre) this.data.secondaryGenre = null; };
+        this.selectGenre = (genre) => { if(!genre) this.data.secondaryGenre = null; };
 
         this.submit = () => {
             if (this.generalForm.$invalid) this.generalForm.$submitted = true;
@@ -721,7 +1050,7 @@
 (function (angular) {
     'use strict';
 
-    angular.module('mllApp.shared', ['mllApp.templates', 'ui.bootstrap']);
+    angular.module('mllApp.shared', ['mllApp.templates', 'ui.bootstrap', 'ngCookies']);
 
 })(window.angular);
 (function (angular) {
@@ -768,6 +1097,52 @@
                     scope.$apply(() => { ctrl.isScrolled = true; });
                 }
             }
+        }
+    }
+})(window.angular);
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.shared')
+        .factory('authenticationService', authenticationService);
+
+    authenticationService.$inject = ['$cookies'];
+
+    function authenticationService($cookies) {
+        let cookiesKey = 'mllApp.authDetails';
+        let details = {};
+
+        return {
+            details: details,
+            logout: logout,
+            login: login,
+            register: register,
+            check: check
+        };
+
+        function check() {
+            let authDetails = $cookies.getObject(cookiesKey);
+
+            if (authDetails) details = authDetails;
+        }
+
+        function logout() {
+            $cookies.remove(cookiesKey);
+
+            details = {};
+        }
+
+        function register(newDetails) {
+            $cookies.putObject(cookiesKey, newDetails);
+
+            details = newDetails;
+        }
+
+        function login(newDetails) {
+            $cookies.putObject(cookiesKey, newDetails);
+
+            details = newDetails;
         }
     }
 })(window.angular);

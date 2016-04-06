@@ -1,0 +1,51 @@
+<form name="ctrl.registerForm" class="form-horizontal form-tab" novalidate>
+    <legend>General Information</legend>
+    <div class="form-group has-feedback"
+         ng-class="{ 'has-success': ctrl.registerForm.title.$valid && ctrl.registerForm.$submitted,
+                     'has-error': ctrl.registerForm.title.$invalid && ctrl.registerForm.$submitted }">
+        <label for="register-title" class="col-xs-2">
+            First Name:
+        </label>
+        <div class="col-xs-10">
+            <input type="text" name="title" class="form-control" id="register-title"
+                   ng-model="ctrl.data.title" required autofocus />
+            <div class="alert alert-danger" role="alert"
+                 ng-show="ctrl.registerForm.title.$invalid && ctrl.registerForm.$submitted">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span ng-show="ctrl.registerForm.title.$error.required">
+                        please provide your first name!!
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <hr/>
+
+
+    <div class="form-group has-feedback"
+         ng-class="{ 'has-success': ctrl.registerForm.lastname.$valid && ctrl.registerForm.$submitted,
+                     'has-error': ctrl.registerForm.lastname.$invalid && ctrl.registerForm.$submitted }">
+        <label for="last-name" class="col-xs-2">
+           Last name:
+        </label>
+        <div class="col-xs-10">
+            <input type="text" name="lastname" class="form-control" id="last-name"
+                   ng-model="ctrl.data.lastname" min="0" max="320" required />
+            <div class="alert alert-danger" role="alert"
+                 ng-show="ctrl.registerForm.lastname.$invalid && ctrl.registerForm.$submitted">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span ng-show="ctrl.registerForm.lastname.$error.required">
+                    Please provide your last name
+                </span>
+            </div>
+        </div>
+    </div>
+
+
+
+
+        <div class="col-xs-3">
+            <button class="btn btn-block btn-primary" ng-click="ctrl.submit()">Next</button>
+        </div>
+    </div>
+</form>

@@ -17,7 +17,7 @@
             <div class="collapse navbar-collapse" id="search-bar">
                 <ul class="nav navbar-nav">
                     <li ng-repeat="link in ctrl.navLinks">
-                        <a ng-href="{{link.href}}">
+                        <a ui-sref="{{link.href}}">
                             <span ng-bind="link.text"></span>
                         </a>
                     </li>
@@ -25,9 +25,15 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-repeat="link in ctrl.authLinks">
-                        <a ng-href="{{link.href}}">
-                            <span ng-bind="link.text"></span>
+                    <li ng-show="!ctrl.authService.details.isAuthenticated">
+                        <a ui-sref="{{ctrl.loginLink.href}}">
+                            <span ng-bind="ctrl.loginLink.text"></span>
+                        </a>
+                    </li>
+
+                    <li ng-show="ctrl.authService.details.isAuthenticated">
+                        <a ui-sref="{{ctrl.logoutLink.href}}">
+                            <span ng-bind="ctrl.logoutLink.text"></span>
                         </a>
                     </li>
                 </ul>

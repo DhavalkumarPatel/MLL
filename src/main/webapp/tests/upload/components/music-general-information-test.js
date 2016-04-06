@@ -1,4 +1,3 @@
-
 'use strict';
 
 describe("Music General Information form Controller:", function() {
@@ -12,13 +11,13 @@ describe("Music General Information form Controller:", function() {
     beforeEach(inject(function ($controller) {
         ctrl = $controller('MusicGeneralInformationFormController', {},
             { onNext: onNext, onPrevious: onPrevious,
-               generalForm : {
-                $invalid: true,
-                $submitted: false,
-                errors: {
-                    required: true
-                }
-            },
+                generalForm : {
+                    $invalid: true,
+                    $submitted: false,
+                    errors: {
+                        required: true
+                    }
+                },
                 data: { artists: [] },
             }
         );}));
@@ -96,7 +95,7 @@ describe("Music General Information form Controller:", function() {
 
         ctrl.addArtist();
 
-       expect(ctrl.data.artists.length).toEqual(before_add+1);
+        expect(ctrl.data.artists.length).toEqual(before_add+1);
 
 
     });
@@ -181,8 +180,3 @@ describe("Music General Information form Controller:", function() {
 
 
 });
-
-
-
-
-
