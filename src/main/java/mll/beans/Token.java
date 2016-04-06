@@ -15,10 +15,6 @@ public class Token  implements Serializable
 	private Boolean isUsed = false;
 	private String inviteType;
 	
-	private Boolean isGenerated;
-	private String url;
-	private String errorMessage;
-	
 	public Integer getId() {
 		return id;
 	}
@@ -60,23 +56,5 @@ public class Token  implements Serializable
 	}
 	public void setInviteType(String inviteType) {
 		this.inviteType = inviteType;
-	}
-	public Boolean getIsGenerated() {
-		return isGenerated;
-	}
-	public void setIsGenerated(Boolean isGenerated) {
-		this.isGenerated = isGenerated;
-	}
-	public String getUrl() {
-		return url;
-	}
-	public void setUrl(String url) {
-		this.url = url;
-	}
-	public String getErrorMessage() {
-		return errorMessage;
-	}
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
 	}
 }
