@@ -1,3 +1,5 @@
-/**
- * Created by chern on 4/6/2016.
- */
+(function (angular) {
+    'use strict';
+
+    angular.module('mllApp.registration', ['mllApp.shared', 'mllApp.templates']);
+})(window.angular);

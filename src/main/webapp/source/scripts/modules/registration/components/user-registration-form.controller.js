@@ -3,12 +3,12 @@
     'use strict';
 
     angular
-        .module('mllApp.')
-        .controller('RegisterFormController', RegisterFormController);
+        .module('mllApp.registration')
+        .controller('UserRegistrationFormController', UserRegistrationFormController);
 
 
 
-    function MusicGeneralInformationFormController() {
+    function UserRegistrationFormController() {
 
         this.submit = () => {
             if (this.generalForm.$invalid) this.generalForm.$submitted = true;

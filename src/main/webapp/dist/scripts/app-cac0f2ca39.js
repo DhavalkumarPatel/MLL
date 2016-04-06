@@ -336,6 +336,98 @@
         };
     }
 })(window.angular);
+(function (angular) {
+    'use strict';
+
+    angular.module('mllApp.registration', ['mllApp.shared', 'mllApp.templates']);
+})(window.angular);
+(function(angular){
+    'use strict';
+
+    let registrationUrl = '/MLL/RegistrationServlet';
+
+    angular
+        .module('mllApp.registration')
+        .constant('registrationUrl', registrationUrl);
+})(window.angular);
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.registration')
+        .factory('registrationService', registrationService);
+
+    registrationService.$inject = ['$http', 'authenticationService', 'registrationUrl'];
+
+    function registrationService($http, authenticationService, registrationUrl) {
+        return {
+            register: register
+        };
+
+        function createConfig(data, type) {
+            data.type = type;
+
+            let httpConfig = {
+                method: 'POST',
+                url: registrationUrl,
+                data: data
+            };
+
+            return httpConfig;
+        }
+
+        function register(data) {
+            return $http(createConfig(data, type)).then((response) => {
+                if (response.data.isRegistered) {
+                    authenticationService.register(response.data);
+                }
+
+                return response.data;
+            }).catch((rejection) => {
+                return rejection;
+            });
+        }
+    }
+})(window.angular);
+
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.registration')
+        .controller('UserRegistrationFormController', UserRegistrationFormController);
+
+
+
+    function UserRegistrationFormController() {
+
+        this.submit = () => {
+            if (this.generalForm.$invalid) this.generalForm.$submitted = true;
+            else this.onNext();
+        };
+
+
+    }
+})(window.angular);
+
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.registration')
+        .directive('mllUserRegistrationForm', mllUserRegistrationForm);
+
+    function mllUserRegistrationForm() {
+        return {
+            restrict: 'AE',
+            replace: true,
+            scope: {},
+            controller: 'UserRegistrationFormController',
+            controllerAs: 'ctrl',
+            templateUrl: 'user-registration-form.template.html'
+        };
+    }
+})(window.angular);
 (function(angular){
     'use strict';
 
