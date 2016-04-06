@@ -2,8 +2,20 @@
     'use strict';
 
     angular.module('mllApp',
-        ['mllApp.shared', 'mllApp.header', 'mllApp.footer', 'mllApp.upload', 'ui.router']);
+        ['mllApp.shared', 'mllApp.header', 'mllApp.footer', 'mllApp.home', 'mllApp.login', 'mllApp.upload', 'ui.router']);
+})(window.angular);
+(function(angular) {
+    'use strict';
 
+    angular
+        .module('mllApp')
+        .run(run);
+
+    run.$inject = ['authenticationService'];
+
+    function run(authenticationService) {
+        authenticationService.check();
+    }
 })(window.angular);
 (function(angular) {
     'use strict';
@@ -12,12 +24,102 @@
         .module('mllApp')
         .config(config);
 
-    function config() {
+    function config($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise('/');
 
+        $stateProvider
+            .state('home', {
+                url: '/',
+                views: {
+                    left: {
+                        template: 'Look, I am a left column!'
+                    },
+                    center: {
+                        template: 'Look, I am a center column!'
+                    },
+                    right: {
+                        template: 'Look, I am a right column!'
+                    }
+                }
+            })
+            .state('userRegistration', {
+                url: '/user-registration/token/:token',
+                views: {
+                    left: {
+                        template: 'Look, I am a left user registration column!'
+                    },
+                    center: {
+                        template: 'Look, I am a center user registration column!'
+                    },
+                    right: {
+                        template: 'Look, I am a right user registration column!'
+                    }
+                }
+            })
+            .state('musicianRegistration', {
+                url: '/user-registration/token/:token',
+                views: {
+                    left: {
+                        template: 'Look, I am a left user registration column!'
+                    },
+                    center: {
+                        template: 'Look, I am a center user registration column!'
+                    },
+                    right: {
+                        template: 'Look, I am a right user registration column!'
+                    }
+                }
+            })
+            .state('login', {
+                url: '/login',
+                views: {
+                    left: { template: '' },
+                    center: {
+                        controller: 'LoginController as ctrl',
+                        templateProvider: function($templateCache) {
+                            let tmpl = $templateCache.get('login-central.view.html');
+
+                            return tmpl;
+                        }
+                    },
+                    right: { template: '' }
+                }
+            })
+            .state('music', {
+                url: '/music',
+                views: {
+                    left: {
+                        template: 'Look, I am a left login column!'
+                    },
+                    center: {
+                        template: 'Look, I am a center login column!'
+                    },
+                    right: {
+                        template: 'Look, I am a right login column!'
+                    }
+                },
+                resolve: {
+                    data: function($state, $q, $timeout, authenticationService) {
+                        let deferred = $q.defer();
+
+                        $timeout(() => {
+                            if (!authenticationService.details.isAuthenticated) {
+                                $state.go('login');
+                                deferred.reject();
+                            }
+
+                            else {
+                                deferred.resolve([]);
+                            }
+                        }, 0);
+
+                        return deferred.promise;
+                    }
+                }
+            });
     }
 
 })(window.angular);
-
 (function (angular) {
     'use strict';
 
@@ -29,8 +131,8 @@
         this.homeLink = { text: 'Home', href: '/profile' };
 
         this.navigationLinks = [
-            { text: 'People', href: '/people' },
-            { text: 'Music', href: '/misuc' }
+            { text: 'People', href: 'people' },
+            { text: 'Music', href: 'music' }
         ];
     }
 
@@ -58,7 +160,18 @@
     'use strict';
 
     angular.module('mllApp.header', ['mllApp.shared', 'mllApp.templates']);
+})(window.angular);
+(function(angular){
+    'use strict';
 
+    let loginLink = { text: 'Log In', href: 'login' };
+
+    let logoutLink = { text: 'Log Out', href: 'logout' };
+
+    angular
+        .module('mllApp.header')
+        .constant('loginLink', loginLink)
+        .constant('logoutLink', logoutLink);
 })(window.angular);
 (function (angular){
     'use strict';
@@ -67,13 +180,14 @@
         .module('mllApp.header')
         .controller('HeaderController', HeaderController);
 
-    function HeaderController() {
-        this.authLinks = [
-            { text: 'Log In', href: '/login' },
-            { text: 'Log Out', href: '/logout' }
-        ];
-    }
+    HeaderController.$inject = ['loginLink', 'logoutLink', 'authenticationService'];
 
+    function HeaderController(loginLink, logoutLink, authenticationService) {
+        this.authService = authenticationService;
+
+        this.loginLink = loginLink;
+        this.logoutLink = logoutLink;
+    }
 })(window.angular);
 
 (function (angular){
@@ -103,6 +217,27 @@
 
     angular.module('mllApp.footer', ['mllApp.templates']);
 
+})(window.angular);
+(function (angular) {
+    'use strict';
+
+    angular.module('mllApp.login', ['mllApp.shared', 'mllApp.templates']);
+})(window.angular);
+(function(angular){
+    'use strict';
+
+    angular
+        .module('mllApp.login')
+        .controller('LoginController', LoginController);
+
+    function LoginController() {
+        this.dummyData = 'ПРИВЕТ, СУЧКИ!';
+    }
+})(window.angular);
+(function(angular){
+    'use strict';
+
+    angular.module('mllApp.home', []);
 })(window.angular);
 (function (angular) {
     'use strict';
@@ -489,7 +624,7 @@
 
         this.agreement = () => this.onAgree({ isChecked: this.isChecked});
 
-        this.selectGenre = (genre) => { if (!genre) this.data.secondaryGenre = null; };
+        this.selectGenre = (genre) => { if(!genre) this.data.secondaryGenre = null; };
 
         this.submit = () => {
             if (this.generalForm.$invalid) this.generalForm.$submitted = true;
@@ -721,7 +856,7 @@
 (function (angular) {
     'use strict';
 
-    angular.module('mllApp.shared', ['mllApp.templates', 'ui.bootstrap']);
+    angular.module('mllApp.shared', ['mllApp.templates', 'ui.bootstrap', 'ngCookies']);
 
 })(window.angular);
 (function (angular) {
@@ -768,6 +903,52 @@
                     scope.$apply(() => { ctrl.isScrolled = true; });
                 }
             }
+        }
+    }
+})(window.angular);
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.shared')
+        .factory('authenticationService', authenticationService);
+
+    authenticationService.$inject = ['$cookies'];
+
+    function authenticationService($cookies) {
+        let cookiesKey = 'mllApp.authDetails';
+        let details = {};
+
+        return {
+            details: details,
+            logout: logout,
+            login: login,
+            register: register,
+            check: check
+        };
+
+        function check() {
+            let authDetails = $cookies.getObject(cookiesKey);
+
+            if (authDetails) details = authDetails;
+        }
+
+        function logout() {
+            $cookies.remove(cookiesKey);
+
+            details = {};
+        }
+
+        function register(newDetails) {
+            $cookies.putObject(cookiesKey, newDetails);
+
+            details = newDetails;
+        }
+
+        function login(newDetails) {
+            $cookies.putObject(cookiesKey, newDetails);
+
+            details = newDetails;
         }
     }
 })(window.angular);

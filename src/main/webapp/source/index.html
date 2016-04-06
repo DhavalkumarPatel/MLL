@@ -33,6 +33,7 @@
 
     <!-- build:jsAngular dist/scripts/angular.js -->
     <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="../bower_components/angular-mocks/angular-mocks.js"></script>
@@ -44,16 +45,23 @@
 
     <!-- build:jsCustom dist/scripts/app.js -->
     <script src="scripts/app.js"></script>
+    <script src="scripts/app.run.js"></script>
     <script src="scripts/app.config.js"></script>
 
     <script src="scripts/components/app.controller.js"></script>
     <script src="scripts/components/app.directive.js"></script>
 
     <script src="scripts/modules/header/header.module.js"></script>
+    <script src="scripts/modules/header/header.globals.js"></script>
     <script src="scripts/modules/header/components/header.controller.js"></script>
     <script src="scripts/modules/header/components/header.directive.js"></script>
 
     <script src="scripts/modules/footer/footer.module.js"></script>
+
+    <script src="scripts/modules/login/login.module.js"></script>
+    <script src="scripts/modules/login/controllers/login.controller.js"></script>
+
+    <script src="scripts/modules/home/home.module.js"></script>
 
     <script src="scripts/modules/picker/picker.module.js"></script>
     <script src="scripts/modules/picker/components/hdd-file-reader.controller.js"></script>
@@ -82,6 +90,7 @@
     <script src="scripts/modules/shared/shared.module.js"></script>
     <script src="scripts/modules/shared/components/scrollable-agreement.controller.js"></script>
     <script src="scripts/modules/shared/components/scrollable-agreement.directive.js"></script>
+    <script src="scripts/modules/shared/services/authentication.service.js"></script>
     <!-- endbuild -->
 
     <!-- Dropbox -->
