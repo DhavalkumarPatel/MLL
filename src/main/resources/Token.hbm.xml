@@ -16,6 +16,10 @@
 		<property name="emailId">
 			<column name="email_id" length="100" not-null="true" />
 		</property>
+		
+		<property name="inviteType">
+			<column name="inviteType" length="50" not-null="true" />
+		</property>
 
 		<property name="userId">
 			<column name="user_id" not-null="true" />
