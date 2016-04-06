@@ -13,7 +13,7 @@ public class AdminUser  implements Serializable
 	private String level;
 	private String gender;
 	private String preference;
-	private String age;
+	private int age;
 	
 	public Integer getId() {
 		return id;
@@ -57,10 +57,10 @@ public class AdminUser  implements Serializable
 	public void setPreference(String preference) {
 		this.preference = preference;
 	}
-	public String getAge() {
+	public int getAge() {
 		return age;
 	}
-	public void setAge(String age) {
+	public void setAge(int age) {
 		this.age = age;
 	}
 }
