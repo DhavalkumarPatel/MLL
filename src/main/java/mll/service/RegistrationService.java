@@ -1,61 +1,52 @@
 package mll.service;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import mll.beans.Artist;
-import mll.beans.Genre;
-import mll.beans.Metadata;
-import mll.beans.Owner;
-import mll.beans.Song;
 import mll.beans.UserDetails;
 import mll.dao.RegistrationDAO;
 
-public class RegistrationService {
+public class RegistrationService 
+{
 	RegistrationDAO dao;
 
-	public RegistrationService() {
+	public RegistrationService() 
+	{
 		dao = new RegistrationDAO();
 	}
 
-	public String register(HttpServletRequest request, HttpServletResponse response) {
-		String responseString = "";
+	@SuppressWarnings("unchecked")
+	public JSONObject register(HttpServletRequest request, HttpServletResponse response)
+	{
+		JSONObject responseObject = new JSONObject();
 
-		try {
-			// Validate the request and populate the metadata beans for all
-			
-			UserDetails userdetails = null;
+		try 
+		{
+			UserDetails userdetails = populateUserDetailBeanFromRequest(request);
 
-			userdetails = populateUserDetailBeanFromRequest(request);
-
-			if (null != userdetails) {
-				// Save all user files with metadata
-				dao.registerUser(userdetails);
-
-				// Set success response
-				responseString = "Successfully Registered.";
-			} else {
-				// Request is invalid so set proper error message
-				responseString = "Request does not contain valid data. Please upload with proper metadata information.";
+			if (null != userdetails) 
+			{
+				responseObject = dao.registerUser(userdetails);
 			}
-		} catch (Exception e) {
+			else 
+			{
+				responseObject.put("isRegistered", false);
+				responseObject.put("errorMessage", "Error while registration. Please submit with proper user details.");
+			}
+		} 
+		catch (Exception e) 
+		{
 			e.printStackTrace();
-			responseString = "Error while saving the data. Please upload with proper metadata information.";
+			responseObject.put("isRegistered", false);
+			responseObject.put("errorMessage", "Error while registration. Please submit with proper user details.");
 		}
 
-		return responseString;
+		return responseObject;
 	}
 
 	/**
@@ -66,9 +57,8 @@ public class RegistrationService {
 	 * @version 1.0
 	 * @since 2016-03-24
 	 */
-	public UserDetails populateUserDetailBeanFromRequest(HttpServletRequest request) throws Exception {
-		UserDetails userdetails = new UserDetails();
-
+	public UserDetails populateUserDetailBeanFromRequest(HttpServletRequest request) throws Exception 
+	{
 		StringBuffer requestStr = new StringBuffer();
 		BufferedReader reader = request.getReader();
 		String line = null;
@@ -79,28 +69,28 @@ public class RegistrationService {
 		JSONParser parser = new JSONParser();
 		JSONObject mainObject = (JSONObject) parser.parse(requestStr.toString());
 
+		UserDetails userdetails = new UserDetails();
 		userdetails.getToken().setToken((String) mainObject.get("token"));
 		userdetails.setType((String) mainObject.get("type"));
 
-		// set in userdetails.user
 		userdetails.getUsers().setUserName((String) mainObject.get("userName"));
 		userdetails.getUsers().setPassword((String) mainObject.get("password"));
 		userdetails.getUsers().setEmailId((String) mainObject.get("emailId"));
 
-		if (userdetails.getType().equalsIgnoreCase("user")) {
-			
+		if (userdetails.getType().equalsIgnoreCase("user")) 
+		{
 			userdetails.getAdminUser().setFirstName((String) mainObject.get("firstName"));
 			userdetails.getAdminUser().setLastName((String) mainObject.get("lastName"));
 			userdetails.getAdminUser().setCollege((String) mainObject.get("college"));
 			userdetails.getAdminUser().setLevel((String) mainObject.get("level"));
 			userdetails.getAdminUser().setGender((String) mainObject.get("gender"));
 			userdetails.getAdminUser().setPreference((String) mainObject.get("preference"));
-			userdetails.getAdminUser().setAge((String) mainObject.get("age"));
+			userdetails.getAdminUser().setAge((Integer) mainObject.get("age"));
 
-		} else {
-
+		} 
+		else 
+		{
 			userdetails.getMusician().setName((String) mainObject.get("name"));
-			
 		}
 
 		return userdetails;

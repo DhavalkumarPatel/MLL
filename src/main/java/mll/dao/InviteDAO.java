@@ -74,12 +74,14 @@ public class InviteDAO
 			if(null != invite)
 			{
 				Query query = session.createQuery("FROM mll.beans.Token tc where tc.token=:token");
+				query.setParameter("token", invite.getToken());
 				List<Token> results = query.list();
 				
 				if(null != results && results.size()>0)
 				{
 					if(null != results.get(0) && !results.get(0).getIsUsed())
 					{
+						invite.setToken(results.get(0));
 						invite.setIsValid(true);
 					}
 					else
