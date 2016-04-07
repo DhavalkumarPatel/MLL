@@ -43,7 +43,7 @@ public class InviteService
 		{
 			responseObject.put("isGenerated", false);
 			responseObject.put("isValid", false);
-			responseObject.put("errorMessage", "Error while processing eith this invite due to invalid invite details.");
+			responseObject.put("errorMessage", "Error while processing this invite due to invalid invite details.");
 		}
 		
 		return responseObject;
