@@ -132,8 +132,29 @@
                 url: '/musician/id/:id',
                 views: {
                     left: { template: 'Look, I am a left user registration column!' },
-                    center: { template: 'Look, I am a center user registration column!' },
+                    center: {
+                        controller: 'MusicianFeaturesController as ctrl',
+                        templateProvider: function ($templateCache) {
+                            return $templateCache.get('musician-profile-center.view.html');
+                        }
+                    },
                     right: { template: 'Look, I am a right user registration column!' }
+                },
+                resolve: {
+                    userId: function($state, $stateParams, $q, $timeout, authenticationService) {
+                        let deferred = $q.defer();
+
+                        $timeout(() => {
+                            if (!authenticationService.details.isAuth) {
+                                $state.go('login');
+                                deferred.reject();
+                            }
+
+                            else deferred.resolve(+$stateParams.id);
+                        }, 0);
+
+                        return deferred.promise;
+                    }
                 }
             })
             .state('login', {
@@ -629,7 +650,19 @@
         this.userId = userId;
     }
 })(window.angular);
+(function (angular) {
+    'use strict';
 
+    angular
+        .module('mllApp.home')
+        .controller('MusicianFeaturesController', MusicianFeaturesController);
+
+    MusicianFeaturesController.$inject = ['userId'];
+
+    function MusicianFeaturesController(userId) {
+        this.userId = userId;
+    }
+})(window.angular);
 (function (angular) {
     'use strict';
 
