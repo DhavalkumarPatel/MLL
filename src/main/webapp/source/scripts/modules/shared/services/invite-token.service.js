@@ -13,7 +13,19 @@
             generateToken: generateToken
         };
 
+        function validateToken(type, token) {
+            //let d = $q.defer();
+            //
+            //$timeout(() => d.resolve({ isValid: true }), 100);
+            //
+            //return d.promise;
 
+            let data = { actionType: 'generate', inviteType: type, token: token };
+            return $http({
+                method: 'POST',
+                url: '/MLL/InviteServlet',
+                data: data
+            });
         }
 
         function generateToken(id, type, email) {
