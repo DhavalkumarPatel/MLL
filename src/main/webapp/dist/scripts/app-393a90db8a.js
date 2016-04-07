@@ -99,11 +99,33 @@
                 }
             })
             .state('musicianRegistration', {
-                url: '/musician-registration/token/:token',
+                url: '/musician/registration/token/:token',
                 views: {
                     left: { template: '' },
-                    center: { template: 'Look, I am a center user registration column!' },
+                    center: {
+                        controller: 'MusicianRegistrationController as ctrl',
+                        templateProvider: function($templateCache) {
+                            return $templateCache.get('musician-registration.view.html');
+                        }
+                    },
                     right: { template: '' }
+                },
+                resolve: {
+                    token: function ($state, $stateParams, $q, inviteTokenService) {
+                        let deferred = $q.defer();
+
+                        inviteTokenService.validateToken('musician', $stateParams.token)
+                            .then((response) => {
+                                if (response.data.isValid) deferred.resolve($stateParams.token);
+
+                                else {
+                                    $state.go('home');
+                                    deferred.reject();
+                                }
+                            });
+
+                        return deferred.promise;
+                    }
                 }
             })
             .state('musician', {
@@ -404,6 +426,19 @@
         this.data = { inviteToken: token };
     }
 })(window.angular);
+(function(angular){
+    'use strict';
+
+    angular
+        .module('mllApp.registration')
+        .controller('MusicianRegistrationController', MusicianRegistrationController);
+
+    MusicianRegistrationController.$inject = ['token'];
+
+    function MusicianRegistrationController(token) {
+        this.data = { inviteToken: token };
+    }
+})(window.angular);
 (function(angular) {
     'use strict';
 
@@ -497,10 +532,86 @@
             scope: {},
             controller: 'UserRegistrationFormController',
             controllerAs: 'ctrl',
-            templateUrl: 'user-registration-form.template.html'
+            templateUrl: 'user-registration-form.template.html',
+            bindToController: {
+                inviteToken: '@'
+            }
         };
     }
 })(window.angular);
+
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.registration')
+        .controller('MusicianRegistrationFormController', MusicianRegistrationFormController);
+
+    MusicianRegistrationFormController.$inject = ['inviteToken', 'registrationService'];
+
+    function MusicianRegistrationFormController(inviteToken, registrationService) {
+        this.data = {};
+
+        this.token = inviteToken;
+        this.service = registrationService;
+
+        this.register = () => {
+            if (this.registrationForm.$invalid) this.registrationForm.$submitted = true;
+            else {
+                let data = this.data;
+                data.token = this.token;
+
+                this.service.register(data, 'musician')
+                    .then((response) => {
+                        this.processResponse(data);
+                    })
+                    .catch((rejection) => {
+
+                    });
+            }
+        };
+
+        this.processResponse = (data) => {
+            if (data.isRegistered) this.redirect(data.userId);
+
+            else this.displayError(data.errorMessage);
+        };
+
+        this.redirect = (id) => {
+            $state.go('musician', { id: id });
+        };
+
+        this.displayError = (errorMessage) => {
+            this.loginForm.$serverError = true;
+            this.errorMessage = errorMessage;
+        };
+
+    }
+})(window.angular);
+
+
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.registration')
+        .directive('mllMusicianRegistrationForm', mllMusicianRegistrationForm);
+
+    function mllMusicianRegistrationForm() {
+        return {
+            restrict: 'AE',
+            replace: true,
+            scope: {},
+            controller: 'MusicianRegistrationFormController',
+            controllerAs: 'ctrl',
+            templateUrl: 'musician-registration-form.template.html',
+            bindToController: {
+                inviteToken: '@'
+            }
+        };
+    }
+})(window.angular);
+
 (function(angular){
     'use strict';
 
@@ -1253,6 +1364,31 @@
                     scope.$apply(() => { ctrl.isScrolled = true; });
                 }
             }
+        }
+    }
+})(window.angular);
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.shared')
+        .directive('mllInputMatch', mllInputMatch);
+
+    function mllInputMatch() {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            link: link
+        };
+
+        function link(scope, elem, attrs, ngModel) {
+            scope.$watch(attrs.ngModel + attrs.mllInputMatch, () => {
+                console.log(`"${attrs.ngModel}" against "attrs.mllInputMatch"`);
+
+                let match = attrs.ngModel === attrs.mllInputMatch;
+
+                ngModel.$setValidity('inputmatch', match);
+            });
         }
     }
 })(window.angular);

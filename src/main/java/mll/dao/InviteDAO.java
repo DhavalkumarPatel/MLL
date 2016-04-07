@@ -12,6 +12,14 @@ import mll.utility.SessionFactoryUtil;
 
 public class InviteDAO 
 {
+	/**
+	* This method takes Invite as an input and generates 
+	* the new unique token and encode it with in URL. It
+	* returns the update invite object.
+	* @author  Dhaval Patel
+	* @version 1.0
+	* @since   2016-04-06 
+	*/
 	public Invite generateInvite(Invite invite) throws Exception
 	{
 		Session session = null;
@@ -60,6 +68,13 @@ public class InviteDAO
 		return invite;
 	}
 	
+	/**
+	* This method takes Invite as an input and validate the token sent in Invite object. 
+	* It returns the update invite object based on token.
+	* @author  Dhaval Patel
+	* @version 1.0
+	* @since   2016-04-06 
+	*/
 	@SuppressWarnings({ "unused", "unchecked" })
 	public Invite validateInvite(Invite invite) throws Exception
 	{

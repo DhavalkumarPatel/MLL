@@ -77,11 +77,33 @@
                 }
             })
             .state('musicianRegistration', {
-                url: '/musician-registration/token/:token',
+                url: '/musician/registration/token/:token',
                 views: {
                     left: { template: '' },
-                    center: { template: 'Look, I am a center user registration column!' },
+                    center: {
+                        controller: 'MusicianRegistrationController as ctrl',
+                        templateProvider: function($templateCache) {
+                            return $templateCache.get('musician-registration.view.html');
+                        }
+                    },
                     right: { template: '' }
+                },
+                resolve: {
+                    token: function ($state, $stateParams, $q, inviteTokenService) {
+                        let deferred = $q.defer();
+
+                        inviteTokenService.validateToken('musician', $stateParams.token)
+                            .then((response) => {
+                                if (response.data.isValid) deferred.resolve($stateParams.token);
+
+                                else {
+                                    $state.go('home');
+                                    deferred.reject();
+                                }
+                            });
+
+                        return deferred.promise;
+                    }
                 }
             })
             .state('musician', {
