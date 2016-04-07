@@ -13,9 +13,6 @@
             generateToken: generateToken
         };
 
-
-        }
-
         function generateToken(id, type, email) {
             let data = { userId: id, inviteType: type, actionType: 'generate', email: email };
 

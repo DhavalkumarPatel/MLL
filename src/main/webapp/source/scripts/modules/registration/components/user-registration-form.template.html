@@ -107,6 +107,27 @@
         </div>
     </div>
 
+    <!------------confirm password-------------->
+
+    <div class="form-group has-feedback"
+         ng-class="{ 'has-success': ctrl.registerForm.cpassword.$valid && ctrl.registerForm.$submitted,
+                     'has-error': ctrl.registerForm.cpassword.$invalid && ctrl.registerForm.$submitted }">
+        <label for="cpass" class="col-xs-2">
+          Confirm Password:
+        </label>
+        <div class="col-xs-10">
+            <input type="password" name="cpassword" class="form-control" id="cpass"
+                   ng-model="ctrl.data.cpassword"  required />
+            <div class="alert alert-danger" role="alert"
+                 ng-show="ctrl.registerForm.cpassword.$invalid && ctrl.registerForm.$submitted">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span ng-show="ctrl.registerForm.cpassword.$error.required">
+                    Both the passwords must match
+                </span>
+            </div>
+        </div>
+    </div>
+
     <!-----------College------------>
 
     <div class="form-group has-feedback"
@@ -184,8 +205,10 @@
             <select name="oneGenre" class="form-control" ng-model="ctrl.data.oneGenre"
                     ng-options="genre for genre in ctrl.genres"
                     ng-change="ctrl.selectGenre(genre)"required>
+
                 <option value="">Select Genre...</option>
             </select>
+
             <div class="alert alert-danger" role="alert"
                  ng-show="ctrl.registerForm.oneGenre.$invalid && ctrl.registerForm.$submitted">
                 <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -215,16 +238,16 @@
          ng-class="{ 'has-success': ctrl.registerForm.gender.$valid && ctrl.registerForm.$submitted,
                      'has-error': ctrl.registerForm.gender.$invalid && ctrl.registerForm.$submitted }">
         <label class="col-xs-2">
-            Gender
+           Gender
         </label>
-        <div class="col-xs-10">
+        <div class="col-xs-18">
             <select name="gender" class="form-control" ng-model="ctrl.data.gender"
                     ng-options="gender.label for gender in ctrl.genders track by gender.id"
                     ng-change="ctrl.selectGender"required>
 
                 <option value="">Select Gender...</option>
             </select>
-            option: {{ctrl.selectGender}}
+
             <div class="alert alert-danger" role="alert"
                  ng-show="ctrl.registerForm.gender.$invalid && ctrl.registerForm.$submitted">
                 <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
