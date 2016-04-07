@@ -21,7 +21,7 @@
 
                 this.service.register(data, 'musician')
                     .then((response) => {
-                        this.processResponse(response.data);
+                        this.processResponse(response);
                     })
                     .catch((rejection) => {
 
