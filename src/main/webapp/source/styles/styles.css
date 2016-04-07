@@ -63,3 +63,26 @@ html, body {
 .form-tab { margin-top: 10px; }
 
 .no-margin { margin: 0; }
+
+.tooltip.tooltip-alert-success .tooltip-inner, .tooltip.tooltip-alert-error .tooltip-inner {
+    padding: 10px;
+    font-size: 15px;
+}
+
+.tooltip.tooltip-alert-success .tooltip-inner {
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+
+.tooltip.tooltip-alert-error .tooltip-inner {
+    background-color: #f2dede;
+    color: #a94442;
+}
+
+.tooltip.tooltip-alert-success .tooltip-arrow {
+    background-color: #dff0d8;
+}
+
+.tooltip.tooltip-alert-error .tooltip-arrow {
+    background-color: #f2dede;
+}

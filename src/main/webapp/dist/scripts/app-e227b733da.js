@@ -57,7 +57,7 @@
 
                         inviteTokenService.validateToken('user', $stateParams.token)
                             .then((response) => {
-                                if (response.isValid) deferred.resolve($stateParams.token);
+                                if (response.data.isValid) deferred.resolve($stateParams.token);
 
                                 else {
                                     $state.go('home');
@@ -546,10 +546,15 @@
             else {
                 this.inviteService.generateToken(+this.userId, this.data.type, this.data.email)
                     .then((response) => {
-                        this.message = response.data.isGenerated
-                            ? 'Invite is succesfully sent!' : response.data.errorMessage;
+                        this.message = response.data.message;
+                        this.isGenerated = response.data.isGenerated;
+
                         this.isOpen = true;
-                        $timeout(() => this.isOpen = false, 1000);
+
+                        this.data.type = '';
+                        this.data.email = '';
+
+                        $timeout(() => this.isOpen = false, 5000);
                     })
                     .catch((rejection) => {
 

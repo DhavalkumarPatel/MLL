@@ -35,7 +35,7 @@
 
                         inviteTokenService.validateToken('user', $stateParams.token)
                             .then((response) => {
-                                if (response.isValid) deferred.resolve($stateParams.token);
+                                if (response.data.isValid) deferred.resolve($stateParams.token);
 
                                 else {
                                     $state.go('home');
