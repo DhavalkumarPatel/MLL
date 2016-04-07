@@ -77,7 +77,7 @@ public class RegistrationDAOTest {
 			UserDetails userdetails = getListOfUserDetails_InValid_Data();
 			RegistrationDAO dao = new RegistrationDAO();
 			JSONObject jo = dao.registerUser(userdetails);
-			assertEquals("Error while saving data.", jo.get("errorMessage"));
+			assertEquals("Token is already used.", jo.get("errorMessage"));
 		} 
 		catch (Exception e) 
 		{
@@ -148,7 +148,13 @@ public class RegistrationDAOTest {
 		userdetails.setAdminUser(admin);
 		userdetails.setType("musician");
 		
-		
+		Token token = new Token();
+		token.setEmailId("Soumya@gmail.com");
+		token.setInviteType("Musician");
+		token.setIssueDate(new Date());
+		token.setIsUsed(true);
+		token.setToken("MLL");
+		userdetails.setToken(token);
 
 		Musician musician = new Musician();
 		musician.setName("Soumya");
