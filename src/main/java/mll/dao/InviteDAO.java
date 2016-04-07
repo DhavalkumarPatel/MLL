@@ -32,13 +32,13 @@ public class InviteDAO
 					invite.getToken().setToken("MLLTKN" + invite.getToken().getId());
 					session.update(invite.getToken());
 					invite.setIsGenerated(true);
-					invite.setErrorMessage("Invite has been sent successfully.");
+					invite.setMessage("Invite has been sent successfully.");
 					invite.setUrl("http://ec2-52-37-104-21.us-west-2.compute.amazonaws.com:8080/MLL/index.html#/"+ invite.getToken().getInviteType() + "/registration/token/" + invite.getToken().getToken());
 				}
 				else
 				{
 					invite.setIsGenerated(false);
-					invite.setErrorMessage("Error while generating token.");
+					invite.setMessage("Error while generating token.");
 				}
 			}
 			
@@ -48,7 +48,7 @@ public class InviteDAO
 		catch(Exception e)
 		{
 			invite.setIsGenerated(false);
-			invite.setErrorMessage("Error while generating token.");
+			invite.setMessage("Error while generating token.");
 			
 			if( null != tx)
 			{
@@ -90,20 +90,20 @@ public class InviteDAO
 					else
 					{
 						invite.setIsValid(false);
-						invite.setErrorMessage("This token is already used.");
+						invite.setMessage("This token is already used.");
 					}
 				}
 				else
 				{
 					invite.setIsValid(false);
-					invite.setErrorMessage("Invalid Token.");
+					invite.setMessage("Invalid Token.");
 				}
 			}
 		}
 		catch(Exception e)
 		{
 			invite.setIsGenerated(false);
-			invite.setErrorMessage("Error while validate Invite.");
+			invite.setMessage("Error while validate Invite.");
 			e.printStackTrace();
 		}
 		return invite;

@@ -9,7 +9,7 @@ public class Invite implements Serializable
 	private Boolean isGenerated = false;
 	private Boolean isValid = false;
 	private String url;
-	private String errorMessage;
+	private String message;
 	private String actiontype;
 	
 	public Token getToken() {
@@ -30,11 +30,12 @@ public class Invite implements Serializable
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public String getErrorMessage() {
-		return errorMessage;
+	
+	public String getMessage() {
+		return message;
 	}
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	public String getActiontype() {
 		return actiontype;

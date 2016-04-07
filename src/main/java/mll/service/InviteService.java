@@ -65,27 +65,19 @@ public class InviteService
 			else
 			{
 				invite.setIsGenerated(false);
-				invite.setErrorMessage("Request does not contain valid data. Please submit with proper invite details.");
+				invite.setMessage("Request does not contain valid data. Please submit with proper invite details.");
 			}
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 			invite.setIsGenerated(false);
-			invite.setErrorMessage("Error while sending Invite. Please submit with proper invite details.");
+			invite.setMessage("Error while sending Invite. Please submit with proper invite details.");
 		}
 		
 		JSONObject responseObject = new JSONObject();
 		responseObject.put("isGenerated", invite.getIsGenerated());
-		if(invite.getIsGenerated())
-		{
-			responseObject.put("message", invite.getErrorMessage());
-		}
-		else
-		{
-			responseObject.put("errorMessage", invite.getErrorMessage());
-		}
-		
+		responseObject.put("message", invite.getMessage());
 		responseObject.put("URL", invite.getUrl());
 		
 		return responseObject;
@@ -102,12 +94,12 @@ public class InviteService
 		{
 			e.printStackTrace();
 			invite.setIsValid(false);
-			invite.setErrorMessage("Error while validating Invite. Please submit again.");
+			invite.setMessage("Error while validating Invite. Please submit again.");
 		}
 		
 		JSONObject responseObject = new JSONObject();
 		responseObject.put("isValid", invite.getIsValid());
-		responseObject.put("errorMessage", invite.getErrorMessage());
+		responseObject.put("errorMessage", invite.getMessage());
 		
 		return responseObject;
 	}
