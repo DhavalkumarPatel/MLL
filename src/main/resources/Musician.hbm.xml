@@ -6,7 +6,6 @@
 	<class name="mll.beans.Musician" table="Musician">
 
 		<id name="id" column="ID">
-			<generator class="native" />
 		</id>
 
 		<property name="name">

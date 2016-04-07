@@ -6,7 +6,6 @@
 	<class name="mll.beans.AdminUser" table="AdminUser">
 
 		<id name="id" column="ID">
-			<generator class="native" />
 		</id>
 
 		<property name="firstName">

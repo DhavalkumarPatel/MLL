@@ -26,7 +26,7 @@ public class RegistrationDAO
 			tx = session.beginTransaction();
 			
 			Invite invite = new Invite();
-			invite.getToken().setToken(userdetails.getToken().getToken());
+			invite.setToken(userdetails.getToken());
 			
 			InviteDAO inviteDao = new InviteDAO();
 			invite = inviteDao.validateInvite(invite);

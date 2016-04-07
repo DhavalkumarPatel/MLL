@@ -125,7 +125,7 @@ public class RegistrationService {
 		if (null != jo) 
 		{
 			m = new Musician();
-			m.setName((String) jo.get("name"));
+			m.setName(" ");
 		}
 		return m;
 	}
@@ -138,6 +138,7 @@ public class RegistrationService {
 		{
 			t = new Token();
 			t.setToken((String) jo.get("token"));
+			t.setInviteType((String) jo.get("type"));
 		}
 		return t;
 	}	
