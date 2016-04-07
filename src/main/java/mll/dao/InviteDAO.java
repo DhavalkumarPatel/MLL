@@ -32,7 +32,7 @@ public class InviteDAO
 					invite.getToken().setToken("MLLTKN" + invite.getToken().getId());
 					session.update(invite.getToken());
 					invite.setIsGenerated(true);
-					invite.setUrl("http://ec2-52-37-104-21.us-west-2.compute.amazonaws.com:8080/MLL/index.html#/"+ invite.getToken().getInviteType() + "-registration/token/" + invite.getToken());
+					invite.setUrl("http://ec2-52-37-104-21.us-west-2.compute.amazonaws.com:8080/MLL/index.html#/"+ invite.getToken().getInviteType() + "/registration/token/" + invite.getToken().getToken());
 				}
 				else
 				{

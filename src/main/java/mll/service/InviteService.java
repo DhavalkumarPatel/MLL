@@ -130,7 +130,7 @@ public class InviteService
 	        	invite.getToken().setInviteType((String) tokenJsonObject.get("inviteType"));
 	        	invite.getToken().setIssueDate(new Date());
 	        	invite.getToken().setIsUsed(false);
-	        	invite.getToken().setUserId((Integer) tokenJsonObject.get("userId"));
+	        	invite.getToken().setUserId(((Long) tokenJsonObject.get("userId")).intValue());
 	    	}
 	    	else
 	    	{
