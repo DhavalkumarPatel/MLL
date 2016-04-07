@@ -13,6 +13,13 @@ import mll.beans.Invite;
 
 public class MailService
 {
+	/**
+	* This method takes Invite object as an input and send 
+	* the invite as an email to the recipient. 
+	* @author  Dhaval Patel
+	* @version 1.0
+	* @since   2016-04-06 
+	*/
 	public Boolean sendInvite(Invite invite)
 	{
 		Boolean isMailSent = false;
@@ -29,12 +36,17 @@ public class MailService
 		return isMailSent;
 	}
 	
+	/**
+	* This method takes receiverMail, subjectLine, message as input 
+	* and sends the mail to the recipient. 
+	* @author  Dhaval Patel
+	* @version 1.0
+	* @since   2016-04-06 
+	*/
 	public static void sendMail(String receiverMail, String subjectLine, String msg) 
 	{
-
 		try 
 		{
-			
 			final String username = "medialicensinglab@gmail.com";
 			final String password = "mll@team19";
 	
