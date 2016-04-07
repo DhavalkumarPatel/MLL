@@ -1,9 +1,8 @@
-
 (function (angular) {
     'use strict';
 
     angular
-        .module('mllApp.registration')
+        .module('mllApp.home')
         .directive('mllInviteForm', mllInviteForm);
 
     function mllInviteForm() {

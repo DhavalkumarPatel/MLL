@@ -72,9 +72,14 @@
             .state('user', {
                 url: '/user/profile/id/:id',
                 views: {
-                    left: { template: 'Look, I am a left user column!' },
-                    center: { template: 'Look, I am a center user column!' },
-                    right: { template: 'Look, I am a right user column!' }
+                    left: { template: 'Profile Information... To Be Implemented...' },
+                    center: { template: 'Community Wall... To Be Implemented...' },
+                    right: {
+                        controller: 'UserFeaturesController as ctrl',
+                        templateProvider: function ($templateCache) {
+                            return $templateCache.get('user-profile-right.view.html');
+                        }
+                    }
                 },
                 resolve: {
                     data: function($state, $q, $timeout, authenticationService) {
@@ -501,8 +506,66 @@
 (function(angular){
     'use strict';
 
-    angular.module('mllApp.home', []);
+    angular.module('mllApp.home', ['mllApp.shared', 'mllApp.templates']);
 })(window.angular);
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.home')
+        .controller('UserFeaturesController', UserFeaturesController);
+
+    function UserFeaturesController(inviteTokenService) {}
+})(window.angular);
+
+
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.home')
+        .controller('InviteFormController', InviteFormController);
+
+    InviteFormController.$inject = ['inviteTokenService'];
+
+    function InviteFormController(inviteTokenService) {
+        this.inviteService = inviteTokenService;
+
+        this.users = [{label:'USER',id:'1'},{label:'MUSICIAN',id:'2'}];
+
+        this.selectUser = {label:'USER',id:'1'}; //default
+
+        this.submit = () => {
+            if (this.registerForm.$invalid) this.registerForm.$submitted = true;
+            else {
+                alert("form successful");
+                this.onNext();
+            }
+        };
+    }
+})(window.angular);
+
+
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.home')
+        .directive('mllInviteForm', mllInviteForm);
+
+    function mllInviteForm() {
+        return {
+            restrict: 'AE',
+            replace: true,
+            scope: {},
+            controller: 'InviteFormController',
+            controllerAs: 'ctrl',
+            templateUrl: 'invite-form.template.html'
+        };
+    }
+})(window.angular);
+
+
 (function (angular) {
     'use strict';
 

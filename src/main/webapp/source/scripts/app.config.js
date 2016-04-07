@@ -50,9 +50,14 @@
             .state('user', {
                 url: '/user/profile/id/:id',
                 views: {
-                    left: { template: 'Look, I am a left user column!' },
-                    center: { template: 'Look, I am a center user column!' },
-                    right: { template: 'Look, I am a right user column!' }
+                    left: { template: 'Profile Information... To Be Implemented...' },
+                    center: { template: 'Community Wall... To Be Implemented...' },
+                    right: {
+                        controller: 'UserFeaturesController as ctrl',
+                        templateProvider: function ($templateCache) {
+                            return $templateCache.get('user-profile-right.view.html');
+                        }
+                    }
                 },
                 resolve: {
                     data: function($state, $q, $timeout, authenticationService) {
