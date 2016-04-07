@@ -9,21 +9,21 @@
         class AuthenticationDetails {
             constructor() {
                 this.isAuth = false;
-                this.details = {};
+                this.data = {};
             }
 
             clear() {
                 this.isAuth = false;
 
-                this.details = {};
+                this.data = {};
             }
 
             change(id, type, permissions) {
                 this.isAuth = true;
 
-                this.details.id = id;
-                this.details.type = type;
-                this.details.permissions = permissions;
+                this.data.id = id;
+                this.data.type = type;
+                this.data.permissions = permissions;
             }
         }
 

@@ -21,8 +21,8 @@
             let authDetails = $cookies.getObject(cookiesKey);
 
             if (authDetails) {
-                let details = authDetails.details;
-                this.details.change(details.id, details.type, details.permissions);
+                let data = authDetails.data;
+                this.details.change(data.id, data.type, data.permissions);
             }
         }
 

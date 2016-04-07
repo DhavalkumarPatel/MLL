@@ -3,7 +3,7 @@
 
     let loginLink = { text: 'Log In', href: 'login' };
 
-    let logoutLink = { text: 'Log Out', href: 'logout' };
+    let logoutLink = { text: 'Log Out' };
 
     angular
         .module('mllApp.header')

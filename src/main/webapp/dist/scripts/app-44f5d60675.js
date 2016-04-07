@@ -181,7 +181,7 @@
 
     let loginLink = { text: 'Log In', href: 'login' };
 
-    let logoutLink = { text: 'Log Out', href: 'logout' };
+    let logoutLink = { text: 'Log Out' };
 
     angular
         .module('mllApp.header')
@@ -195,13 +195,19 @@
         .module('mllApp.header')
         .controller('HeaderController', HeaderController);
 
-    HeaderController.$inject = ['loginLink', 'logoutLink', 'authenticationService'];
+    HeaderController.$inject = ['$state', 'loginLink', 'logoutLink', 'authenticationService'];
 
-    function HeaderController(loginLink, logoutLink, authenticationService) {
+    function HeaderController($state, loginLink, logoutLink, authenticationService) {
         this.authService = authenticationService;
 
         this.loginLink = loginLink;
         this.logoutLink = logoutLink;
+
+        this.logout = () => {
+            this.authService.clean();
+
+            $state.go('login');
+        }
     }
 })(window.angular);
 
@@ -1157,21 +1163,21 @@
         class AuthenticationDetails {
             constructor() {
                 this.isAuth = false;
-                this.details = {};
+                this.data = {};
             }
 
             clear() {
                 this.isAuth = false;
 
-                this.details = {};
+                this.data = {};
             }
 
             change(id, type, permissions) {
                 this.isAuth = true;
 
-                this.details.id = id;
-                this.details.type = type;
-                this.details.permissions = permissions;
+                this.data.id = id;
+                this.data.type = type;
+                this.data.permissions = permissions;
             }
         }
 
@@ -1201,8 +1207,8 @@
             let authDetails = $cookies.getObject(cookiesKey);
 
             if (authDetails) {
-                let details = authDetails.details;
-                this.details.change(details.id, details.type, details.permissions);
+                let data = authDetails.data;
+                this.details.change(data.id, data.type, data.permissions);
             }
         }
 

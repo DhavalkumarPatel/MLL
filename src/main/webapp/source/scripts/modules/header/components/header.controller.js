@@ -5,12 +5,18 @@
         .module('mllApp.header')
         .controller('HeaderController', HeaderController);
 
-    HeaderController.$inject = ['loginLink', 'logoutLink', 'authenticationService'];
+    HeaderController.$inject = ['$state', 'loginLink', 'logoutLink', 'authenticationService'];
 
-    function HeaderController(loginLink, logoutLink, authenticationService) {
+    function HeaderController($state, loginLink, logoutLink, authenticationService) {
         this.authService = authenticationService;
 
         this.loginLink = loginLink;
         this.logoutLink = logoutLink;
+
+        this.logout = () => {
+            this.authService.clean();
+
+            $state.go('login');
+        }
     }
 })(window.angular);
