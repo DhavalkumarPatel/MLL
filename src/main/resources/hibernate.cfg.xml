@@ -29,11 +29,11 @@
   	<!-- Enable Hibernate's automatic session context management -->
  	<property name="current_session_context_class">thread</property>
 
+	<mapping resource="User.hbm.xml"/>
 	<mapping resource="Song.hbm.xml"/>
 	<mapping resource="Artist.hbm.xml"/>
 	<mapping resource="Genre.hbm.xml"/>
 	<mapping resource="Owner.hbm.xml"/>
-	<mapping resource="User.hbm.xml"/>
 	<mapping resource="AdminUser.hbm.xml"/>
 	<mapping resource="Musician.hbm.xml"/>
 	<mapping resource="Token.hbm.xml"/>
