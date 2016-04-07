@@ -228,6 +228,16 @@ public class SubmissionService
 	    song.setPublishingCompany((String) ownershipInformation.get("pubCompany")); 
 	    song.setPro((String) ownershipInformation.get("pbo"));
 	    
+	    if(null != generalInformation.get("userId"))
+	    {
+	    	song.setUserId((Integer)generalInformation.get("userId"));
+	    }
+	    else
+	    {
+	    	//TODO
+	    	song.setUserId(0);
+	    }
+	    
 	    if(null != dropboxURL && !"".equals(dropboxURL))
 	    {
 	    	song.setContentURL(dropboxURL);
