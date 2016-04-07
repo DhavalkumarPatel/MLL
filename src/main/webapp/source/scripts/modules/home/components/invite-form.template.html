@@ -46,7 +46,11 @@
             </div>
             <div class="form-group">
                 <div class="col-xs-12">
-                    <button class="btn btn-block btn-primary" ng-click="ctrl.invite()">Invite</button>
+                    <button class="btn btn-block btn-primary" ng-click="ctrl.invite()"
+                            uib-tooltip="{{ctrl.message}}" tooltip-is-open="ctrl.isOpen"
+                            tooltip-placement="bottom" tooltip-trigger="none">
+                        Invite
+                    </button>
                 </div>
             </div>
         </form>
