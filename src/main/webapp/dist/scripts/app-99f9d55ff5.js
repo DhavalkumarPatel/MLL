@@ -535,7 +535,7 @@
 
         this.data = {};
 
-        this.type = [
+        this.types = [
             { label: 'General User', value: 'user' },
             { label: 'Musician', value: 'musician' }
         ];
