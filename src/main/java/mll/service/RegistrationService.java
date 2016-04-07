@@ -89,9 +89,12 @@ public class RegistrationService {
 			u.setUserName((String) jo.get("userName"));
 			u.setPassword((String) jo.get("password"));
 			u.setEmailId((String) jo.get("emailId"));
+			return u;
 		}
-		return u;
-
+		else
+		{
+		return null;
+		}
 	}
 
 	public AdminUser populateAdminUser(JSONObject jo) {
@@ -105,9 +108,13 @@ public class RegistrationService {
 			au.setGender((String) jo.get("gender"));
 			au.setPreference((String) jo.get("preference"));
 			au.setAge((Integer) jo.get("age"));
-
+			return au;
 		}
-		return au;
+		else
+		{
+			return null;
+		}
+		
 
 	}
 
@@ -116,9 +123,13 @@ public class RegistrationService {
 		if (null != jo) 
 		{
 			m.setName((String) jo.get("name"));
+			return m;
 
 		}
-		return m;
+		else
+		{
+		return null;
+		}
 
 	}
 	
@@ -128,10 +139,14 @@ public class RegistrationService {
 		if (null != jo) 
 		{
 			t.setToken((String) jo.get("token"));
+			return t;
 			
 
 		}
-		return t;
+		else
+		{
+		return null;
+		}
 
 	}	
 }
