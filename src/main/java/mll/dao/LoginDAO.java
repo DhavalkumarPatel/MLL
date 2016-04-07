@@ -50,7 +50,7 @@ public class LoginDAO {
 					login.getUser().setEmailId(users.get(0).getEmailId());
 					
 					Query musician = session.createQuery("from Musician m where m.id=:id");
-					query.setInteger("id", login.getUser().getId());
+					musician.setInteger("id", login.getUser().getId());
 					
 					List<Musician> ms = musician.list();
 					
@@ -65,7 +65,7 @@ public class LoginDAO {
 					else 
 					{
 						Query admin_user = session.createQuery("from AdminUser au where au.id=:id");
-						query.setInteger("id", login.getUser().getId());
+						admin_user.setInteger("id", login.getUser().getId());
 						
 						List<AdminUser> aus = admin_user.list();
 						
@@ -101,6 +101,7 @@ public class LoginDAO {
 				// Rollback the transaction if any error comes during the process
 				tx.rollback();
 			}
+			e.printStackTrace();
 			throw e;
 		}
 		return login;
