@@ -14,6 +14,7 @@ import mll.beans.Token;
 import mll.beans.User;
 import mll.beans.UserDetails;
 import mll.dao.RegistrationDAO;
+import mll.utility.Encryption;
 
 public class RegistrationService {
 	RegistrationDAO dao;
@@ -70,6 +71,9 @@ public class RegistrationService {
 
 		userdetails.setUsers(populateUser(mainObject));
 
+		// Calling Encryption method to encrypt the password & Setting the encrypted password 
+		userdetails.getUsers().setPassword(Encryption.encryptPassword(userdetails.getUsers().getPassword()));
+		
 		if (userdetails.getType().equalsIgnoreCase("user")) 
 		{
 			userdetails.setAdminUser(populateAdminUser(mainObject));

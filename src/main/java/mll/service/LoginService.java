@@ -10,6 +10,7 @@ import org.json.simple.parser.JSONParser;
 
 import mll.beans.Login;
 import mll.dao.LoginDAO;
+import mll.utility.Encryption;
 
 public class LoginService
 {
@@ -71,7 +72,7 @@ public class LoginService
 	* @since   2016-04-06 
 	*/
 	
-	private Login populateUser(HttpServletRequest request) throws Exception
+	public Login populateUser(HttpServletRequest request) throws Exception
 	{
 		// TODO Auto-generated method stub
 		Login login = new Login();
@@ -87,9 +88,28 @@ public class LoginService
 		JSONParser parser = new JSONParser();
 		JSONObject mainObject = (JSONObject) parser.parse(requestStr.toString());
 		
-		login.getUser().setUserName((String)mainObject.get("userName"));
-		login.getUser().setPassword((String)mainObject.get("password"));
-
+		login = populateUserDetails(mainObject);
+		
+		// Calling Encryption method to encrypt the entered password
+		login.getUser().setPassword(Encryption.encryptPassword(login.getUser().getPassword()));
+		
+		return login;
+	}
+	
+	/**
+	 * This method takes a JSON object as an input and returns
+	 * a login object containing user name and password.
+	 * @param JSON object, jo
+	 * @return
+	 */
+	public Login populateUserDetails (JSONObject jo)
+	{
+		Login login = new Login();
+		if (null != jo) 
+		{
+			login.getUser().setUserName((String)jo.get("userName"));
+			login.getUser().setPassword((String)jo.get("password"));
+		}
 		return login;
 	}
 
