@@ -1373,7 +1373,9 @@
         .module('mllApp.shared')
         .directive('mllInputMatch', mllInputMatch);
 
-    function mllInputMatch() {
+    mllInputMatch.$inject = ['$parse'];
+
+    function mllInputMatch($parse) {
         return {
             restrict: 'A',
             require: 'ngModel',
@@ -1381,7 +1383,7 @@
         };
 
         function link(scope, elem, attrs, ngModel) {
-            scope.$watch(attrs.ngModel + attrs.mllInputMatch, (oldVal, newVal) => {
+            scope.$watch($parse(attrs.ngModel) + $parse(attrs.mllInputMatch), (oldVal, newVal) => {
                 console.log(newVal + ' - ' + oldVal);
 
                 let match = attrs.ngModel === attrs.mllInputMatch;
