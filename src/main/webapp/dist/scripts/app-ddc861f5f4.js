@@ -277,7 +277,11 @@
                 data: data
             }).then((response) => {
                 if (response.data.isValidUser) {
-                    authenticationService.login(response.data);
+                    let id = response.data.userId;
+                    let type =response.data.type;
+                    let permissions = { browse: response.data.browse, upload: response.data.upload };
+
+                    authenticationService.change(id, type, permissions);
                 }
 
                 return response.data;
@@ -402,7 +406,11 @@
         function register(data) {
             return $http(createConfig(data, type)).then((response) => {
                 if (response.data.isRegistered) {
-                    authenticationService.register(response.data);
+                    let id = response.data.userId;
+                    let type =response.data.type;
+                    let permissions = { browse: response.data.browse, upload: response.data.upload };
+
+                    authenticationService.change(id, type, permissions);
                 }
 
                 return response.data;
@@ -1145,42 +1153,37 @@
         .module('mllApp.shared')
         .factory('authenticationService', authenticationService);
 
-    authenticationService.$inject = ['$cookies'];
+    authenticationService.$inject = ['$cookies', 'AuthDetails'];
 
-    function authenticationService($cookies) {
+    function authenticationService($cookies, AuthDetails) {
         let cookiesKey = 'mllApp.authDetails';
-        let details = {};
 
         return {
-            details: details,
-            logout: logout,
-            login: login,
-            register: register,
+            details: new AuthDetails(),
+            clear: clear,
+            change: change,
             check: check
         };
 
         function check() {
             let authDetails = $cookies.getObject(cookiesKey);
 
-            if (authDetails) details = authDetails;
+            if (authDetails) {
+                let details = authDetails.details;
+                this.details.change(details.id, details.type, details.permissions);
+            }
         }
 
-        function logout() {
+        function clear() {
             $cookies.remove(cookiesKey);
 
-            details = {};
+            this.details.clear();
         }
 
-        function register(newDetails) {
-            $cookies.putObject(cookiesKey, newDetails);
+        function change(id, type, permissions) {
+            this.details.change(id, type, permissions);
 
-            details = newDetails;
-        }
-
-        function login(newDetails) {
-            $cookies.putObject(cookiesKey, newDetails);
-
-            details = newDetails;
+            $cookies.putObject(cookiesKey, this.details);
         }
     }
 })(window.angular);
@@ -1198,6 +1201,15 @@
             validateToken: validateToken,
             generateToken: generateToken
         };
+
+        function validateToken(type, token) {
+            let data = { actionType: 'validate', inviteType: type, token: token };
+            return $http({
+                method: 'POST',
+                url: '/MLL/InviteServlet',
+                data: data
+            });
+        }
 
         function generateToken(id, type, email) {
             let data = { userId: id, inviteType: type, actionType: 'generate', email: email };

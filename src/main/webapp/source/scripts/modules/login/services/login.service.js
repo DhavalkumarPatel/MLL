@@ -19,7 +19,11 @@
                 data: data
             }).then((response) => {
                 if (response.data.isValidUser) {
-                    authenticationService.login(response.data);
+                    let id = response.data.userId;
+                    let type =response.data.type;
+                    let permissions = { browse: response.data.browse, upload: response.data.upload };
+
+                    authenticationService.change(id, type, permissions);
                 }
 
                 return response.data;

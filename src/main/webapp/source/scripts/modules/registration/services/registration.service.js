@@ -27,7 +27,11 @@
         function register(data) {
             return $http(createConfig(data, type)).then((response) => {
                 if (response.data.isRegistered) {
-                    authenticationService.register(response.data);
+                    let id = response.data.userId;
+                    let type =response.data.type;
+                    let permissions = { browse: response.data.browse, upload: response.data.upload };
+
+                    authenticationService.change(id, type, permissions);
                 }
 
                 return response.data;

@@ -13,8 +13,6 @@
             generateToken: generateToken
         };
 
-<<<<<<< HEAD
-=======
         function validateToken(type, token) {
             let data = { actionType: 'validate', inviteType: type, token: token };
             return $http({
@@ -24,7 +22,6 @@
             });
         }
 
->>>>>>> origin/master
         function generateToken(id, type, email) {
             let data = { userId: id, inviteType: type, actionType: 'generate', email: email };
 
