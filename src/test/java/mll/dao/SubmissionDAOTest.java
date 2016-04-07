@@ -1,12 +1,8 @@
 package mll.dao;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import org.junit.Test;
 
 import mll.beans.Artist;
 import mll.beans.Genre;
@@ -17,6 +13,7 @@ import mll.beans.Song;
 public class SubmissionDAOTest 
 {
 	
+	/*
 	@Test
 	public void test_case_1() 
 	{
@@ -63,7 +60,7 @@ public class SubmissionDAOTest
 		{
 
 		}
-	}
+	}*/
 
 	private List<Metadata> getListOfMetadata()
 	{

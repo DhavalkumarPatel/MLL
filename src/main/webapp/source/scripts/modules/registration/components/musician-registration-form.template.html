@@ -1,0 +1,85 @@
+<!------USER NAME----->
+<div class="form-group has-feedback"
+     ng-class="{ 'has-success': ctrl.registerForm.username.$valid && ctrl.registerForm.$submitted,
+                     'has-error': ctrl.registerForm.username.$invalid && ctrl.registerForm.$submitted }">
+    <label for="user-name" class="col-xs-2">
+        Username:
+    </label>
+    <div class="col-xs-10">
+        <input type="text" name="username" class="form-control" id="user-name"
+               ng-model="ctrl.data.username"  required />
+        <div class="alert alert-danger" role="alert"
+             ng-show="ctrl.registerForm.username.$invalid && ctrl.registerForm.$submitted">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span ng-show="ctrl.registerForm.username.$error.required">
+                    Username is mandatory!
+                </span>
+        </div>
+    </div>
+</div>
+
+
+<!-----------Email id------------>
+<div class="form-group has-feedback"
+     ng-class="{ 'has-success': ctrl.registerForm.email.$valid && ctrl.registerForm.$submitted,
+                     'has-error': ctrl.registerForm.email.$invalid && ctrl.registerForm.$submitted }">
+    <label for="email-id" class="col-xs-2">
+        Email Id:
+    </label>
+    <div class="col-xs-10">
+        <input type="email" name="email" class="form-control" id="email-id"
+               ng-model="ctrl.data.email"  required />
+        <div class="alert alert-danger" role="alert"
+             ng-show="ctrl.registerForm.email.$invalid && ctrl.registerForm.$submitted">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span ng-show="ctrl.registerForm.email.$error.required">
+                    Email id is mandatory!
+                </span>
+        </div>
+    </div>
+</div>
+
+<!------------------Password---------------------->
+
+<div class="form-group has-feedback"
+     ng-class="{ 'has-success': ctrl.registerForm.password.$valid && ctrl.registerForm.$submitted,
+                     'has-error': ctrl.registerForm.password.$invalid && ctrl.registerForm.$submitted }">
+    <label for="pass" class="col-xs-2">
+        Password:
+    </label>
+    <div class="col-xs-10">
+        <input type="password" name="password" class="form-control" id="pass"
+               ng-model="ctrl.data.password"  required />
+        <div class="alert alert-danger" role="alert"
+             ng-show="ctrl.registerForm.password.$invalid && ctrl.registerForm.$submitted">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span ng-show="ctrl.registerForm.password.$error.required">
+                    Password must  have characters
+                    more than 6 and less than 10 with at least
+                    one uppercase character,one
+                    special character and one number
+                </span>
+        </div>
+    </div>
+</div>
+
+<!------------confirm password-------------->
+
+<div class="form-group has-feedback"
+     ng-class="{ 'has-success': ctrl.registerForm.cpassword.$valid && ctrl.registerForm.$submitted,
+                     'has-error': ctrl.registerForm.cpassword.$invalid && ctrl.registerForm.$submitted }">
+    <label for="cpass" class="col-xs-2">
+        Confirm Password:
+    </label>
+    <div class="col-xs-10">
+        <input type="password" name="cpassword" class="form-control" id="cpass"
+               ng-model="ctrl.data.cpassword"  required />
+        <div class="alert alert-danger" role="alert"
+             ng-show="ctrl.registerForm.cpassword.$invalid && ctrl.registerForm.$submitted">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span ng-show="ctrl.registerForm.cpassword.$error.required">
+                    Both the passwords must match
+                </span>
+        </div>
+    </div>
+</div>

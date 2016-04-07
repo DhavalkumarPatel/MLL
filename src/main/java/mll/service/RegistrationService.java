@@ -8,39 +8,34 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import mll.beans.AdminUser;
+import mll.beans.Musician;
+import mll.beans.Token;
+import mll.beans.User;
 import mll.beans.UserDetails;
 import mll.dao.RegistrationDAO;
 
-public class RegistrationService 
-{
+public class RegistrationService {
 	RegistrationDAO dao;
 
-	public RegistrationService() 
-	{
+	public RegistrationService() {
 		dao = new RegistrationDAO();
 	}
 
 	@SuppressWarnings("unchecked")
-	public JSONObject register(HttpServletRequest request, HttpServletResponse response)
-	{
+	public JSONObject register(HttpServletRequest request, HttpServletResponse response) {
 		JSONObject responseObject = new JSONObject();
 
-		try 
-		{
+		try {
 			UserDetails userdetails = populateUserDetailBeanFromRequest(request);
 
-			if (null != userdetails) 
-			{
+			if (null != userdetails) {
 				responseObject = dao.registerUser(userdetails);
-			}
-			else 
-			{
+			} else {
 				responseObject.put("isRegistered", false);
 				responseObject.put("errorMessage", "Error while registration. Please submit with proper user details.");
 			}
-		} 
-		catch (Exception e) 
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			responseObject.put("isRegistered", false);
 			responseObject.put("errorMessage", "Error while registration. Please submit with proper user details.");
@@ -57,8 +52,7 @@ public class RegistrationService
 	 * @version 1.0
 	 * @since 2016-03-24
 	 */
-	public UserDetails populateUserDetailBeanFromRequest(HttpServletRequest request) throws Exception 
-	{
+	public UserDetails populateUserDetailBeanFromRequest(HttpServletRequest request) throws Exception {
 		StringBuffer requestStr = new StringBuffer();
 		BufferedReader reader = request.getReader();
 		String line = null;
@@ -70,30 +64,74 @@ public class RegistrationService
 		JSONObject mainObject = (JSONObject) parser.parse(requestStr.toString());
 
 		UserDetails userdetails = new UserDetails();
-		userdetails.getToken().setToken((String) mainObject.get("token"));
+		
+		userdetails.setToken(populateToken(mainObject));
 		userdetails.setType((String) mainObject.get("type"));
 
-		userdetails.getUsers().setUserName((String) mainObject.get("userName"));
-		userdetails.getUsers().setPassword((String) mainObject.get("password"));
-		userdetails.getUsers().setEmailId((String) mainObject.get("emailId"));
+		userdetails.setUsers(populateUser(mainObject));
 
 		if (userdetails.getType().equalsIgnoreCase("user")) 
 		{
-			userdetails.getAdminUser().setFirstName((String) mainObject.get("firstName"));
-			userdetails.getAdminUser().setLastName((String) mainObject.get("lastName"));
-			userdetails.getAdminUser().setCollege((String) mainObject.get("college"));
-			userdetails.getAdminUser().setLevel((String) mainObject.get("level"));
-			userdetails.getAdminUser().setGender((String) mainObject.get("gender"));
-			userdetails.getAdminUser().setPreference((String) mainObject.get("preference"));
-			userdetails.getAdminUser().setAge((Integer) mainObject.get("age"));
+			userdetails.setAdminUser(populateAdminUser(mainObject));
 
-		} 
-		else 
+		} else
 		{
-			userdetails.getMusician().setName((String) mainObject.get("name"));
+			userdetails.setMusician(populateMusician(mainObject));
 		}
 
 		return userdetails;
 	}
 
+	public User populateUser(JSONObject jo) {
+		User u = new User();
+		if (null != jo) 
+		{
+			u.setUserName((String) jo.get("userName"));
+			u.setPassword((String) jo.get("password"));
+			u.setEmailId((String) jo.get("emailId"));
+		}
+		return u;
+
+	}
+
+	public AdminUser populateAdminUser(JSONObject jo) {
+		AdminUser au = new AdminUser();
+		if (null != jo) 
+		{
+			au.setFirstName((String) jo.get("firstName"));
+			au.setLastName((String) jo.get("lastName"));
+			au.setCollege((String) jo.get("college"));
+			au.setLevel((String) jo.get("level"));
+			au.setGender((String) jo.get("gender"));
+			au.setPreference((String) jo.get("preference"));
+			au.setAge((Integer) jo.get("age"));
+
+		}
+		return au;
+
+	}
+
+	public Musician populateMusician(JSONObject jo) {
+		Musician m = new Musician();
+		if (null != jo) 
+		{
+			m.setName((String) jo.get("name"));
+
+		}
+		return m;
+
+	}
+	
+	
+	public Token populateToken(JSONObject jo) {
+		Token t = new Token();
+		if (null != jo) 
+		{
+			t.setToken((String) jo.get("token"));
+			
+
+		}
+		return t;
+
+	}	
 }

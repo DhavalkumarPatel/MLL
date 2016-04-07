@@ -1,0 +1,34 @@
+<form name="ctrl.registerForm" class="form-horizontal form-tab" novalidate>
+    <legend>Invite People</legend>
+    <hr/>
+    <!--------------people types--------------------->
+    <div class="form-group has-feedback"
+         ng-class="{ 'has-success': ctrl.registerForm.people.$valid && ctrl.registerForm.$submitted,
+                     'has-error': ctrl.registerForm.people.$invalid && ctrl.registerForm.$submitted }">
+        <label class="col-xs-2">
+            People Type:
+        </label>
+        <div class="col-xs-18">
+            <select name="people" class="form-control" ng-model="ctrl.data.people"
+                    ng-options="user.label for users in ctrl.users track by gender.id"
+                    ng-change="ctrl.selectUser"required>
+
+                <option value="">Select a user...</option>
+            </select>
+
+            <div class="alert alert-danger" role="alert"
+                 ng-show="ctrl.registerForm.people.$invalid && ctrl.registerForm.$submitted">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span ng-show="ctrl.registerForm.people.$error.required">
+                    Please, select a user!
+                </span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xs-3">
+        <button class="btn btn-block btn-primary" ng-click="ctrl.submit()">Register</button>
+    </div>
+    </div>
+</form>

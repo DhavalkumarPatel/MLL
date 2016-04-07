@@ -13,13 +13,9 @@
             generateToken: generateToken
         };
 
+<<<<<<< HEAD
+=======
         function validateToken(type, token) {
-            //let d = $q.defer();
-            //
-            //$timeout(() => d.resolve({ isValid: true }), 100);
-            //
-            //return d.promise;
-
             let data = { actionType: 'validate', inviteType: type, token: token };
             return $http({
                 method: 'POST',
@@ -28,6 +24,7 @@
             });
         }
 
+>>>>>>> origin/master
         function generateToken(id, type, email) {
             let data = { userId: id, inviteType: type, actionType: 'generate', email: email };
 
