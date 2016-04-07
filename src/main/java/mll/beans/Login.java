@@ -8,9 +8,9 @@ public class Login implements Serializable {
 	public static final String musicianType = "musician";
 	public static final String adminUserType = "user";
 	
-	private User user;
-	private AdminUser admin;
-	private Musician musician;
+	private User user = new User();
+	private AdminUser admin = new AdminUser();
+	private Musician musician = new Musician();
 	private boolean isValidUser;
 	private String errMsg;
 	private String type;

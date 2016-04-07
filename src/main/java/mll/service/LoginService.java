@@ -1,13 +1,14 @@
 package mll.service;
 
 import java.io.BufferedReader;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
 import mll.beans.Login;
-import mll.beans.User;
 import mll.dao.LoginDAO;
 
 public class LoginService
@@ -29,29 +30,33 @@ public class LoginService
 	* @since   2016-04-06 
 	*/
 	
-	public Login validateLogin(HttpServletRequest request, HttpServletResponse response) {
+	public Login validateLogin(HttpServletRequest request, HttpServletResponse response) 
+	{
 		// TODO Auto-generated method stub
 		Login login = new Login();
 		
 		try
 		{
 			// Validate the request and populate the user beans if the request is valid.
-			User user = null;
-			user = populateUser(request);
+			login = populateUser(request);
 			
-			if(null != user)
+			if(null != login)
 			{
 				// validate login 
-				login = dao.validateLogin(user);
+				login = dao.validateLogin(login);
 			}
 			else
 			{
-				return null;		
+				login = new Login();
+				login.setValidUser(false);
+				login.setErrMsg("Invalid Request.");
 			}
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			login.setValidUser(false);
+			login.setErrMsg("Invalid Request.");
 		}
 		return login;
 	}
@@ -66,34 +71,26 @@ public class LoginService
 	* @since   2016-04-06 
 	*/
 	
-	private User populateUser(HttpServletRequest request) {
+	private Login populateUser(HttpServletRequest request) throws Exception
+	{
 		// TODO Auto-generated method stub
 		Login login = new Login();
-		User user =  new User();
 
-		try {
-			StringBuffer requestStr = new StringBuffer();
-			BufferedReader reader = request.getReader();
-			String line = null;
-			while ((line = reader.readLine()) != null)
-			{
-				requestStr.append(line);
-			}
-
-			JSONParser parser = new JSONParser();
-			JSONObject mainObject = (JSONObject) parser.parse(requestStr.toString());
-			
-			if (null != user) {
-
-				user.setUserName((String)mainObject.get("userName"));
-				user.setPassword((String)mainObject.get("password"));
-				login.setUser(user);
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		StringBuffer requestStr = new StringBuffer();
+		BufferedReader reader = request.getReader();
+		String line = null;
+		while ((line = reader.readLine()) != null)
+		{
+			requestStr.append(line);
 		}
 
-		return user;
+		JSONParser parser = new JSONParser();
+		JSONObject mainObject = (JSONObject) parser.parse(requestStr.toString());
+		
+		login.getUser().setUserName((String)mainObject.get("userName"));
+		login.getUser().setPassword((String)mainObject.get("password"));
+
+		return login;
 	}
 
 }
