@@ -3,6 +3,7 @@
     <div class="form-group"
          ng-class="{ 'has-success': ctrl.loginForm.email.$valid && ctrl.loginForm.$submitted,
                      'has-error': ctrl.loginForm.$invalid && ctrl.loginForm.$submitted }">
+        <label class="col-xs-3" for="login-username">User Name</label>
         <div class="col-xs-9">
             <input type="text" name="userName" class="form-control" id="login-username"
                    ng-model="ctrl.data.userName" required/>
