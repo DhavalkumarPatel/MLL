@@ -73,8 +73,10 @@ public class InviteDAO
 			
 			if(null != invite)
 			{
-				Query query = session.createQuery("FROM mll.beans.Token tc where tc.token=:token");
-				query.setParameter("token", invite.getToken());
+				Query query = session.createQuery("FROM mll.beans.Token tc where tc.token=:token and tc.inviteType=:inviteType");
+				query.setParameter("token", invite.getToken().getToken());
+				query.setParameter("inviteType", invite.getToken().getInviteType());
+				
 				List<Token> results = query.list();
 				
 				if(null != results && results.size()>0)
@@ -100,7 +102,8 @@ public class InviteDAO
 		catch(Exception e)
 		{
 			invite.setIsGenerated(false);
-			invite.setErrorMessage("Error while generating token.");
+			invite.setErrorMessage("Error while validate Invite.");
+			e.printStackTrace();
 		}
 		return invite;
 	}
