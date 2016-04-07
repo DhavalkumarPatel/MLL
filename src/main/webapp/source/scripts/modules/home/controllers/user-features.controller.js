@@ -11,4 +11,3 @@
         this.userId = userId;
     }
 })(window.angular);
-

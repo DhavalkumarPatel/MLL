@@ -581,7 +581,7 @@
         };
 
         this.displayError = (errorMessage) => {
-            this.loginForm.$serverError = true;
+            this.registrationForm.$serverError = true;
             this.errorMessage = errorMessage;
         };
 
@@ -614,7 +614,7 @@
 (function(angular){
     'use strict';
 
-    angular.module('mllApp.home', ['mllApp.shared', 'mllApp.templates', 'ui.bootstrap']);
+    angular.module('mllApp.home', ['mllApp.shared', 'mllApp.templates', 'mllApp.upload', 'ui.bootstrap']);
 })(window.angular);
 (function (angular) {
     'use strict';
@@ -629,7 +629,6 @@
         this.userId = userId;
     }
 })(window.angular);
-
 
 (function (angular) {
     'use strict';

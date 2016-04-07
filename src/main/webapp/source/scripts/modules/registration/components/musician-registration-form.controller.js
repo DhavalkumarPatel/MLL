@@ -40,7 +40,7 @@
         };
 
         this.displayError = (errorMessage) => {
-            this.loginForm.$serverError = true;
+            this.registrationForm.$serverError = true;
             this.errorMessage = errorMessage;
         };
 
