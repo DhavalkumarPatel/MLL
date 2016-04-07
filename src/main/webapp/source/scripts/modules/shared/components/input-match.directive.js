@@ -5,22 +5,24 @@
         .module('mllApp.shared')
         .directive('mllInputMatch', mllInputMatch);
 
-    mllInputMatch.$inject = ['$parse'];
-
-    function mllInputMatch($parse) {
+    function mllInputMatch() {
         return {
             restrict: 'A',
             require: 'ngModel',
+            scope: {
+              firstValue: '=mllInputMatch'
+            },
             link: link
         };
 
-        function link(scope, elem, attrs, ngModel) {
-            scope.$watch($parse(attrs.ngModel) + $parse(attrs.mllInputMatch), (oldVal, newVal) => {
-                console.log(newVal + ' - ' + oldVal);
+        function link(scope, elem, attrs, ctrl) {
 
-                let match = attrs.ngModel === attrs.mllInputMatch;
+            ctrl.$parsers.unshift((secondValue) => {
+                ctrl.$setValidity('inputmatch', secondValue === scope.firstValue);
+            });
 
-                ngModel.$setValidity('inputmatch', match);
+            scope.$watch('firstValue', (fValue) => {
+                ctrl.$setValidity('inputmatch', fValue === ctrl.$viewValue);
             });
         }
     }
