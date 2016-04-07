@@ -20,7 +20,7 @@
             //
             //return d.promise;
 
-            let data = { actionType: 'generate', inviteType: type, token: token };
+            let data = { actionType: 'validate', inviteType: type, token: token };
             return $http({
                 method: 'POST',
                 url: '/MLL/InviteServlet',
