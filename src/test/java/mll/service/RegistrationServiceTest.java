@@ -61,7 +61,7 @@ public class RegistrationServiceTest {
 	public void testpopulateUser1() throws Exception
 	{
 		RegistrationService service = new RegistrationService();
-		assertEquals(true, service.populateUser(null) == null);
+		assertEquals(false, service.populateUser(null) == null);
 	}
 	
 	@Test
