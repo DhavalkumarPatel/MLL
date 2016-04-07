@@ -1153,9 +1153,8 @@
 
         return {
             details: details,
-            logout: logout,
-            login: login,
-            register: register,
+            clean: clean,
+            set: set,
             check: check
         };
 
@@ -1165,22 +1164,32 @@
             if (authDetails) details = authDetails;
         }
 
-        function logout() {
+        function clean() {
             $cookies.remove(cookiesKey);
 
             details = {};
         }
 
-        function register(newDetails) {
-            $cookies.putObject(cookiesKey, newDetails);
+        function createDetails(serverDetails) {
+            let details = {
+                isAuthenticated: true,
+                userId: serverDetails.userId,
+                userType: serverDetails.type,
+                permissions: {
+                    browse: serverDetails.browse,
+                    upload: serverDetails.upload
+                }
+            };
 
-            details = newDetails;
+            return details;
         }
 
-        function login(newDetails) {
-            $cookies.putObject(cookiesKey, newDetails);
+        function set(serverDetails) {
+            clean();
 
-            details = newDetails;
+            details = createDetails(serverDetails);
+
+            $cookies.putObject(cookiesKey, details);
         }
     }
 })(window.angular);
