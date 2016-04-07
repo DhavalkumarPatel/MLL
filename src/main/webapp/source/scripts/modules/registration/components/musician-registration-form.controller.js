@@ -6,12 +6,11 @@
         .module('mllApp.registration')
         .controller('MusicianRegistrationFormController', MusicianRegistrationFormController);
 
-    MusicianRegistrationFormController.$inject = ['inviteToken', 'registrationService'];
+    MusicianRegistrationFormController.$inject = ['registrationService'];
 
-    function MusicianRegistrationFormController(inviteToken, registrationService) {
+    function MusicianRegistrationFormController(registrationService) {
         this.data = {};
-
-        this.token = inviteToken;
+        
         this.service = registrationService;
 
         this.register = () => {
