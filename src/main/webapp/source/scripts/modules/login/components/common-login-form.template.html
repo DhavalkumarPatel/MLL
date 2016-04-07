@@ -3,17 +3,15 @@
     <div class="form-group"
          ng-class="{ 'has-success': ctrl.loginForm.email.$valid && ctrl.loginForm.$submitted,
                      'has-error': ctrl.loginForm.$invalid && ctrl.loginForm.$submitted }">
-        <label class="col-xs-3" for="login-email">E-mail</label>
+        <label class="col-xs-3" for="login-username">User Name</label>
         <div class="col-xs-9">
-            <input type="email" name="email" class="form-control" id="login-email" ng-model="ctrl.data.email" required/>
+            <input type="text" name="userName" class="form-control" id="login-username"
+                   ng-model="ctrl.data.userName" required/>
             <div class="alert alert-danger" role="alert"
-                 ng-show="ctrl.loginForm.email.$invalid && ctrl.loginForm.$submitted">
+                 ng-show="ctrl.loginForm.userName.$invalid && ctrl.loginForm.$submitted">
                 <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                <span ng-show="ctrl.loginForm.email.$error.email">
-                    Please, provide a valid e-mail address!
-                </span>
-                <span ng-show="ctrl.loginForm.email.$error.required">
-                    Please, provide a e-mail address!
+                <span ng-show="ctrl.loginForm.userName.$error.required">
+                    Please, provide a user name!
                 </span>
             </div>
         </div>

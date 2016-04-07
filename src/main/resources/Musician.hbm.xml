@@ -3,7 +3,7 @@
 
 <hibernate-mapping>
 	
-	<class name="mll.beans.Artist" table="Artist">
+	<class name="mll.beans.Musician" table="Musician">
 
 		<id name="id" column="ID">
 			<generator class="native" />
