@@ -465,7 +465,7 @@
             return httpConfig;
         }
 
-        function register(data) {
+        function register(data, type) {
             return $http(createConfig(data, type)).then((response) => {
                 if (response.data.isRegistered) {
                     let id = response.data.userId;
@@ -558,7 +558,7 @@
             if (this.registrationForm.$invalid) this.registrationForm.$submitted = true;
             else {
                 let data = this.data;
-                data.token = this.token;
+                data.token = this.inviteToken;
 
                 this.service.register(data, 'musician')
                     .then((response) => {
@@ -1387,10 +1387,10 @@
 
             ctrl.$parsers.unshift((secondValue) => {
                 let match = secondValue === scope.firstValue;
-                
+
                 ctrl.$setValidity('inputmatch', match);
 
-                return match;
+                return secondValue;
             });
 
             scope.$watch('firstValue', (fValue) => {

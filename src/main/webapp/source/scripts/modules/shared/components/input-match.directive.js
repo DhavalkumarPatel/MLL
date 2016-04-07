@@ -19,10 +19,10 @@
 
             ctrl.$parsers.unshift((secondValue) => {
                 let match = secondValue === scope.firstValue;
-                
+
                 ctrl.$setValidity('inputmatch', match);
 
-                return match;
+                return secondValue;
             });
 
             scope.$watch('firstValue', (fValue) => {

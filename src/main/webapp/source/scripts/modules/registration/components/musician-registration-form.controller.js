@@ -17,7 +17,7 @@
             if (this.registrationForm.$invalid) this.registrationForm.$submitted = true;
             else {
                 let data = this.data;
-                data.token = this.token;
+                data.token = this.inviteToken;
 
                 this.service.register(data, 'musician')
                     .then((response) => {

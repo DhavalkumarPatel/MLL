@@ -24,7 +24,7 @@
             return httpConfig;
         }
 
-        function register(data) {
+        function register(data, type) {
             return $http(createConfig(data, type)).then((response) => {
                 if (response.data.isRegistered) {
                     let id = response.data.userId;
