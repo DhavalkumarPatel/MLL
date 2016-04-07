@@ -24,7 +24,8 @@ public class RegistrationService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public JSONObject register(HttpServletRequest request, HttpServletResponse response) {
+	public JSONObject register(HttpServletRequest request, HttpServletResponse response) 
+	{
 		JSONObject responseObject = new JSONObject();
 
 		try {
@@ -53,7 +54,8 @@ public class RegistrationService {
 	 * @version 1.0
 	 * @since 2016-03-24
 	 */
-	public UserDetails populateUserDetailBeanFromRequest(HttpServletRequest request) throws Exception {
+	public UserDetails populateUserDetailBeanFromRequest(HttpServletRequest request) throws Exception 
+	{
 		StringBuffer requestStr = new StringBuffer();
 		BufferedReader reader = request.getReader();
 		String line = null;
@@ -86,25 +88,25 @@ public class RegistrationService {
 		return userdetails;
 	}
 
-	public User populateUser(JSONObject jo) {
-		User u = new User();
+	public User populateUser(JSONObject jo) 
+	{
+		User u = null;
 		if (null != jo) 
 		{
+			u = new User();
 			u.setUserName((String) jo.get("userName"));
 			u.setPassword((String) jo.get("password"));
 			u.setEmailId((String) jo.get("emailId"));
-			return u;
 		}
-		else
-		{
-		return null;
-		}
+		return u;
 	}
 
-	public AdminUser populateAdminUser(JSONObject jo) {
-		AdminUser au = new AdminUser();
+	public AdminUser populateAdminUser(JSONObject jo)
+	{
+		AdminUser au = null;
 		if (null != jo) 
 		{
+			au = new AdminUser();
 			au.setFirstName((String) jo.get("firstName"));
 			au.setLastName((String) jo.get("lastName"));
 			au.setCollege((String) jo.get("college"));
@@ -112,45 +114,31 @@ public class RegistrationService {
 			au.setGender((String) jo.get("gender"));
 			au.setPreference((String) jo.get("preference"));
 			au.setAge((Integer) jo.get("age"));
-			return au;
-		}
-		else
-		{
-			return null;
-		}
-		
-
-	}
-
-	public Musician populateMusician(JSONObject jo) {
-		Musician m = new Musician();
-		if (null != jo) 
-		{
-			m.setName((String) jo.get("name"));
-			return m;
-
-		}
-		else
-		{
-		return null;
-		}
-
-	}
-	
-	
-	public Token populateToken(JSONObject jo) {
-		Token t = new Token();
-		if (null != jo) 
-		{
-			t.setToken((String) jo.get("token"));
-			return t;
 			
-
 		}
-		else
+		return au;
+	}
+
+	public Musician populateMusician(JSONObject jo) 
+	{
+		Musician m = null;
+		if (null != jo) 
 		{
-		return null;
+			m = new Musician();
+			m.setName((String) jo.get("name"));
 		}
-
+		return m;
+	}
+	
+	
+	public Token populateToken(JSONObject jo) 
+	{
+		Token t = null;
+		if (null != jo) 
+		{
+			t = new Token();
+			t.setToken((String) jo.get("token"));
+		}
+		return t;
 	}	
 }
