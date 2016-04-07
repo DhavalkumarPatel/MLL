@@ -12,27 +12,43 @@
             .state('home', {
                 url: '/',
                 views: {
-                    left: {
-                        template: 'Look, I am a left column!'
-                    },
-                    center: {
-                        template: 'Look, I am a center column!'
-                    },
-                    right: {
-                        template: 'Look, I am a right column!'
-                    }
+                    left: { template: 'Home Left Column' },
+                    center: { template: 'Home Center Column' },
+                    right: { template: 'Home Center Column' }
                 }
             })
             .state('userRegistration', {
-                url: '/user-registration/token/:token',
+                url: '/user/registration/token/:token',
                 views: {
-                    left: { template: 'Look, I am a left user registration column!' },
-                    center: { template: 'Look, I am a center user registration column!' },
-                    right: { template: 'Look, I am a right user registration column!' }
+                    left: { template: '' },
+                    center: {
+                        controller: 'UserRegistrationController as ctrl',
+                        templateProvider: function($templateCache) {
+                            return $templateCache.get('user-registration.view.html');
+                        }
+                    },
+                    right: { template: '' }
+                },
+                resolve: {
+                    token: function($state, $stateParams, $q, inviteTokenService) {
+                        let deferred = $q.defer();
+
+                        inviteTokenService.validateToken('user', $stateParams.token)
+                            .then((response) => {
+                                if (response.isValid) deferred.resolve($stateParams.token);
+
+                                else {
+                                    $state.go('home');
+                                    deferred.reject();
+                                }
+                            });
+
+                        return deferred.promise;
+                    }
                 }
             })
             .state('user', {
-                url: '/user/id/:id',
+                url: '/user/profile/id/:id',
                 views: {
                     left: { template: 'Look, I am a left user column!' },
                     center: { template: 'Look, I am a center user column!' },
@@ -40,11 +56,11 @@
                 }
             })
             .state('musicianRegistration', {
-                url: '/user-registration/token/:token',
+                url: '/musician-registration/token/:token',
                 views: {
-                    left: { template: 'Look, I am a left user registration column!' },
+                    left: { template: '' },
                     center: { template: 'Look, I am a center user registration column!' },
-                    right: { template: 'Look, I am a right user registration column!' }
+                    right: { template: '' }
                 }
             })
             .state('musician', {
@@ -71,15 +87,9 @@
             .state('music', {
                 url: '/music',
                 views: {
-                    left: {
-                        template: 'Look, I am a left login column!'
-                    },
-                    center: {
-                        template: 'Look, I am a center login column!'
-                    },
-                    right: {
-                        template: 'Look, I am a right login column!'
-                    }
+                    left: { template: 'Music Left Column' },
+                    center: { template: 'Music Center Column' },
+                    right: { template: 'Music Right Column' }
                 },
                 resolve: {
                     data: function($state, $q, $timeout, authenticationService) {
