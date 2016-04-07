@@ -37,7 +37,7 @@ public class InviteDAO
 				else
 				{
 					invite.setIsGenerated(false);
-					invite.setErrorMessage("Error while generating tocken.");
+					invite.setErrorMessage("Error while generating token.");
 				}
 			}
 			
@@ -47,7 +47,7 @@ public class InviteDAO
 		catch(Exception e)
 		{
 			invite.setIsGenerated(false);
-			invite.setErrorMessage("Error while generating tocken.");
+			invite.setErrorMessage("Error while generating token.");
 			
 			if( null != tx)
 			{
@@ -100,7 +100,7 @@ public class InviteDAO
 		catch(Exception e)
 		{
 			invite.setIsGenerated(false);
-			invite.setErrorMessage("Error while generating tocken.");
+			invite.setErrorMessage("Error while generating token.");
 		}
 		return invite;
 	}

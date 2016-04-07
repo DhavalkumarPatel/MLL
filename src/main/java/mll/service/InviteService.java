@@ -121,7 +121,7 @@ public class InviteService
 	    	JSONParser parser = new JSONParser();
 	    	JSONObject tokenJsonObject = (JSONObject) parser.parse(requestStr.toString());
 	    	
-	    	invite.setActiontype((String) tokenJsonObject.get("email"));
+	    	invite.setActiontype((String) tokenJsonObject.get("actionType"));
 	    	
 	    	if(invite.getActiontype().equalsIgnoreCase("generate"))
 	    	{
