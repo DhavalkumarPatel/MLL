@@ -80,7 +80,7 @@
                             <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
                             <input type="password" name="confPassword" class="form-control" ng-model="ctrl.data.confPassword"
                                    placeholder="Password..." ng-minlength="8" required
-                                   mll-input-match="password" />
+                                   mll-input-match="ctrl.data.password" />
                         </div>
                         <div class="alert alert-danger" role="alert"
                              ng-show="ctrl.registrationForm.confPassword.$invalid && ctrl.registrationForm.$submitted">
