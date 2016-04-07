@@ -553,6 +553,7 @@
 
                         this.data.type = '';
                         this.data.email = '';
+                        this.form.$submitted = false;
 
                         $timeout(() => this.isOpen = false, 5000);
                     })
