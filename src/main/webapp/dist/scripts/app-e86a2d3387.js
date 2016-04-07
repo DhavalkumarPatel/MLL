@@ -1381,8 +1381,8 @@
         };
 
         function link(scope, elem, attrs, ngModel) {
-            scope.$watch(attrs.ngModel + attrs.mllInputMatch, () => {
-                console.log(`"${attrs.ngModel}" against "attrs.mllInputMatch"`);
+            scope.$watch(attrs.ngModel + attrs.mllInputMatch, (oldVal, newVal) => {
+                console.log(newVal + ' - ' + oldVal);
 
                 let match = attrs.ngModel === attrs.mllInputMatch;
 
