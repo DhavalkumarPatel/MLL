@@ -1386,7 +1386,11 @@
         function link(scope, elem, attrs, ctrl) {
 
             ctrl.$parsers.unshift((secondValue) => {
-                ctrl.$setValidity('inputmatch', secondValue === scope.firstValue);
+                let match = secondValue === scope.firstValue;
+                
+                ctrl.$setValidity('inputmatch', match);
+
+                return match;
             });
 
             scope.$watch('firstValue', (fValue) => {
