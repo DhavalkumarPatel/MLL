@@ -1199,19 +1199,19 @@
             generateToken: generateToken
         };
 
-        function validateToken(/*type, token*/) {
-            let d = $q.defer();
+        function validateToken(type, token) {
+            //let d = $q.defer();
+            //
+            //$timeout(() => d.resolve({ isValid: true }), 100);
+            //
+            //return d.promise;
 
-            $timeout(() => d.resolve({ isValid: true }), 100);
-
-            return d.promise;
-
-            //let data = { actionType: 'generate', inviteType: type, token: token };
-            //return $http({
-            //    method: 'POST',
-            //    url: '/MLL/InviteServlet',
-            //    data: data
-            //});
+            let data = { actionType: 'generate', inviteType: type, token: token };
+            return $http({
+                method: 'POST',
+                url: '/MLL/InviteServlet',
+                data: data
+            });
         }
 
         function generateToken(id, type, email) {
