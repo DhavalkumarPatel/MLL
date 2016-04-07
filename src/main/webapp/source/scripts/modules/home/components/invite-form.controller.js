@@ -10,15 +10,24 @@
     function InviteFormController(inviteTokenService) {
         this.inviteService = inviteTokenService;
 
-        this.users = [{label:'USER',id:'1'},{label:'MUSICIAN',id:'2'}];
+        this.data = {};
 
-        this.selectUser = {label:'USER',id:'1'}; //default
+        this.type = [
+            { label: 'General User', value: 'user' },
+            { label: 'Musician', value: 'musician' }
+        ];
 
         this.submit = () => {
-            if (this.registerForm.$invalid) this.registerForm.$submitted = true;
+            if (this.form.$invalid) this.form.$submitted = true;
+
             else {
-                alert("form successful");
-                this.onNext();
+                this.inviteService.generateToken(this.userId, this.data.type, this.data.email)
+                    .then((response) => {
+                        console.dir(response);
+                    })
+                    .catch((rejection) => {
+
+                    });
             }
         };
     }

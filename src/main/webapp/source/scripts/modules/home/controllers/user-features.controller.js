@@ -5,6 +5,10 @@
         .module('mllApp.home')
         .controller('UserFeaturesController', UserFeaturesController);
 
-    function UserFeaturesController(inviteTokenService) {}
+    UserFeaturesController.$inject = ['userId'];
+
+    function UserFeaturesController(userId) {
+        this.userId = userId;
+    }
 })(window.angular);
 

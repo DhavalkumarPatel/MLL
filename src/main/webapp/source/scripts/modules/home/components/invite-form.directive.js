@@ -12,7 +12,10 @@
             scope: {},
             controller: 'InviteFormController',
             controllerAs: 'ctrl',
-            templateUrl: 'invite-form.template.html'
+            templateUrl: 'invite-form.template.html',
+            bindToController: {
+                userId: '@'
+            }
         };
     }
 })(window.angular);

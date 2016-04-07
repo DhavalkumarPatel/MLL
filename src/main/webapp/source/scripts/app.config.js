@@ -60,7 +60,7 @@
                     }
                 },
                 resolve: {
-                    data: function($state, $q, $timeout, authenticationService) {
+                    userId: function($state, $stateParams, $q, $timeout, authenticationService) {
                         let deferred = $q.defer();
 
                         $timeout(() => {
@@ -69,9 +69,7 @@
                                 deferred.reject();
                             }
 
-                            else {
-                                deferred.resolve([]);
-                            }
+                            else deferred.resolve(+$stateParams.id);
                         }, 0);
 
                         return deferred.promise;

@@ -82,7 +82,7 @@
                     }
                 },
                 resolve: {
-                    data: function($state, $q, $timeout, authenticationService) {
+                    userId: function($state, $stateParams, $q, $timeout, authenticationService) {
                         let deferred = $q.defer();
 
                         $timeout(() => {
@@ -91,9 +91,7 @@
                                 deferred.reject();
                             }
 
-                            else {
-                                deferred.resolve([]);
-                            }
+                            else deferred.resolve(+$stateParams.id);
                         }, 0);
 
                         return deferred.promise;
@@ -515,7 +513,11 @@
         .module('mllApp.home')
         .controller('UserFeaturesController', UserFeaturesController);
 
-    function UserFeaturesController(inviteTokenService) {}
+    UserFeaturesController.$inject = ['userId'];
+
+    function UserFeaturesController(userId) {
+        this.userId = userId;
+    }
 })(window.angular);
 
 
@@ -531,15 +533,24 @@
     function InviteFormController(inviteTokenService) {
         this.inviteService = inviteTokenService;
 
-        this.users = [{label:'USER',id:'1'},{label:'MUSICIAN',id:'2'}];
+        this.data = {};
 
-        this.selectUser = {label:'USER',id:'1'}; //default
+        this.type = [
+            { label: 'General User', value: 'user' },
+            { label: 'Musician', value: 'musician' }
+        ];
 
         this.submit = () => {
-            if (this.registerForm.$invalid) this.registerForm.$submitted = true;
+            if (this.form.$invalid) this.form.$submitted = true;
+
             else {
-                alert("form successful");
-                this.onNext();
+                this.inviteService.generateToken(this.userId, this.data.type, this.data.email)
+                    .then((response) => {
+                        console.dir(response);
+                    })
+                    .catch((rejection) => {
+
+                    });
             }
         };
     }
@@ -560,7 +571,10 @@
             scope: {},
             controller: 'InviteFormController',
             controllerAs: 'ctrl',
-            templateUrl: 'invite-form.template.html'
+            templateUrl: 'invite-form.template.html',
+            bindToController: {
+                userId: '@'
+            }
         };
     }
 })(window.angular);
