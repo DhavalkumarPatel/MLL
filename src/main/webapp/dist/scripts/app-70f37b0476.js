@@ -562,7 +562,7 @@
 
                 this.service.register(data, 'musician')
                     .then((response) => {
-                        this.processResponse(data);
+                        this.processResponse(response.data);
                     })
                     .catch((rejection) => {
 
