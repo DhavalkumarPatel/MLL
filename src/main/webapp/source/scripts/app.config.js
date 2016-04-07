@@ -79,9 +79,14 @@
             .state('musicianRegistration', {
                 url: '/musician/registration/token/:token',
                 views: {
-                    left: {template: ''},
-                    center: {template: 'Look, I am a center user registration column!'},
-                    right: {template: ''}
+                    left: { template: '' },
+                    center: {
+                        controller: 'MusicianRegistrationController as ctrl',
+                        templateProvider: function($templateCache) {
+                            return $templateCache.get('musician-registration.view.html');
+                        }
+                    },
+                    right: { template: '' }
                 },
                 resolve: {
                     token: function ($state, $stateParams, $q, inviteTokenService) {

@@ -101,9 +101,14 @@
             .state('musicianRegistration', {
                 url: '/musician/registration/token/:token',
                 views: {
-                    left: {template: ''},
-                    center: {template: 'Look, I am a center user registration column!'},
-                    right: {template: ''}
+                    left: { template: '' },
+                    center: {
+                        controller: 'MusicianRegistrationController as ctrl',
+                        templateProvider: function($templateCache) {
+                            return $templateCache.get('musician-registration.view.html');
+                        }
+                    },
+                    right: { template: '' }
                 },
                 resolve: {
                     token: function ($state, $stateParams, $q, inviteTokenService) {
@@ -418,6 +423,19 @@
     UserRegistrationController.$inject = ['token'];
 
     function UserRegistrationController(token) {
+        this.data = { inviteToken: token };
+    }
+})(window.angular);
+(function(angular){
+    'use strict';
+
+    angular
+        .module('mllApp.registration')
+        .controller('MusicianRegistrationController', MusicianRegistrationController);
+
+    MusicianRegistrationController.$inject = ['token'];
+
+    function MusicianRegistrationController(token) {
         this.data = { inviteToken: token };
     }
 })(window.angular);

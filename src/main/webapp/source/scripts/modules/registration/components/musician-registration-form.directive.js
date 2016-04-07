@@ -13,7 +13,10 @@
             scope: {},
             controller: 'MusicianRegistrationFormController',
             controllerAs: 'ctrl',
-            templateUrl: 'musician-registration-form.template.html'
+            templateUrl: 'musician-registration-form.template.html',
+            bindToController: {
+                inviteToken: '@'
+            }
         };
     }
 })(window.angular);
