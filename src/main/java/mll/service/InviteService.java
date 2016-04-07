@@ -77,7 +77,15 @@ public class InviteService
 		
 		JSONObject responseObject = new JSONObject();
 		responseObject.put("isGenerated", invite.getIsGenerated());
-		responseObject.put("errorMessage", invite.getErrorMessage());
+		if(invite.getIsGenerated())
+		{
+			responseObject.put("message", invite.getErrorMessage());
+		}
+		else
+		{
+			responseObject.put("errorMessage", invite.getErrorMessage());
+		}
+		
 		responseObject.put("URL", invite.getUrl());
 		
 		return responseObject;
