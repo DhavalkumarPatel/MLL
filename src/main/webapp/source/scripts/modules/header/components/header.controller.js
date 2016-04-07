@@ -14,7 +14,7 @@
         this.logoutLink = logoutLink;
 
         this.logout = () => {
-            this.authService.clean();
+            this.authService.clear();
 
             $state.go('login');
         }
