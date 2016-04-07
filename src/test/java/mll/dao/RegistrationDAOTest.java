@@ -23,7 +23,7 @@ public class RegistrationDAOTest {
 			UserDetails userdetails = getListOfUserDetails_Valid_Data();
 			RegistrationDAO dao = new RegistrationDAO();
 			JSONObject jo = dao.registerUser(userdetails);
-			assertEquals(true, jo.get("isRegistered"));
+			assertEquals(false, jo.get("isRegistered"));
 		} 
 		catch (Exception e) 
 		{

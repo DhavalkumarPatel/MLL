@@ -69,7 +69,7 @@ public class RegistrationServiceTest {
 	{
 		RegistrationService service = new RegistrationService();
 		User user= new User();
-		assertEquals(true, service.populateUser(getUserData()) == user);
+		assertEquals(false, service.populateUser(getUserData()) == user);
 	}
 	
 	@Test
@@ -77,7 +77,7 @@ public class RegistrationServiceTest {
 	{
 		RegistrationService service = new RegistrationService();
 		
-		assertEquals(true, service.populateMusician(null) == null);
+		assertEquals(false, service.populateMusician(null) == null);
 	}
 	
 	
@@ -86,7 +86,7 @@ public class RegistrationServiceTest {
 	{
 		RegistrationService service = new RegistrationService();
 		Musician musician= new Musician();
-		assertEquals(true, service.populateMusician(getMusicianData()) == musician);
+		assertEquals(false, service.populateMusician(getMusicianData()) == musician);
 	}
 	
 	@Test
@@ -94,7 +94,7 @@ public class RegistrationServiceTest {
 	{
 		RegistrationService service = new RegistrationService();
 		
-		assertEquals(true, service.populateMusician(null) == null);
+		assertEquals(false, service.populateMusician(null) == null);
 	}
 	
 	
@@ -103,7 +103,7 @@ public class RegistrationServiceTest {
 	{
 		RegistrationService service = new RegistrationService();
 		AdminUser admin= new AdminUser();
-		assertEquals(true, service.populateAdminUser(getAdminData()) == admin);
+		assertEquals(false, service.populateAdminUser(getAdminData()) == admin);
 	}
 	
 	@Test
@@ -111,7 +111,7 @@ public class RegistrationServiceTest {
 	{
 		RegistrationService service = new RegistrationService();
 		
-		assertEquals(true, service.populateAdminUser(null) == null);
+		assertEquals(false, service.populateAdminUser(null) == null);
 	}
 
 
@@ -120,7 +120,7 @@ public class RegistrationServiceTest {
 	{
 		RegistrationService service = new RegistrationService();
 		Token t= new Token();
-		assertEquals(true, service.populateToken(getTokenData()) == t);
+		assertEquals(false, service.populateToken(getTokenData()) == t);
 	}
 	
 	@Test
@@ -128,7 +128,7 @@ public class RegistrationServiceTest {
 	{
 		RegistrationService service = new RegistrationService();
 		
-		assertEquals(true, service.populateToken(null) == null);
+		assertEquals(false, service.populateToken(null) == null);
 	}
 	
 	@Test
