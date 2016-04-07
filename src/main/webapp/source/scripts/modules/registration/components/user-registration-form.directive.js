@@ -13,7 +13,10 @@
             scope: {},
             controller: 'UserRegistrationFormController',
             controllerAs: 'ctrl',
-            templateUrl: 'user-registration-form.template.html'
+            templateUrl: 'user-registration-form.template.html',
+            bindToController: {
+                inviteToken: '@'
+            }
         };
     }
 })(window.angular);
