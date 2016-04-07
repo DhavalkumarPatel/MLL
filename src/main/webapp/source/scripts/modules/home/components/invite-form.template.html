@@ -27,7 +27,11 @@
                  ng-class="{ 'has-success': ctrl.form.email.$valid && ctrl.form.$submitted,
                              'has-error': ctrl.form.email.$invalid && ctrl.form.$submitted }">
                 <div class="col-xs-12">
-                    <input type="email" name="email" ng-model="ctrl.data.email" class="form-control" required>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                        <input type="email" name="email" ng-model="ctrl.data.email" class="form-control"
+                               placeholder="Email Address..." required></div>
+
                     <div class="alert alert-danger" role="alert"
                          ng-show="ctrl.form.type.$invalid && ctrl.form.$submitted">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -40,9 +44,10 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-xs-12">
-                <button class="btn btn-block btn-primary" ng-click="ctrl.invite()">Invite</button>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <button class="btn btn-block btn-primary" ng-click="ctrl.invite()">Invite</button>
+                </div>
             </div>
         </form>
     </div>

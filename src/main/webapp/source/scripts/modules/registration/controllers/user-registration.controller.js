@@ -5,7 +5,7 @@
         .module('mllApp.registration')
         .controller('UserRegistrationController', UserRegistrationController);
 
-    UserRegistrationController.$iject = ['token'];
+    UserRegistrationController.$inject = ['token'];
 
     function UserRegistrationController(token) {
         this.data = { inviteToken: token };

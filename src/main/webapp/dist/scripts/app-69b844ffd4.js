@@ -398,7 +398,7 @@
         .module('mllApp.registration')
         .controller('UserRegistrationController', UserRegistrationController);
 
-    UserRegistrationController.$iject = ['token'];
+    UserRegistrationController.$inject = ['token'];
 
     function UserRegistrationController(token) {
         this.data = { inviteToken: token };
@@ -540,11 +540,11 @@
             { label: 'Musician', value: 'musician' }
         ];
 
-        this.submit = () => {
+        this.invite = () => {
             if (this.form.$invalid) this.form.$submitted = true;
 
             else {
-                this.inviteService.generateToken(this.userId, this.data.type, this.data.email)
+                this.inviteService.generateToken(+this.userId, this.data.type, this.data.email)
                     .then((response) => {
                         console.dir(response);
                     })
