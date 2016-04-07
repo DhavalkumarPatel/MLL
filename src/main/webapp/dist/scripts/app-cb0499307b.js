@@ -547,9 +547,9 @@
         .module('mllApp.registration')
         .controller('MusicianRegistrationFormController', MusicianRegistrationFormController);
 
-    MusicianRegistrationFormController.$inject = ['registrationService'];
+    MusicianRegistrationFormController.$inject = ['$state', 'registrationService'];
 
-    function MusicianRegistrationFormController(registrationService) {
+    function MusicianRegistrationFormController($state, registrationService) {
         this.data = {};
         
         this.service = registrationService;
