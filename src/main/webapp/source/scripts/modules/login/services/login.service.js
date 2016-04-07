@@ -19,7 +19,7 @@
                 data: data
             }).then((response) => {
                 if (response.data.isValidUser) {
-                    authenticationService.login(response.data);
+                    authenticationService.set(response.data);
                 }
 
                 return response.data;

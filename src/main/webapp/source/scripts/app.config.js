@@ -53,6 +53,24 @@
                     left: { template: 'Look, I am a left user column!' },
                     center: { template: 'Look, I am a center user column!' },
                     right: { template: 'Look, I am a right user column!' }
+                },
+                resolve: {
+                    data: function($state, $q, $timeout, authenticationService) {
+                        let deferred = $q.defer();
+
+                        $timeout(() => {
+                            if (!authenticationService.details.isAuthenticated) {
+                                $state.go('login');
+                                deferred.reject();
+                            }
+
+                            else {
+                                deferred.resolve([]);
+                            }
+                        }, 0);
+
+                        return deferred.promise;
+                    }
                 }
             })
             .state('musicianRegistration', {
