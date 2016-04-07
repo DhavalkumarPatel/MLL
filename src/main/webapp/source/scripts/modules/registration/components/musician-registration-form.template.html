@@ -1,5 +1,5 @@
 <div>
-    <div class="coll-xs-10 col-xs-offset-1 well">
+    <div class="col-xs-10 col-xs-offset-1 well">
         <h3 class="text-center no-margin">Registration</h3>
     </div>
 
@@ -10,7 +10,7 @@
              <div class="col-xs-10 col-xs-offset-1">
                  <div class="input-group">
                      <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                     <input type="text" name="username" class="form-control" ng-model="ctrl.data.username"
+                     <input type="text" name="username" class="form-control" ng-model="ctrl.data.userName"
                             placeholder="User Name..." required />
                  </div>
 
@@ -30,7 +30,7 @@
              <div class="col-xs-10 col-xs-offset-1">
                  <div class="input-group">
                      <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-                     <input type="email" name="email" class="form-control" ng-model="ctrl.data.email"
+                     <input type="email" name="email" class="form-control" ng-model="ctrl.data.emailId"
                             placeholder="Email Address..." required />
                  </div>
                 <div class="alert alert-danger" role="alert"
@@ -78,9 +78,9 @@
                     <div class="col-xs-12">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                            <input type="password" name="confPassword" class="form-control" ng-model="ctrl.data.password"
+                            <input type="password" name="confPassword" class="form-control" ng-model="ctrl.data.confPassword"
                                    placeholder="Password..." ng-minlength="8" required
-                                   mll-input-match="ctrl.registrationForm.password" />
+                                   mll-input-match="password" />
                         </div>
                         <div class="alert alert-danger" role="alert"
                              ng-show="ctrl.registrationForm.confPassword.$invalid && ctrl.registrationForm.$submitted">
@@ -96,6 +96,21 @@
                              </span>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-1">
+                    <div class="alert alert-danger" role="alert" ng-show="ctrl.loginForm.$serverError">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span ng-bind="ctrl.errorMessage"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-1">
+                    <button  class="btn btn-primary btn-block" ng-click="ctrl.register()">Register</button>
                 </div>
             </div>
         </div>
