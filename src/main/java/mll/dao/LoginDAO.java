@@ -36,7 +36,7 @@ public class LoginDAO {
 			tx = session.beginTransaction();
 
 			// Query the User, musician and AdminUser Objects to validate the login credentials and determine the type of the user.
-			if((null != login.getUser().getUserName()) && (null != login.getUser().getPassword()))
+			if(null != login && null != login.getUser() && null != login.getUser().getUserName() && null != login.getUser().getPassword() && !"".equals(login.getUser().getUserName()) && !"".equals(null != login.getUser().getPassword()))
 			{
 				Query query = session.createQuery("from User u where u.userName=:userName and u.password=:password");
 				query.setString("userName", login.getUser().getUserName());

@@ -77,7 +77,7 @@ public class SubmissionDAO
 	* @version 1.0
 	* @since   2016-03-24 
 	*/
-	private List<Artist> saveArtists(List<Artist> artists, Integer songId, Session session) throws Exception
+	public List<Artist> saveArtists(List<Artist> artists, Integer songId, Session session) throws Exception
 	{
 		if(null != artists)
 		{
@@ -102,7 +102,7 @@ public class SubmissionDAO
 	* @version 1.0
 	* @since   2016-03-24 
 	*/
-	private List<Genre> saveGenres(List<Genre> genres, Integer songId, Session session) throws Exception
+	public List<Genre> saveGenres(List<Genre> genres, Integer songId, Session session) throws Exception
 	{
 		if(null != genres)
 		{
@@ -127,7 +127,7 @@ public class SubmissionDAO
 	* @version 1.0
 	* @since   2016-03-24 
 	*/
-	private List<Owner> saveOwners(List<Owner> owners, Integer songId, Session session) throws Exception
+	public List<Owner> saveOwners(List<Owner> owners, Integer songId, Session session) throws Exception
 	{
 		if(null != owners)
 		{

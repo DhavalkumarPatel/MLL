@@ -5,15 +5,12 @@ import static org.junit.Assert.assertEquals;
 import org.json.simple.JSONObject;
 import org.junit.Test;
 
-import mll.beans.AdminUser;
 import mll.beans.Musician;
 import mll.beans.Token;
 import mll.beans.User;
 
-public class RegistrationServiceTest {
-
-	/*
-	
+public class RegistrationServiceTest 
+{
 	@Test
 	public void testpopulateUser1() throws Exception
 	{
@@ -22,7 +19,6 @@ public class RegistrationServiceTest {
 		assertEquals(false, service.populateUser(null) == user);
 	}
 	
-	
 	@Test
 	public void testpopulateUser2() throws Exception
 	{
@@ -30,7 +26,6 @@ public class RegistrationServiceTest {
 		
 		assertEquals(true, service.populateUser(null) == null);
 	}
-	
 	
 	@Test
 	public void testpopulateUser3() throws Exception
@@ -62,8 +57,7 @@ public class RegistrationServiceTest {
 	public void testpopulateMusician2() throws Exception
 	{
 		RegistrationService service = new RegistrationService();
-		
-		assertEquals(true, service.populateMusician(getMusicianData()).getName() == "Soumya");
+		assertEquals(true, service.populateMusician(getMusicianData()).getName().equalsIgnoreCase(" "));
 	}
 	
 
@@ -98,7 +92,6 @@ public class RegistrationServiceTest {
 	public void testpopulateAdminUser2() throws Exception
 	{
 		RegistrationService service = new RegistrationService();
-		AdminUser au= new AdminUser();
 		assertEquals(false, service.populateAdminUser(getAdminData()) == null);
 	}
 	
@@ -118,7 +111,6 @@ public class RegistrationServiceTest {
 		assertEquals(true, service.populateAdminUser(getAdminData()).getId() == null);
 	}
 	
-	
 	@Test
 	public void testpopulateToken1() throws Exception
 	{
@@ -126,8 +118,6 @@ public class RegistrationServiceTest {
 		
 		assertEquals(true, service.populateToken(null) == null);
 	}
-	
-
 	
 	@Test
 	public void testpopulateToken2() throws Exception
@@ -145,8 +135,6 @@ public class RegistrationServiceTest {
 		assertEquals(false, service.populateToken(getTokenData()).getToken() == null);
 	}
 	
-	
-
 	@Test
 	public void testpopulateToken4() throws Exception
 	{
@@ -184,7 +172,6 @@ public class RegistrationServiceTest {
 
 	}
 	
-	
 	@SuppressWarnings("unchecked")
 	public JSONObject getMusicianData()
 	{
@@ -200,6 +187,5 @@ public class RegistrationServiceTest {
 		jo.put("token", "MK12");
 		
 		return jo;
-	}*/
-	
+	}
 }

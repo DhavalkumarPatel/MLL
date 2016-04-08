@@ -21,56 +21,59 @@ public class RegistrationDAO
 		
 		try
 		{
-			// Initialize the session and transaction
-			session = SessionFactoryUtil.getSessionFactory().getCurrentSession();
-			tx = session.beginTransaction();
-			
-			Invite invite = new Invite();
-			invite.setToken(userdetails.getToken());
-			
-			InviteDAO inviteDao = new InviteDAO();
-			invite = inviteDao.validateInvite(invite);
-			
-			if(invite.getIsValid())
+			if(null != userdetails && null != userdetails.getToken() && null != userdetails.getToken().getToken() && null != userdetails.getToken().getInviteType() && null != userdetails.getUsers())
 			{
-				invite.getToken().setIsUsed(true);
-				session.update(invite.getToken());
+				// Initialize the session and transaction
+				session = SessionFactoryUtil.getSessionFactory().getCurrentSession();
+				tx = session.beginTransaction();
 				
-				Integer userId = (Integer)session.save(userdetails.getUsers());
+				Invite invite = new Invite();
+				invite.setToken(userdetails.getToken());
 				
-				if(null != userId)
+				InviteDAO inviteDao = new InviteDAO();
+				invite = inviteDao.validateInvite(invite);
+				
+				if(invite.getIsValid())
 				{
-					responseObject.put("isRegistered", true);
-					responseObject.put("userId", userId);
+					invite.getToken().setIsUsed(true);
+					session.update(invite.getToken());
 					
-					if(userdetails.getType().equalsIgnoreCase("user"))
+					Integer userId = (Integer)session.save(userdetails.getUsers());
+					
+					if(null != userId)
 					{
-						userdetails.getAdminUser().setId(userId);
-						session.save(userdetails.getAdminUser());
-				        responseObject.put("browse", true);
-						responseObject.put("upload", false);
+						responseObject.put("isRegistered", true);
+						responseObject.put("userId", userId);
+						
+						if(userdetails.getType().equalsIgnoreCase("user"))
+						{
+							userdetails.getAdminUser().setId(userId);
+							session.save(userdetails.getAdminUser());
+					        responseObject.put("browse", true);
+							responseObject.put("upload", false);
+						}
+						else if(userdetails.getType().equalsIgnoreCase("musician"))
+						{
+							userdetails.getMusician().setId(userId);
+							session.save(userdetails.getMusician());
+					        responseObject.put("browse", false);
+							responseObject.put("upload", true);
+						}
 					}
-					else if(userdetails.getType().equalsIgnoreCase("musician"))
+					else
 					{
-						userdetails.getMusician().setId(userId);
-						session.save(userdetails.getMusician());
-				        responseObject.put("browse", false);
-						responseObject.put("upload", true);
+						responseObject.put("isRegistered", false);
+						responseObject.put("errorMessage", "Not able to save user details.");
 					}
 				}
-				else
+				else 
 				{
 					responseObject.put("isRegistered", false);
-					responseObject.put("errorMessage", "Not able to save user details.");
+					responseObject.put("errorMessage", "Token is already used.");
 				}
+					
+				tx.commit();
 			}
-			else 
-			{
-				responseObject.put("isRegistered", false);
-				responseObject.put("errorMessage", "Token is already used.");
-			}
-				
-			tx.commit();
 		}
 		catch(Exception e)
 		{

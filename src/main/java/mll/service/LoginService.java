@@ -102,11 +102,12 @@ public class LoginService
 	 * @param JSON object, jo
 	 * @return
 	 */
-	public Login populateUserDetails (JSONObject jo)
+	public Login populateUserDetails(JSONObject jo)
 	{
-		Login login = new Login();
+		Login login = null;
 		if (null != jo) 
 		{
+			login = new Login();
 			login.getUser().setUserName((String)jo.get("userName"));
 			login.getUser().setPassword((String)jo.get("password"));
 		}

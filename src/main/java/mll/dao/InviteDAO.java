@@ -31,7 +31,7 @@ public class InviteDAO
 			session = SessionFactoryUtil.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
 			
-			if(null != invite)
+			if(null != invite && null != invite.getToken().getToken())
 			{
 				invite.getToken().setId((Integer) session.save(invite.getToken()));
 				
@@ -63,7 +63,7 @@ public class InviteDAO
 				// Rollback the transaction if any error comes during the process
 				 tx.rollback();
 			}
-			throw e;
+			e.printStackTrace();
 		}
 		return invite;
 	}

@@ -1,32 +1,47 @@
 package mll.utility;
 
 import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
-public class EncryptionTest {
+public class EncryptionTest
+{
 
-	//Positive case
 	@Test
-	public void testcase1() {
-
-		try {
-			String password = "password123";
-			assertEquals(true, Encryption.encryptPassword(password).equals("482c811da5d5b4bc6d497ffa98491e38"));
-
-		} catch (Exception e) {
+	public void encryptPassword1() 
+	{
+		try 
+		{
+			assertEquals(true, Encryption.encryptPassword(null) == null);
+		} 
+		catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
 	}
 	
-	//Negative case
 	@Test
-	public void testcase2() {
-
-		try {
-			String password = "password@123";
-			assertEquals(false, Encryption.encryptPassword(password).equals("482c811da5d5b4bc6d497ffa98491e38"));
-
-		} catch (Exception e) {
+	public void encryptPassword2() 
+	{
+		try 
+		{
+			assertEquals(true, Encryption.encryptPassword("") == null);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void encryptPassword3() 
+	{
+		try 
+		{
+			assertEquals(true, Encryption.encryptPassword("Password@123").equals(Encryption.encryptPassword("Password@123")));
+		} 
+		catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
 	}
