@@ -9,7 +9,7 @@ import mll.beans.Login;
 public class LoginDAOTest 
 {
 	@Test
-	public void validateLogin1()
+	public void testValidateLogin1()
 	{
 		try 
 		{
@@ -23,7 +23,7 @@ public class LoginDAOTest
 	}
 	
 	@Test
-	public void validateLogin2()
+	public void testValidateLogin2()
 	{
 		try 
 		{
@@ -39,7 +39,7 @@ public class LoginDAOTest
 	}
 	
 	@Test
-	public void validateLogin3()
+	public void testValidateLogin3()
 	{
 		try 
 		{
@@ -55,7 +55,7 @@ public class LoginDAOTest
 	}
 	
 	@Test
-	public void validateLogin4()
+	public void testValidateLogin4()
 	{
 		try 
 		{
@@ -71,7 +71,7 @@ public class LoginDAOTest
 	}
 	
 	@Test
-	public void validateLogin5()
+	public void testValidateLogin5()
 	{
 		try 
 		{
@@ -87,7 +87,7 @@ public class LoginDAOTest
 	}
 	
 	@Test
-	public void validateLogin6()
+	public void testValidateLogin6()
 	{
 		try 
 		{
@@ -103,7 +103,7 @@ public class LoginDAOTest
 	}
 	
 	@Test
-	public void validateLogin7()
+	public void testValidateLogin7()
 	{
 		try 
 		{

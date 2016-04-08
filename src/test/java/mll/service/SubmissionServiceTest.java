@@ -12,14 +12,14 @@ import mll.beans.Metadata;
 public class SubmissionServiceTest 
 {
 	@Test
-	public void testpopulateSong1() throws Exception
+	public void testPopulateSong1() throws Exception
 	{
 		SubmissionService service = new SubmissionService();
 		assertEquals(true, service.populateSong(null, null, null, null, null) == null);
 	}
 	
 	@Test
-	public void testpopulateSong2() throws Exception
+	public void testPopulateSong2() throws Exception
 	{
 		SubmissionService service = new SubmissionService();
 		Metadata metadata = new Metadata();
@@ -27,7 +27,7 @@ public class SubmissionServiceTest
 	}
 	
 	@Test
-	public void testpopulateSong3() throws Exception
+	public void testPopulateSong3() throws Exception
 	{
 		SubmissionService service = new SubmissionService();
 		Metadata metadata = new Metadata();
@@ -35,7 +35,7 @@ public class SubmissionServiceTest
 	}
 	
 	@Test
-	public void testpopulateSong4() throws Exception
+	public void testPopulateSong4() throws Exception
 	{
 		SubmissionService service = new SubmissionService();
 		Metadata metadata = new Metadata();
@@ -43,7 +43,7 @@ public class SubmissionServiceTest
 	}
 	
 	@Test
-	public void testpopulateSong5() throws Exception
+	public void testPopulateSong5() throws Exception
 	{
 		SubmissionService service = new SubmissionService();
 		Metadata metadata = new Metadata();
@@ -51,7 +51,7 @@ public class SubmissionServiceTest
 	}
 	
 	@Test
-	public void testpopulateSong6() throws Exception
+	public void testPopulateSong6() throws Exception
 	{
 		SubmissionService service = new SubmissionService();
 		Metadata metadata = new Metadata();
@@ -59,7 +59,7 @@ public class SubmissionServiceTest
 	}
 	
 	@Test
-	public void testpopulateSong7() throws Exception
+	public void testPopulateSong7() throws Exception
 	{
 		SubmissionService service = new SubmissionService();
 		Metadata metadata = new Metadata();

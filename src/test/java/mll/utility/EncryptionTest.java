@@ -8,7 +8,7 @@ public class EncryptionTest
 {
 
 	@Test
-	public void encryptPassword1() 
+	public void testEncryptPassword1() 
 	{
 		try 
 		{
@@ -21,7 +21,7 @@ public class EncryptionTest
 	}
 	
 	@Test
-	public void encryptPassword2() 
+	public void testEncryptPassword2() 
 	{
 		try 
 		{
@@ -34,7 +34,7 @@ public class EncryptionTest
 	}
 	
 	@Test
-	public void encryptPassword3() 
+	public void testEncryptPassword3() 
 	{
 		try 
 		{

@@ -10,7 +10,7 @@ public class InviteDAOTest
 {
 	
 	@Test
-	public void generateInvite1() 
+	public void testGenerateInvite1() 
 	{
 		try 
 		{
@@ -23,7 +23,7 @@ public class InviteDAOTest
 	}
 	
 	@Test
-	public void generateInvite2() 
+	public void testGenerateInvite2() 
 	{
 		try 
 		{
@@ -36,7 +36,7 @@ public class InviteDAOTest
 	}
 	
 	@Test
-	public void generateInvite3() 
+	public void testGenerateInvite3() 
 	{
 		try 
 		{
@@ -49,7 +49,7 @@ public class InviteDAOTest
 	}
 	
 	@Test
-	public void validateInvite1() 
+	public void testValidateInvite1() 
 	{
 		try 
 		{
@@ -62,7 +62,7 @@ public class InviteDAOTest
 	}
 	
 	@Test
-	public void validateInvite2() 
+	public void testValidateInvite2() 
 	{
 		try 
 		{
@@ -75,7 +75,7 @@ public class InviteDAOTest
 	}
 	
 	@Test
-	public void validateInvite3() 
+	public void testValidateInvite3() 
 	{
 		try 
 		{

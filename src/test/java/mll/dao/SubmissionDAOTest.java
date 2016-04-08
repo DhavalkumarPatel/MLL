@@ -15,7 +15,7 @@ import mll.beans.Owner;
 public class SubmissionDAOTest 
 {
 	@Test
-	public void saveMetadata1() 
+	public void testSaveMetadata1() 
 	{
 		try 
 		{
@@ -29,7 +29,7 @@ public class SubmissionDAOTest
 	}
 	
 	@Test
-	public void saveMetadata2() 
+	public void testSaveMetadata2() 
 	{
 		try 
 		{
@@ -44,7 +44,7 @@ public class SubmissionDAOTest
 	}
 	
 	@Test
-	public void saveArtists1() 
+	public void testSaveArtists1() 
 	{
 		try 
 		{
@@ -58,7 +58,7 @@ public class SubmissionDAOTest
 	}
 	
 	@Test
-	public void saveArtists2() 
+	public void testSaveArtists2() 
 	{
 		try 
 		{
@@ -73,7 +73,7 @@ public class SubmissionDAOTest
 	}
 	
 	@Test
-	public void saveGenres1() 
+	public void testSaveGenres1() 
 	{
 		try 
 		{
@@ -87,7 +87,7 @@ public class SubmissionDAOTest
 	}
 	
 	@Test
-	public void saveGenres2() 
+	public void testSaveGenres2() 
 	{
 		try 
 		{
@@ -102,7 +102,7 @@ public class SubmissionDAOTest
 	}
 	
 	@Test
-	public void saveOwners1() 
+	public void testSaveOwners1() 
 	{
 		try 
 		{
@@ -116,7 +116,7 @@ public class SubmissionDAOTest
 	}
 	
 	@Test
-	public void saveOwners2() 
+	public void testSaveOwners2() 
 	{
 		try 
 		{

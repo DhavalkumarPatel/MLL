@@ -154,27 +154,37 @@ public class InviteService
 	    	JSONParser parser = new JSONParser();
 	    	JSONObject tokenJsonObject = (JSONObject) parser.parse(requestStr.toString());
 	    	
-	    	invite.setActiontype((String) tokenJsonObject.get("actionType"));
-	    	
-	    	if(invite.getActiontype().equalsIgnoreCase("generate"))
-	    	{
-	    		invite.getToken().setEmailId((String) tokenJsonObject.get("email"));
-	        	invite.getToken().setToken("");
-	        	invite.getToken().setInviteType((String) tokenJsonObject.get("inviteType"));
-	        	invite.getToken().setIssueDate(new Date());
-	        	invite.getToken().setIsUsed(false);
-	        	invite.getToken().setUserId(((Long) tokenJsonObject.get("userId")).intValue());
-	    	}
-	    	else
-	    	{
-	        	invite.getToken().setToken((String) tokenJsonObject.get("token"));
-	        	invite.getToken().setInviteType((String) tokenJsonObject.get("inviteType"));
-	    	}
+	    	invite = populateInviteBeansFromRequest(invite, tokenJsonObject);
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 			// Error message will be set from the main method.
+		}
+		
+		return invite;
+	}
+	
+	public Invite populateInviteBeansFromRequest(Invite invite, JSONObject tokenJsonObject)
+	{
+		if(null != invite && null != tokenJsonObject)
+		{
+			invite.setActiontype((String) tokenJsonObject.get("actionType"));
+			
+			if(invite.getActiontype().equalsIgnoreCase("generate"))
+			{
+				invite.getToken().setEmailId((String) tokenJsonObject.get("email"));
+		    	invite.getToken().setToken("");
+		    	invite.getToken().setInviteType((String) tokenJsonObject.get("inviteType"));
+		    	invite.getToken().setIssueDate(new Date());
+		    	invite.getToken().setIsUsed(false);
+		    	invite.getToken().setUserId(((Long) tokenJsonObject.get("userId")).intValue());
+			}
+			else
+			{
+		    	invite.getToken().setToken((String) tokenJsonObject.get("token"));
+		    	invite.getToken().setInviteType((String) tokenJsonObject.get("inviteType"));
+			}
 		}
 		
 		return invite;

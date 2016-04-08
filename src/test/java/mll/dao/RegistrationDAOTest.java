@@ -10,7 +10,7 @@ import mll.beans.UserDetails;
 public class RegistrationDAOTest 
 {
 	@Test
-	public void registerUser1() 
+	public void testRegisterUser1() 
 	{
 		try 
 		{
@@ -25,7 +25,7 @@ public class RegistrationDAOTest
 	}
 	
 	@Test
-	public void registerUser2() 
+	public void testRegisterUser2() 
 	{
 		try 
 		{
@@ -42,7 +42,7 @@ public class RegistrationDAOTest
 	}
 	
 	@Test
-	public void registerUser3() 
+	public void testRegisterUser3() 
 	{
 		try 
 		{
@@ -59,7 +59,7 @@ public class RegistrationDAOTest
 	}
 	
 	@Test
-	public void registerUser4() 
+	public void testRegisterUser4() 
 	{
 		try 
 		{
@@ -76,7 +76,7 @@ public class RegistrationDAOTest
 	}
 	
 	@Test
-	public void registerUser5() 
+	public void testRegisterUser5() 
 	{
 		try 
 		{

@@ -12,7 +12,7 @@ import mll.beans.User;
 public class RegistrationServiceTest 
 {
 	@Test
-	public void testpopulateUser1() throws Exception
+	public void testOopulateUser1() throws Exception
 	{
 		RegistrationService service = new RegistrationService();
 		User user= new User();
@@ -20,7 +20,7 @@ public class RegistrationServiceTest
 	}
 	
 	@Test
-	public void testpopulateUser2() throws Exception
+	public void testPopulateUser2() throws Exception
 	{
 		RegistrationService service = new RegistrationService();
 		
@@ -28,7 +28,7 @@ public class RegistrationServiceTest
 	}
 	
 	@Test
-	public void testpopulateUser3() throws Exception
+	public void testPopulateUser3() throws Exception
 	{
 		RegistrationService service = new RegistrationService();
 		
@@ -37,7 +37,7 @@ public class RegistrationServiceTest
 	
 	
 	@Test
-	public void testpopulateUser4() throws Exception
+	public void testPopulateUser4() throws Exception
 	{
 		RegistrationService service = new RegistrationService();
 		
@@ -46,7 +46,7 @@ public class RegistrationServiceTest
 	
 	
 	@Test
-	public void testpopulateMusician1() throws Exception
+	public void testPopulateMusician1() throws Exception
 	{
 		RegistrationService service = new RegistrationService();
 		
@@ -54,7 +54,7 @@ public class RegistrationServiceTest
 	}
 	
 	@Test
-	public void testpopulateMusician2() throws Exception
+	public void testPopulateMusician2() throws Exception
 	{
 		RegistrationService service = new RegistrationService();
 		assertEquals(true, service.populateMusician(getMusicianData()).getName().equalsIgnoreCase(" "));
@@ -62,7 +62,7 @@ public class RegistrationServiceTest
 	
 
 	@Test
-	public void testpopulateMusician3() throws Exception
+	public void testPopulateMusician3() throws Exception
 	{
 		RegistrationService service = new RegistrationService();
 		Musician musician= new Musician();
@@ -71,7 +71,7 @@ public class RegistrationServiceTest
 	
 	
 	@Test
-	public void testpopulateMusician4() throws Exception
+	public void testPopulateMusician4() throws Exception
 	{
 		RegistrationService service = new RegistrationService();
 		
@@ -80,7 +80,7 @@ public class RegistrationServiceTest
 	
 	
 	@Test
-	public void testpopulateAdminUser1() throws Exception
+	public void testPopulateAdminUser1() throws Exception
 	{
 		RegistrationService service = new RegistrationService();
 		
@@ -89,14 +89,14 @@ public class RegistrationServiceTest
 
 
 	@Test
-	public void testpopulateAdminUser2() throws Exception
+	public void testPopulateAdminUser2() throws Exception
 	{
 		RegistrationService service = new RegistrationService();
 		assertEquals(false, service.populateAdminUser(getAdminData()) == null);
 	}
 	
 	@Test
-	public void testpopulateAdminUser3() throws Exception
+	public void testPopulateAdminUser3() throws Exception
 	{
 		RegistrationService service = new RegistrationService();
 		
@@ -104,7 +104,7 @@ public class RegistrationServiceTest
 	}
 	
 	@Test
-	public void testpopulateAdminUser4() throws Exception
+	public void testPopulateAdminUser4() throws Exception
 	{
 		RegistrationService service = new RegistrationService();
 		
@@ -112,7 +112,7 @@ public class RegistrationServiceTest
 	}
 	
 	@Test
-	public void testpopulateToken1() throws Exception
+	public void testPopulateToken1() throws Exception
 	{
 		RegistrationService service = new RegistrationService();
 		
@@ -120,7 +120,7 @@ public class RegistrationServiceTest
 	}
 	
 	@Test
-	public void testpopulateToken2() throws Exception
+	public void testPopulateToken2() throws Exception
 	{
 		RegistrationService service = new RegistrationService();
 		
@@ -128,7 +128,7 @@ public class RegistrationServiceTest
 	}
 	
 	@Test
-	public void testpopulateToken3() throws Exception
+	public void testPopulateToken3() throws Exception
 	{
 		RegistrationService service = new RegistrationService();
 		
@@ -136,7 +136,7 @@ public class RegistrationServiceTest
 	}
 	
 	@Test
-	public void testpopulateToken4() throws Exception
+	public void testPopulateToken4() throws Exception
 	{
 		RegistrationService service = new RegistrationService();
 		Token t= new Token();
