@@ -26,7 +26,7 @@ public class MailService
 		
 		try
 		{
-			sendMail(invite.getToken().getEmailId(), "Invite from Media Licencing Lab", "Your invitation link is :: " + invite.getUrl());
+			sendMail(invite.getToken().getEmailId(), "Invite from Media Licencing Lab", "Hi, \n\n"+ invite.getToken().getMessageBody() + "\n\nYour invitation link is :: " + invite.getUrl() + "\n\nThanks,\nMedia Team");
 		}
 		catch(Exception e)
 		{

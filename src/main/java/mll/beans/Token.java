@@ -14,6 +14,7 @@ public class Token  implements Serializable
 	private Date issueDate;
 	private Boolean isUsed = false;
 	private String inviteType;
+	private String messageBody;
 	
 	public Integer getId() {
 		return id;
@@ -56,5 +57,11 @@ public class Token  implements Serializable
 	}
 	public void setInviteType(String inviteType) {
 		this.inviteType = inviteType;
+	}
+	public String getMessageBody() {
+		return messageBody;
+	}
+	public void setMessageBody(String messageBody) {
+		this.messageBody = messageBody;
 	}
 }

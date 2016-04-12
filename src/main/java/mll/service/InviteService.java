@@ -176,6 +176,7 @@ public class InviteService
 				invite.getToken().setEmailId((String) tokenJsonObject.get("email"));
 		    	invite.getToken().setToken("");
 		    	invite.getToken().setInviteType((String) tokenJsonObject.get("inviteType"));
+		    	invite.getToken().setMessageBody((String) tokenJsonObject.get("messageBody"));
 		    	invite.getToken().setIssueDate(new Date());
 		    	invite.getToken().setIsUsed(false);
 		    	invite.getToken().setUserId(((Long) tokenJsonObject.get("userId")).intValue());

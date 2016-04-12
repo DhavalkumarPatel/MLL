@@ -49,5 +49,4 @@ public class Invite implements Serializable
 	public void setIsValid(Boolean isValid) {
 		this.isValid = isValid;
 	}
-	
 }
