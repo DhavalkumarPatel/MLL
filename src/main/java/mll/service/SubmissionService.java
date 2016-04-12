@@ -40,9 +40,10 @@ public class SubmissionService
 	* @version 1.0
 	* @since   2016-03-24 
 	*/
-	public String uploadMedia(HttpServletRequest request, HttpServletResponse response)
+	@SuppressWarnings("unchecked")
+	public JSONObject uploadMedia(HttpServletRequest request, HttpServletResponse response)
 	{
-		String responseString = "";
+		JSONObject responseObject = new JSONObject();
 		
 		try
 		{
@@ -62,22 +63,23 @@ public class SubmissionService
 				// Save all media files with metadata
 				dao.saveMetadata(metadatas);
 				
-				// Set success response
-				responseString = "Media files uploaded successfully.";
+				responseObject.put("isUploaded", true);
+				responseObject.put("message", "Media files uploaded successfully.");
 			}
 			else
 			{
-				// Request is invalid so set proper error message
-				responseString = "Request does not contain valid data. Please upload with proper metadata information.";
+				responseObject.put("isUploaded", false);
+				responseObject.put("message", "Request does not contain valid data. Please upload with proper metadata information.");
 			}
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			responseString = "Error while saving the data. Please upload with proper metadata information.";
+			responseObject.put("isUploaded", false);
+			responseObject.put("message", "Error while saving the data. Please upload with proper metadata information.");
 		}
 		
-		return responseString;
+		return responseObject;
 	}
 	
 	/**
