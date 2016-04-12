@@ -18,9 +18,11 @@
 
         this.selectGenre = (genre) => { if(!genre) this.data.twoGenre = null; };
 
-        this.genders = [{label:'MALE',id:'1'},{label:'FEMALE',id:'2'}];
+        this.genders=['Male','Female'];
 
-        this.selectGender = {label:'MALE',id:'1'}; //default
+        this.levels=['Phd','Graduate','UnderGraduate'];
+
+        this.colleges=['College of Music','College of Engineering','College of Science','College of Management'];
 
         this.submit = () => {
             if (this.registerForm.$invalid) this.registerForm.$submitted = true;
