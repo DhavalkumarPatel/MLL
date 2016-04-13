@@ -165,7 +165,7 @@ public class RegistrationServiceTest
 		jo.put("level", "12");
 		jo.put("gender", "Female");
 		jo.put("preference", "none");
-		jo.put("age", 24);
+		jo.put("age", 24L);
 		return jo;
 		
 		
