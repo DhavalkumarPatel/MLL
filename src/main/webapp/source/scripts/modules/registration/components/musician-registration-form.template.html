@@ -11,7 +11,7 @@
                  <div class="input-group">
                      <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
                      <input type="text" name="username" class="form-control" ng-model="ctrl.data.userName"
-                            placeholder="User Name..." required />
+                            placeholder="User Name" required />
                  </div>
 
                 <div class="alert alert-danger" role="alert"
@@ -31,7 +31,7 @@
                  <div class="input-group">
                      <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
                      <input type="email" name="email" class="form-control" ng-model="ctrl.data.emailId"
-                            placeholder="Email Address..." required />
+                            placeholder="Email Address" required />
                  </div>
                 <div class="alert alert-danger" role="alert"
                      ng-show="ctrl.registrationForm.email.$invalid && ctrl.registrationForm.$submitted">
@@ -55,7 +55,7 @@
                          <div class="input-group">
                              <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
                              <input type="password" name="password" class="form-control" ng-model="ctrl.data.password"
-                                    placeholder="Password..." ng-minlength="8" required />
+                                    placeholder="Password" ng-minlength="8" required />
                          </div>
                          <div class="alert alert-danger" role="alert"
                               ng-show="ctrl.registrationForm.password.$invalid && ctrl.registrationForm.$submitted">
@@ -79,7 +79,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
                             <input type="password" name="confPassword" class="form-control" ng-model="ctrl.data.confPassword"
-                                   placeholder="Confirm Your Password..." ng-minlength="8" required
+                                   placeholder="Password Confirmation" ng-minlength="8" required
                                    mll-input-match="ctrl.data.password" />
                         </div>
                         <div class="alert alert-danger" role="alert"
