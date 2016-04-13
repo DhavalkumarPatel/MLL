@@ -113,8 +113,7 @@ public class RegistrationService {
 			au.setLevel((String) jo.get("level"));
 			au.setGender((String) jo.get("gender"));
 			au.setPreference((String) jo.get("preference"));
-			au.setAge((Integer) jo.get("age"));
-			
+			au.setAge(((Long) jo.get("age")).intValue());
 		}
 		return au;
 	}
