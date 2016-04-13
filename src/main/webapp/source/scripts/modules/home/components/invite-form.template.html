@@ -30,7 +30,7 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
                         <input type="email" name="email" ng-model="ctrl.data.email" class="form-control"
-                               placeholder="Email Address..." required></div>
+                               placeholder="Email Address" required></div>
 
                     <div class="alert alert-danger" role="alert"
                          ng-show="ctrl.form.email.$invalid && ctrl.form.$submitted">
@@ -45,7 +45,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <textarea class="form-control" rows="5" ng-model="ctrl.data.messageBody"></textarea>
+                <div class="row">
+                    <textarea class="form-control" rows="3" ng-model="ctrl.data.messageBody"></textarea>
+                </div>
             </div>
 
             <div class="form-group">

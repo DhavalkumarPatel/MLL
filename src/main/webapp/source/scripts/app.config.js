@@ -30,7 +30,7 @@
                     right: { template: '' }
                 },
                 resolve: {
-                    token: function($state, $stateParams, $q, inviteTokenService) {
+                    token: function($state, $stateParams, $q, inviteTokenService, registrationTypes) {
                         let deferred = $q.defer();
 
                         inviteTokenService
