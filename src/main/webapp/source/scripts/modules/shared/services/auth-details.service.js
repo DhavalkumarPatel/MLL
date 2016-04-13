@@ -3,30 +3,38 @@
 
     angular
         .module('mllApp.shared')
-        .factory('AuthDetails', AuthDetails);
+        .factory('authDetailsService', authDetailsService);
 
-    function AuthDetails() {
-        class AuthenticationDetails {
-            constructor() {
-                this.isAuth = false;
-                this.data = {};
-            }
+    function authDetailsService() {
+        return {
+            isAuth: false,
+            data: {},
+            init: init,
+            clear: clear,
+            change: change
+        };
 
-            clear() {
-                this.isAuth = false;
+        function init(data) {
+            this.isAuth = true;
 
-                this.data = {};
-            }
-
-            change(id, type, permissions) {
-                this.isAuth = true;
-
-                this.data.id = id;
-                this.data.type = type;
-                this.data.permissions = permissions;
-            }
+            this.data = data;
         }
 
-        return AuthenticationDetails;
+        function clear() {
+            this.isAuth = false;
+
+            this.data = {};
+        }
+
+        function change(data) {
+            this.isAuth = true;
+
+            this.data.id = data.userId;
+            this.data.type = data.type;
+
+            this.data.permissions = {};
+            this.data.permissions.browse = data.browse;
+            this.data.permissions.upload = data.upload;
+        }
     }
 })(window.angular);

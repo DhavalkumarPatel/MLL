@@ -33,7 +33,8 @@
                     token: function($state, $stateParams, $q, inviteTokenService) {
                         let deferred = $q.defer();
 
-                        inviteTokenService.validateToken('user', $stateParams.token)
+                        inviteTokenService
+                            .validateToken({ inviteType: registrationTypes.user, token: $stateParams.token })
                             .then((response) => {
                                 if (response.data.isValid) deferred.resolve($stateParams.token);
 
@@ -89,10 +90,11 @@
                     right: { template: '' }
                 },
                 resolve: {
-                    token: function ($state, $stateParams, $q, inviteTokenService) {
+                    token: function ($state, $stateParams, $q, inviteTokenService, registrationTypes) {
                         let deferred = $q.defer();
 
-                        inviteTokenService.validateToken('musician', $stateParams.token)
+                        inviteTokenService
+                            .validateToken({ inviteType: registrationTypes.musician, token: $stateParams.token })
                             .then((response) => {
                                 if (response.data.isValid) deferred.resolve($stateParams.token);
 
@@ -174,6 +176,10 @@
                     }
                 }
             });
+    }
+
+    function accessCheck(){
+
     }
 
 })(window.angular);

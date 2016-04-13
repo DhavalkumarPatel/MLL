@@ -5,37 +5,32 @@
         .module('mllApp.shared')
         .factory('authenticationService', authenticationService);
 
-    authenticationService.$inject = ['$cookies', 'AuthDetails'];
+    authenticationService.$inject = ['$cookies', 'authDetailsService', 'authDetailsKey'];
 
-    function authenticationService($cookies, AuthDetails) {
-        let cookiesKey = 'mllApp.authDetails';
-
+    function authenticationService($cookies, authDetailsService, authDetailsKey) {
         return {
-            details: new AuthDetails(),
+            details: authDetailsService,
             clear: clear,
             change: change,
             check: check
         };
 
         function check() {
-            let authDetails = $cookies.getObject(cookiesKey);
+            let authDetails = $cookies.getObject(authDetailsKey);
 
-            if (authDetails) {
-                let data = authDetails.data;
-                this.details.change(data.id, data.type, data.permissions);
-            }
+            if (authDetails) this.details.init(authDetails.data);
         }
 
         function clear() {
-            $cookies.remove(cookiesKey);
+            $cookies.remove(authDetailsKey);
 
             this.details.clear();
         }
 
-        function change(id, type, permissions) {
-            this.details.change(id, type, permissions);
+        function change(data) {
+            this.details.change(data);
 
-            $cookies.putObject(cookiesKey, this.details);
+            $cookies.putObject(authDetailsKey, this.details);
         }
     }
 })(window.angular);

@@ -13,24 +13,13 @@
         };
 
         function login(data) {
-            return $http({
-                method: 'POST',
-                url: loginUrl,
-                data: data
-            }).then((response) => {
-                if (response.data.isValidUser) {
-                    let id = response.data.userId;
-                    let type =response.data.type;
-                    let permissions = { browse: response.data.browse, upload: response.data.upload };
+            return $http.post(loginUrl, data)
+                .then((response) => {
+                    if (response.data.isValidUser) authenticationService.change(response.data);
 
-                    authenticationService.change(id, type, permissions);
-                }
-
-                return response.data;
-            }).catch((rejection) => {
-                return rejection;
-            });
-
+                    return response.data;
+                })
+                .catch((rejection) => rejection);
         }
     }
 })(window.angular);

@@ -55,7 +55,8 @@
                     token: function($state, $stateParams, $q, inviteTokenService) {
                         let deferred = $q.defer();
 
-                        inviteTokenService.validateToken('user', $stateParams.token)
+                        inviteTokenService
+                            .validateToken({ inviteType: registrationTypes.user, token: $stateParams.token })
                             .then((response) => {
                                 if (response.data.isValid) deferred.resolve($stateParams.token);
 
@@ -111,10 +112,11 @@
                     right: { template: '' }
                 },
                 resolve: {
-                    token: function ($state, $stateParams, $q, inviteTokenService) {
+                    token: function ($state, $stateParams, $q, inviteTokenService, registrationTypes) {
                         let deferred = $q.defer();
 
-                        inviteTokenService.validateToken('musician', $stateParams.token)
+                        inviteTokenService
+                            .validateToken({ inviteType: registrationTypes.musician, token: $stateParams.token })
                             .then((response) => {
                                 if (response.data.isValid) deferred.resolve($stateParams.token);
 
@@ -196,6 +198,10 @@
                     }
                 }
             });
+    }
+
+    function accessCheck(){
+
     }
 
 })(window.angular);
@@ -341,24 +347,13 @@
         };
 
         function login(data) {
-            return $http({
-                method: 'POST',
-                url: loginUrl,
-                data: data
-            }).then((response) => {
-                if (response.data.isValidUser) {
-                    let id = response.data.userId;
-                    let type =response.data.type;
-                    let permissions = { browse: response.data.browse, upload: response.data.upload };
+            return $http.post(loginUrl, data)
+                .then((response) => {
+                    if (response.data.isValidUser) authenticationService.change(response.data);
 
-                    authenticationService.change(id, type, permissions);
-                }
-
-                return response.data;
-            }).catch((rejection) => {
-                return rejection;
-            });
-
+                    return response.data;
+                })
+                .catch((rejection) => rejection);
         }
     }
 })(window.angular);
@@ -430,9 +425,32 @@
 
     let registrationUrl = '/MLL/RegistrationServlet';
 
+    let registrationTypes = {
+        user: 'user',
+        musician: 'musician'
+    };
+
+    let musicGenres = [ 'Alternative', 'Blues', 'Children\'s Music', 'Christian & Gospel', 'Comedy', 'Classical',
+        'Country', 'Dance', 'Electronic', 'Hip - Hop / Rap', 'Pop', 'Jazz', 'Latino', 'R & B / Soul', 'Reggae',
+        'Metal', 'Rock', 'Singer / Songwriter', 'Folk / Americana', 'Funk' ].sort();
+
+    let universityAffiliations = [ 'Undergraduate Student', 'Graduate Student', 'Faculty/Stuff' ];
+
+    let userGenders = [ 'Male', 'Female', 'Not Specified' ];
+
+    let universityColleges = [ 'College of Arts, Media and Design', 'D\'Amore-McKim School of Business',
+        'College of Computer and Information Science', 'College of Engineering', 'Bouvé College of Health Sciences',
+        'School of Law', 'College of Professional Studies', 'College of Science',
+        'College of Social Sciences and Humanities' ].sort();
+
     angular
         .module('mllApp.registration')
-        .constant('registrationUrl', registrationUrl);
+        .constant('registrationUrl', registrationUrl)
+        .constant('registrationTypes', registrationTypes)
+        .constant('universityAffiliations', universityAffiliations)
+        .constant('universityColleges',universityColleges)
+        .constant('userGenders', userGenders)
+        .constant('musicGenres', musicGenres);
 })(window.angular);
 (function(angular){
     'use strict';
@@ -474,32 +492,14 @@
             register: register
         };
 
-        function createConfig(data, type) {
-            data.type = type;
+        function register(data) {
+            return $http.post(registrationUrl, data)
+                .then((response) => {
+                    if (response.data.isRegistered) authenticationService.change(response.data);
 
-            let httpConfig = {
-                method: 'POST',
-                url: registrationUrl,
-                data: data
-            };
-
-            return httpConfig;
-        }
-
-        function register(data, type) {
-            return $http(createConfig(data, type)).then((response) => {
-                if (response.data.isRegistered) {
-                    let id = response.data.userId;
-                    let type =response.data.type;
-                    let permissions = { browse: response.data.browse, upload: response.data.upload };
-
-                    authenticationService.change(id, type, permissions);
-                }
-
-                return response.data;
-            }).catch((rejection) => {
-                return rejection;
-            });
+                    return response.data;
+                })
+                .catch((rejection) => rejection);
         }
     }
 })(window.angular);
@@ -511,31 +511,44 @@
         .module('mllApp.registration')
         .controller('UserRegistrationFormController', UserRegistrationFormController);
 
+    UserRegistrationFormController.$inject =
+        [
+            '$state', 'registrationService', 'musicGenres', 'userGenders',
+            'universityColleges', 'universityAffiliations', 'registrationTypes'
+        ];
 
+    function UserRegistrationFormController($state, regService, genres, genders, colleges, affiliations, regTypes) {
+        this.genres = genres;
+        this.genders = genders;
+        this.colleges = colleges;
+        this.affiliations = affiliations;
 
-    function UserRegistrationFormController() {
-
-        this.genres = ['Alternative', 'Blues', 'Children\'s Music', 'Christian & Gospel', 'Comedy', 'Classical',
-            'Country', 'Dance', 'Electronic', 'Hip - Hop / Rap', 'Pop', 'Jazz', 'Latino', 'R & B / Soul', 'Reggae',
-            'Metal', 'Rock', 'Singer / Songwriter', 'Folk / Americana', 'Funk' ];
-
-
-
-        this.selectGenre = (genre) => { if(!genre) this.data.twoGenre = null; };
-
-        this.genders = [{label:'MALE',id:'1'},{label:'FEMALE',id:'2'}];
-
-        this.selectGender = {label:'MALE',id:'1'}; //default
-
-        this.submit = () => {
-            if (this.registerForm.$invalid) this.registerForm.$submitted = true;
-            else {
-                alert("form successful");
-                this.onNext();
-            }
+        this.data = {
+            type: regTypes.user,
+            token: this.inviteToken
         };
 
+        this.register = () => {
+            if (this.registrationForm.$invalid) this.registrationForm.$submitted = true;
 
+            else
+                regService.register(this.data)
+                    .then((response) => this.processResponse(response))
+                    .catch((rejection) => this.displayError(rejection));
+        };
+
+        this.processResponse = (data) => {
+            if (data.isRegistered) this.redirect(data.userId);
+
+            else this.displayError(data.errorMessage);
+        };
+
+        this.redirect = (id) => $state.go(regTypes.user, { id: id });
+
+        this.displayError = (errorMessage) => {
+            this.registrationForm.$serverError = true;
+            this.errorMessage = errorMessage;
+        };
     }
 })(window.angular);
 
@@ -560,7 +573,6 @@
         };
     }
 })(window.angular);
-
 (function (angular) {
     'use strict';
 
@@ -568,27 +580,21 @@
         .module('mllApp.registration')
         .controller('MusicianRegistrationFormController', MusicianRegistrationFormController);
 
-    MusicianRegistrationFormController.$inject = ['$state', 'registrationService'];
+    MusicianRegistrationFormController.$inject = ['$state', 'registrationService', 'registrationTypes'];
 
-    function MusicianRegistrationFormController($state, registrationService) {
-        this.data = {};
-        
-        this.service = registrationService;
+    function MusicianRegistrationFormController($state, registrationService, registrationTypes) {
+        this.data = {
+            type: registrationTypes.musician,
+            token: this.inviteToken
+        };
 
         this.register = () => {
             if (this.registrationForm.$invalid) this.registrationForm.$submitted = true;
-            else {
-                let data = this.data;
-                data.token = this.inviteToken;
 
-                this.service.register(data, 'musician')
-                    .then((response) => {
-                        this.processResponse(response);
-                    })
-                    .catch((rejection) => {
-
-                    });
-            }
+            else
+                registrationService.register(this.data)
+                    .then((response) => this.processResponse(response))
+                    .catch((rejection) => this.displayError(rejection));
         };
 
         this.processResponse = (data) => {
@@ -597,18 +603,14 @@
             else this.displayError(data.errorMessage);
         };
 
-        this.redirect = (id) => {
-            $state.go('musician', { id: id });
-        };
+        this.redirect = (id) => $state.go(registrationTypes.musician, { id: id });
 
         this.displayError = (errorMessage) => {
             this.registrationForm.$serverError = true;
             this.errorMessage = errorMessage;
         };
-
     }
 })(window.angular);
-
 
 (function (angular) {
     'use strict';
@@ -673,9 +675,9 @@
     InviteFormController.$inject = ['$timeout', 'inviteTokenService'];
 
     function InviteFormController($timeout, inviteTokenService) {
-        this.inviteService = inviteTokenService;
-
-        this.data = {};
+        this.data = {
+            userId: +this.userId
+        };
 
         this.types = [
             { label: 'General User', value: 'user' },
@@ -685,8 +687,9 @@
         this.invite = () => {
             if (this.form.$invalid) this.form.$submitted = true;
 
-            else {
-                this.inviteService.generateToken(+this.userId, this.data.type, this.data.email)
+            else
+                inviteTokenService
+                    .generateToken(this.data)
                     .then((response) => {
                         this.message = response.data.message;
                         this.isGenerated = response.data.isGenerated;
@@ -699,15 +702,10 @@
 
                         $timeout(() => this.isOpen = false, 5000);
                     })
-                    .catch((rejection) => {
-
-                    });
-            }
+                    .catch((rejection) => rejection);
         };
     }
 })(window.angular);
-
-
 (function (angular) {
     'use strict';
 
@@ -886,9 +884,9 @@
 
     let musicFormats = ['.mp3', '.wav'];
 
-    let musicGenres = ['Alternative', 'Blues', 'Children\'s Music', 'Christian & Gospel', 'Comedy', 'Classical',
+    let musicGenres = [ 'Alternative', 'Blues', 'Children\'s Music', 'Christian & Gospel', 'Comedy', 'Classical',
         'Country', 'Dance', 'Electronic', 'Hip - Hop / Rap', 'Pop', 'Jazz', 'Latino', 'R & B / Soul', 'Reggae',
-        'Metal', 'Rock', 'Singer / Songwriter', 'Folk / Americana', 'Funk' ];
+        'Metal', 'Rock', 'Singer / Songwriter', 'Folk / Americana', 'Funk' ].sort();
 
     let musicForms = {
         current: 0,
@@ -1113,8 +1111,6 @@
         this.addArtist = () => this.data.artists.push({ name: '' });
 
         this.removeArtist = (i) => this.data.artists.splice(i, 1);
-
-        this.agreement = () => this.onAgree({ isChecked: this.isChecked});
 
         this.selectGenre = (genre) => { if(!genre) this.data.secondaryGenre = null; };
 
@@ -1351,6 +1347,24 @@
     angular.module('mllApp.shared', ['mllApp.templates', 'ui.bootstrap', 'ngCookies']);
 
 })(window.angular);
+(function(angular){
+    'use strict';
+
+    let invitationUrl = '/MLL/InviteServlet';
+
+    let authDetailsKey = 'mllApp.authDetails';
+
+    let tokenActionTypes = {
+        validate: 'validate',
+        generate: 'generate'
+    };
+
+    angular
+        .module('mllApp.shared')
+        .constant('invitationUrl', invitationUrl)
+        .constant('authDetailsKey', authDetailsKey)
+        .constant('tokenActionTypes', tokenActionTypes);
+})(window.angular);
 (function (angular) {
     'use strict';
 
@@ -1410,7 +1424,7 @@
             restrict: 'A',
             require: 'ngModel',
             scope: {
-              firstValue: '=mllInputMatch'
+                firstValue: '=mllInputMatch'
             },
             link: link
         };
@@ -1436,31 +1450,39 @@
 
     angular
         .module('mllApp.shared')
-        .factory('AuthDetails', AuthDetails);
+        .factory('authDetailsService', authDetailsService);
 
-    function AuthDetails() {
-        class AuthenticationDetails {
-            constructor() {
-                this.isAuth = false;
-                this.data = {};
-            }
+    function authDetailsService() {
+        return {
+            isAuth: false,
+            data: {},
+            init: init,
+            clear: clear,
+            change: change
+        };
 
-            clear() {
-                this.isAuth = false;
+        function init(data) {
+            this.isAuth = true;
 
-                this.data = {};
-            }
-
-            change(id, type, permissions) {
-                this.isAuth = true;
-
-                this.data.id = id;
-                this.data.type = type;
-                this.data.permissions = permissions;
-            }
+            this.data = data;
         }
 
-        return AuthenticationDetails;
+        function clear() {
+            this.isAuth = false;
+
+            this.data = {};
+        }
+
+        function change(data) {
+            this.isAuth = true;
+
+            this.data.id = data.userId;
+            this.data.type = data.type;
+
+            this.data.permissions = {};
+            this.data.permissions.browse = data.browse;
+            this.data.permissions.upload = data.upload;
+        }
     }
 })(window.angular);
 (function(angular) {
@@ -1470,37 +1492,32 @@
         .module('mllApp.shared')
         .factory('authenticationService', authenticationService);
 
-    authenticationService.$inject = ['$cookies', 'AuthDetails'];
+    authenticationService.$inject = ['$cookies', 'authDetailsService', 'authDetailsKey'];
 
-    function authenticationService($cookies, AuthDetails) {
-        let cookiesKey = 'mllApp.authDetails';
-
+    function authenticationService($cookies, authDetailsService, authDetailsKey) {
         return {
-            details: new AuthDetails(),
+            details: authDetailsService,
             clear: clear,
             change: change,
             check: check
         };
 
         function check() {
-            let authDetails = $cookies.getObject(cookiesKey);
+            let authDetails = $cookies.getObject(authDetailsKey);
 
-            if (authDetails) {
-                let data = authDetails.data;
-                this.details.change(data.id, data.type, data.permissions);
-            }
+            if (authDetails) this.details.init(authDetails.data);
         }
 
         function clear() {
-            $cookies.remove(cookiesKey);
+            $cookies.remove(authDetailsKey);
 
             this.details.clear();
         }
 
-        function change(id, type, permissions) {
-            this.details.change(id, type, permissions);
+        function change(data) {
+            this.details.change(data);
 
-            $cookies.putObject(cookiesKey, this.details);
+            $cookies.putObject(authDetailsKey, this.details);
         }
     }
 })(window.angular);
@@ -1511,31 +1528,24 @@
         .module('mllApp.shared')
         .factory('inviteTokenService', inviteTokenService);
 
-    inviteTokenService.$inject = ['$http', '$q', '$timeout'];
+    inviteTokenService.$inject = ['$http', 'invitationUrl', 'tokenActionTypes'];
 
-    function inviteTokenService($http, $q, $timeout) {
+    function inviteTokenService($http, invitationUrl, tokenActionTypes) {
         return {
             validateToken: validateToken,
             generateToken: generateToken
         };
 
-        function validateToken(type, token) {
-            let data = { actionType: 'validate', inviteType: type, token: token };
-            return $http({
-                method: 'POST',
-                url: '/MLL/InviteServlet',
-                data: data
-            });
+        function validateToken(data) {
+            data.actionType =  tokenActionTypes.validate;
+
+            return $http.post(invitationUrl, data);
         }
 
-        function generateToken(id, type, email) {
-            let data = { userId: id, inviteType: type, actionType: 'generate', email: email };
+        function generateToken(data) {
+            data.actionType = tokenActionTypes.generate;
 
-            return $http({
-                method: 'POST',
-                url: '/MLL/InviteServlet',
-                data: data
-            });
+            return $http.post(invitationUrl, data);
         }
     }
 })(window.angular);

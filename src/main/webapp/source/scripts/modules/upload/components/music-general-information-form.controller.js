@@ -11,8 +11,6 @@
 
         this.genres = musicGenres;
 
-        this.
-
         this.addArtist = () => this.data.artists.push({ name: '' });
 
         this.removeArtist = (i) => this.data.artists.splice(i, 1);

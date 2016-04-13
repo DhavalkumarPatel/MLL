@@ -3,9 +3,9 @@
 
     let musicFormats = ['.mp3', '.wav'];
 
-    let musicGenres = ['Alternative', 'Blues', 'Children\'s Music', 'Christian & Gospel', 'Comedy', 'Classical',
+    let musicGenres = [ 'Alternative', 'Blues', 'Children\'s Music', 'Christian & Gospel', 'Comedy', 'Classical',
         'Country', 'Dance', 'Electronic', 'Hip - Hop / Rap', 'Pop', 'Jazz', 'Latino', 'R & B / Soul', 'Reggae',
-        'Metal', 'Rock', 'Singer / Songwriter', 'Folk / Americana', 'Funk' ];
+        'Metal', 'Rock', 'Singer / Songwriter', 'Folk / Americana', 'Funk' ].sort();
 
     let musicForms = {
         current: 0,

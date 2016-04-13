@@ -10,7 +10,7 @@
             restrict: 'A',
             require: 'ngModel',
             scope: {
-              firstValue: '=mllInputMatch'
+                firstValue: '=mllInputMatch'
             },
             link: link
         };

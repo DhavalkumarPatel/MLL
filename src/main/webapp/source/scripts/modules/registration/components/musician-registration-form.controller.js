@@ -1,4 +1,3 @@
-
 (function (angular) {
     'use strict';
 
@@ -6,27 +5,21 @@
         .module('mllApp.registration')
         .controller('MusicianRegistrationFormController', MusicianRegistrationFormController);
 
-    MusicianRegistrationFormController.$inject = ['$state', 'registrationService'];
+    MusicianRegistrationFormController.$inject = ['$state', 'registrationService', 'registrationTypes'];
 
-    function MusicianRegistrationFormController($state, registrationService) {
-        this.data = {};
-        
-        this.service = registrationService;
+    function MusicianRegistrationFormController($state, registrationService, registrationTypes) {
+        this.data = {
+            type: registrationTypes.musician,
+            token: this.inviteToken
+        };
 
         this.register = () => {
             if (this.registrationForm.$invalid) this.registrationForm.$submitted = true;
-            else {
-                let data = this.data;
-                data.token = this.inviteToken;
 
-                this.service.register(data, 'musician')
-                    .then((response) => {
-                        this.processResponse(response);
-                    })
-                    .catch((rejection) => {
-
-                    });
-            }
+            else
+                registrationService.register(this.data)
+                    .then((response) => this.processResponse(response))
+                    .catch((rejection) => this.displayError(rejection));
         };
 
         this.processResponse = (data) => {
@@ -35,14 +28,11 @@
             else this.displayError(data.errorMessage);
         };
 
-        this.redirect = (id) => {
-            $state.go('musician', { id: id });
-        };
+        this.redirect = (id) => $state.go(registrationTypes.musician, { id: id });
 
         this.displayError = (errorMessage) => {
             this.registrationForm.$serverError = true;
             this.errorMessage = errorMessage;
         };
-
     }
 })(window.angular);

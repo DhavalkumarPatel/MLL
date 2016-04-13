@@ -8,9 +8,9 @@
     InviteFormController.$inject = ['$timeout', 'inviteTokenService'];
 
     function InviteFormController($timeout, inviteTokenService) {
-        this.inviteService = inviteTokenService;
-
-        this.data = {};
+        this.data = {
+            userId: +this.userId
+        };
 
         this.types = [
             { label: 'General User', value: 'user' },
@@ -20,8 +20,9 @@
         this.invite = () => {
             if (this.form.$invalid) this.form.$submitted = true;
 
-            else {
-                this.inviteService.generateToken(+this.userId, this.data.type, this.data.email)
+            else
+                inviteTokenService
+                    .generateToken(this.data)
                     .then((response) => {
                         this.message = response.data.message;
                         this.isGenerated = response.data.isGenerated;
@@ -34,11 +35,7 @@
 
                         $timeout(() => this.isOpen = false, 5000);
                     })
-                    .catch((rejection) => {
-
-                    });
-            }
+                    .catch((rejection) => rejection);
         };
     }
 })(window.angular);
-

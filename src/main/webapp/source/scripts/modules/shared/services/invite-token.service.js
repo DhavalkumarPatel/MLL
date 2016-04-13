@@ -5,31 +5,24 @@
         .module('mllApp.shared')
         .factory('inviteTokenService', inviteTokenService);
 
-    inviteTokenService.$inject = ['$http', '$q', '$timeout'];
+    inviteTokenService.$inject = ['$http', 'invitationUrl', 'tokenActionTypes'];
 
-    function inviteTokenService($http, $q, $timeout) {
+    function inviteTokenService($http, invitationUrl, tokenActionTypes) {
         return {
             validateToken: validateToken,
             generateToken: generateToken
         };
 
-        function validateToken(type, token) {
-            let data = { actionType: 'validate', inviteType: type, token: token };
-            return $http({
-                method: 'POST',
-                url: '/MLL/InviteServlet',
-                data: data
-            });
+        function validateToken(data) {
+            data.actionType =  tokenActionTypes.validate;
+
+            return $http.post(invitationUrl, data);
         }
 
-        function generateToken(id, type, email) {
-            let data = { userId: id, inviteType: type, actionType: 'generate', email: email };
+        function generateToken(data) {
+            data.actionType = tokenActionTypes.generate;
 
-            return $http({
-                method: 'POST',
-                url: '/MLL/InviteServlet',
-                data: data
-            });
+            return $http.post(invitationUrl, data);
         }
     }
 })(window.angular);

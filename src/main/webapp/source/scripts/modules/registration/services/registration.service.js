@@ -12,32 +12,14 @@
             register: register
         };
 
-        function createConfig(data, type) {
-            data.type = type;
+        function register(data) {
+            return $http.post(registrationUrl, data)
+                .then((response) => {
+                    if (response.data.isRegistered) authenticationService.change(response.data);
 
-            let httpConfig = {
-                method: 'POST',
-                url: registrationUrl,
-                data: data
-            };
-
-            return httpConfig;
-        }
-
-        function register(data, type) {
-            return $http(createConfig(data, type)).then((response) => {
-                if (response.data.isRegistered) {
-                    let id = response.data.userId;
-                    let type =response.data.type;
-                    let permissions = { browse: response.data.browse, upload: response.data.upload };
-
-                    authenticationService.change(id, type, permissions);
-                }
-
-                return response.data;
-            }).catch((rejection) => {
-                return rejection;
-            });
+                    return response.data;
+                })
+                .catch((rejection) => rejection);
         }
     }
 })(window.angular);
