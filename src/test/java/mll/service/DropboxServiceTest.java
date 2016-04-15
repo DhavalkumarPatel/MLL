@@ -10,7 +10,7 @@ public class DropboxServiceTest
 	public void testContentFromDropbox1() throws Exception
 	{
 		DropboxService ds = new DropboxService();
-		assertEquals(false, ds.getContentFromDropbox(null) == null);
+		assertEquals(true, ds.getContentFromDropbox(null) == null);
 	}
 	
 	@Test
