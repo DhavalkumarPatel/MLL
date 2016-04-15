@@ -1,24 +1,33 @@
 package mll.service;
 
+import java.io.File;
 import java.util.List;
+
+import org.nuxeo.ecm.automation.client.Constants;
+import org.nuxeo.ecm.automation.client.Session;
+import org.nuxeo.ecm.automation.client.adapters.DocumentService;
+import org.nuxeo.ecm.automation.client.jaxrs.impl.HttpAutomationClient;
+import org.nuxeo.ecm.automation.client.model.Document;
+import org.nuxeo.ecm.automation.client.model.FileBlob;
+import org.nuxeo.ecm.automation.client.model.PathRef;
 
 import mll.beans.Metadata;
 
 public class NuxeoService
 {
-	//private static String NUXEOURL = "http://localhost:8080/nuxeo/site/automation";
-	//private static String USERNAME = "Administrator";
-	//private static String PASSWORD = "Administrator";
+	private static String NUXEOURL = "http://localhost:8080/nuxeo/site/automation";
+	private static String USERNAME = "Administrator";
+	private static String PASSWORD = "Administrator";
 	
-	//HttpAutomationClient client = null;
-	//Session session = null;
+	HttpAutomationClient client = null;
+	Session session = null;
 	
 	public NuxeoService() 
 	{
 		try
 		{
-			//client = new HttpAutomationClient(NUXEOURL);
-			//session = (Session) client.getSession(USERNAME, PASSWORD);
+			client = new HttpAutomationClient(NUXEOURL);
+			session = (Session) client.getSession(USERNAME, PASSWORD);
 		}
 		catch(Exception e)
 		{
@@ -37,7 +46,7 @@ public class NuxeoService
 					if(null != metadata && null != metadata.getSong() && null != metadata.getSong().getId())
 					{
 						// Fetch the root of Nuxeo repository
-						/*Document root = (Document) session.newRequest("Document.Fetch").set("value", "/").execute();
+						Document root = (Document) session.newRequest("Document.Fetch").set("value", "/").execute();
 						
 						File file=new File("C:\\song.mp3");
 						FileBlob fb = new FileBlob(file);
@@ -50,7 +59,7 @@ public class NuxeoService
 						//Fetch the document for JSON
 						Document document = (Document) session.newRequest(DocumentService.GetDocumentChild).setInput(new PathRef("/")).set("name", "myfile"+metadata.getSong().getId()).execute();
 						document.set("dc:description", metadata.getMetadataJson().toString());
-						document = (Document) session.newRequest("Document.Update").setInput(document).set("properties", document).execute();*/
+						document = (Document) session.newRequest("Document.Update").setInput(document).set("properties", document).execute();
 					}
 				}
 			}

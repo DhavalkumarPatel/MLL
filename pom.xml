@@ -13,6 +13,13 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	
+   <repositories>
+		<repository>
+		  <id>public-releases</id>
+		  <url>https://maven-us.nuxeo.org/nexus/service/local/repositories/public-releases/content/</url>
+		</repository>
+   </repositories>
+   
 	<dependencies>
 
 		<dependency>
@@ -153,6 +160,13 @@
 			<groupId>com.sun.mail</groupId>
 			<artifactId>javax.mail</artifactId>
 			<version>1.5.1</version>
+		</dependency>
+
+		<dependency>
+		  <groupId>org.nuxeo.ecm.automation</groupId>
+		  <artifactId>nuxeo-automation-client</artifactId>
+		  <version>8.2</version>
+		  <classifier>jar-with-dependencies</classifier>
 		</dependency>
 
 	</dependencies>
