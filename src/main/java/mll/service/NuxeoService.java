@@ -3,13 +3,11 @@ package mll.service;
 import java.util.List;
 
 import mll.beans.Metadata;
+import mll.utility.Configuration;
 
 public class NuxeoService
 {
-	//private static String NUXEOURL = "http://localhost:8080/nuxeo/site/automation";
-	//private static String USERNAME = "Administrator";
-	//private static String PASSWORD = "Administrator";
-	
+	Configuration conf = new Configuration();
 	//HttpAutomationClient client = null;
 	//Session session = null;
 	
@@ -17,8 +15,8 @@ public class NuxeoService
 	{
 		try
 		{
-			//client = new HttpAutomationClient(NUXEOURL);
-			//session = (Session) client.getSession(USERNAME, PASSWORD);
+			//client = new HttpAutomationClient(conf.NUXEO_URL);
+			//session = (Session) client.getSession(conf.NUXEO_USER_NAME, conf.NUXEO_PASSWORD);
 		}
 		catch(Exception e)
 		{

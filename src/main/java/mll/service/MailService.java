@@ -10,9 +10,12 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import mll.beans.Invite;
+import mll.utility.Configuration;
 
 public class MailService
 {
+	Configuration conf = new Configuration();
+	
 	/**
 	* This method takes Invite object as an input and send 
 	* the invite as an email to the recipient. 
@@ -26,7 +29,7 @@ public class MailService
 		
 		try
 		{
-			sendMail(invite.getToken().getEmailId(), "Invite from Media Licencing Lab", "\n"+ invite.getToken().getMessageBody() + "\n\nHere is your personalized invitation link. Use it to create your profile in the platform :: " + invite.getUrl() + "\n\nIf you received this message in error, or if you have a problem during the registration process, please contact medialicensinglab@gmail.com.\n\nThanks,\nMedia Team");
+			sendMail(invite.getToken().getEmailId(), "Invite from Media Licencing Lab", "\n"+ invite.getToken().getMessageBody() + "\n\nHere is your personalized invitation link. Use it to create your profile in the platform :: " + invite.getUrl() + "\n\nIf you received this message in error, or if you have a problem during the registration process, please contact "+ conf.EMAIL_ADDRESS_FOR_SUPPORT +".\n\nThanks,\nMedia Team");
 		}
 		catch(Exception e)
 		{
@@ -43,13 +46,10 @@ public class MailService
 	* @version 1.0
 	* @since   2016-04-06 
 	*/
-	public static void sendMail(String receiverMail, String subjectLine, String msg) 
+	public void sendMail(String receiverMail, String subjectLine, String msg) 
 	{
 		try 
 		{
-			final String username = "medialicensinglab@gmail.com";
-			final String password = "mll@team19";
-	
 			Properties props = new Properties();
 			props.put("mail.smtp.host", "smtp.gmail.com");
 			props.put("mail.smtp.socketFactory.port", "465");
@@ -62,12 +62,12 @@ public class MailService
 				@Override
 				protected PasswordAuthentication getPasswordAuthentication() 
 				{
-					return new PasswordAuthentication(username, password);
+					return new PasswordAuthentication(conf.USER_NAME_FOR_EMAIL, conf.PASSWOD_FOR_EMAIL);
 				}
 			});
 
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("medialicensinglab@gmail.com", "Media Team"));
+			message.setFrom(new InternetAddress(conf.FROM_EMAIL_ADDRESS, conf.FROM_NAME));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiverMail));
 			message.setSubject(subjectLine);
 			message.setText(msg);

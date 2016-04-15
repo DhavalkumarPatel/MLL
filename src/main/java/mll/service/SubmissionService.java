@@ -21,11 +21,12 @@ import mll.beans.Metadata;
 import mll.beans.Owner;
 import mll.beans.Song;
 import mll.dao.SubmissionDAO;
+import mll.utility.Configuration;
 
 public class SubmissionService
 {
 	SubmissionDAO dao;
-	private static Boolean IS_NUXEO_CODE_ENABLED = false;
+	Configuration conf = new Configuration();
 	
 	public SubmissionService() 
 	{
@@ -65,7 +66,7 @@ public class SubmissionService
 				metadatas = dao.saveMetadata(metadatas);
 				
 				//
-				if(IS_NUXEO_CODE_ENABLED)
+				if(conf.IS_NUXEO_ENABLED)
 				{
 					NuxeoService nuxeoService = new NuxeoService();
 					nuxeoService.uploadMedia(metadatas);
