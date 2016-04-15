@@ -12,7 +12,14 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-
+	
+   <repositories>
+		<repository>
+		  <id>public-releases</id>
+		  <url>https://maven-us.nuxeo.org/nexus/service/local/repositories/public-releases/content/</url>
+		</repository>
+   </repositories>
+   
 	<dependencies>
 
 		<dependency>
@@ -155,11 +162,27 @@
 			<version>1.5.1</version>
 		</dependency>
 
-	</dependencies>
+		<dependency>
+		  <groupId>org.nuxeo.ecm.automation</groupId>
+		  <artifactId>nuxeo-automation-client</artifactId>
+		  <version>8.2</version>
+		  <classifier>jar-with-dependencies</classifier>
+		</dependency>
 
+	</dependencies>
+	
+	
 	<build>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>tomcat-maven-plugin</artifactId>
+					<configuration>
+						<server>tomcat-development-server</server>
+						<port>9966</port>
+					</configuration>
+				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>exec-maven-plugin</artifactId>

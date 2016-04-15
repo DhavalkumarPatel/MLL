@@ -37,6 +37,10 @@
 			<column name="content"  length="200" not-null="true" />
 		</property>
 		
+		<property name="userId">
+			<column name="user_id" not-null="true" />
+		</property>
+		
 	</class>
 	
 </hibernate-mapping>

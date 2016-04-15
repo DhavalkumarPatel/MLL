@@ -112,6 +112,25 @@ public class RegistrationService {
 			au.setCollege((String) jo.get("college"));
 			au.setLevel((String) jo.get("level"));
 			au.setGender((String) jo.get("gender"));
+			
+			if(null != jo.get("major") && !"".equals(jo.get("major")))
+			{
+				au.setMajor((String) jo.get("major"));
+			}
+			else
+			{
+				au.setMajor(" ");
+			}
+			
+			if(null != jo.get("minor") && !"".equals(jo.get("minor")))
+			{
+				au.setMinor((String) jo.get("minor"));
+			}
+			else
+			{
+				au.setMinor(" ");
+			}
+			
 			au.setPreference((String) jo.get("preference"));
 			au.setAge(((Long) jo.get("age")).intValue());
 		}

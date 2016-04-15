@@ -35,6 +35,14 @@
 		<property name="age">
 			<column name="age"  not-null="false" />
 		</property>
+		
+		<property name="major">
+			<column name="major" length="200" />
+		</property>
+		
+		<property name="minor">
+			<column name="minor" length="200"/>
+		</property>
 		      	
 	</class>
 	

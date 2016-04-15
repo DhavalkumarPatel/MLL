@@ -14,6 +14,8 @@ public class AdminUser  implements Serializable
 	private String gender;
 	private String preference;
 	private Integer age;
+	private String major;
+	private String minor;
 	
 	public Integer getId() {
 		return id;
@@ -63,4 +65,17 @@ public class AdminUser  implements Serializable
 	public void setAge(Integer age) {
 		this.age = age;
 	}
+	public String getMajor() {
+		return major;
+	}
+	public void setMajor(String major) {
+		this.major = major;
+	}
+	public String getMinor() {
+		return minor;
+	}
+	public void setMinor(String minor) {
+		this.minor = minor;
+	}
+	
 }

@@ -25,6 +25,7 @@ import mll.dao.SubmissionDAO;
 public class SubmissionService
 {
 	SubmissionDAO dao;
+	private static Boolean IS_NUXEO_CODE_ENABLED = false;
 	
 	public SubmissionService() 
 	{
@@ -61,7 +62,14 @@ public class SubmissionService
 			if(null != metadatas && !metadatas.isEmpty())
 			{
 				// Save all media files with metadata
-				dao.saveMetadata(metadatas);
+				metadatas = dao.saveMetadata(metadatas);
+				
+				//
+				if(IS_NUXEO_CODE_ENABLED)
+				{
+					NuxeoService nuxeoService = new NuxeoService();
+					nuxeoService.uploadMedia(metadatas);
+				}
 				
 				responseObject.put("isUploaded", true);
 				responseObject.put("message", "Media files uploaded successfully.");
@@ -125,6 +133,9 @@ public class SubmissionService
 	    // Populate Song Recorders Information	 
 	    populateSongRecorders(metadata, soundInformation);
 	    
+	    // set Json Object For Nuxeo
+	    metadata.setMetadataJson(mainObject);
+	    
 		metadatas.add(metadata);
 		return metadatas;
 	}
@@ -138,6 +149,7 @@ public class SubmissionService
 	* @version 1.0
 	* @since   2016-03-24 
 	*/
+	@SuppressWarnings("unchecked")
 	public List<Metadata> populateMetadataBeansFromMultipartRequest(HttpServletRequest request) throws Exception
 	{
 		List<Metadata> metadatas = new ArrayList<Metadata>();
@@ -198,6 +210,13 @@ public class SubmissionService
 	    // Populate Song Recorders Information	 
 	    populateSongRecorders(metadata, soundInformation);
 	    
+	    // createJsonObject For Nuxeo
+	    JSONObject mainObject = new JSONObject();
+	    mainObject.put("generalInformation", generalInformation);
+	    mainObject.put("ownershipInformation", ownershipInformation);
+	    mainObject.put("soundInformation", soundInformation);
+	    metadata.setMetadataJson(mainObject);
+	    
 		metadatas.add(metadata);
 		return metadatas;
 	}
@@ -237,7 +256,7 @@ public class SubmissionService
 	    else
 	    {
 	    	//TODO
-	    	song.setUserId(0);
+	    	song.setUserId(2);
 	    }
 	    
 	    if(null != dropboxURL && !"".equals(dropboxURL))

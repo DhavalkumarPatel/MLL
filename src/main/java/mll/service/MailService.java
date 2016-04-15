@@ -26,7 +26,7 @@ public class MailService
 		
 		try
 		{
-			sendMail(invite.getToken().getEmailId(), "Invite from Media Licencing Lab", "\n"+ invite.getToken().getMessageBody() + "\n\nYour invitation link is :: " + invite.getUrl() + "\n\nThanks,\nMedia Team");
+			sendMail(invite.getToken().getEmailId(), "Invite from Media Licencing Lab", "\n"+ invite.getToken().getMessageBody() + "\n\nHere is your personalized invitation link. Use it to create your profile in the platform :: " + invite.getUrl() + "\n\nIf you received this message in error, or if you have a problem during the registration process, please contact medialicensinglab@gmail.com.\n\nThanks,\nMedia Team");
 		}
 		catch(Exception e)
 		{
