@@ -48,6 +48,8 @@ public class NuxeoService
 						Document root = (Document) session.newRequest("Document.Fetch").set("value", "/").execute();
 						
 						// create a file document
+						  
+						// We cannot send byte array to Nuxeo so we can write byte array to server directory and then send that file path to Nuxeo. 
 						session.newRequest("Document.Create").setInput(root).set("type", "File").set("name", "myfile"+metadata.getSong().getId()).set("properties", "dc:title=MLL-SONG "+metadata.getSong().getId()).execute();
 						session.newRequest("Blob.Attach").setHeader(Constants.HEADER_NX_VOIDOP, "true").setInput(metadata.getSong().getContent()).set("document", "/myfile"+metadata.getSong().getId()).execute();
 						
