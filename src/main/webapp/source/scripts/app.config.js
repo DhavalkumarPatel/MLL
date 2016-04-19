@@ -115,7 +115,7 @@
                 }
             })
             .state('musician', {
-                url: '/musician/id/:id',
+                url: '/musician/profile/id/:id',
                 views: {
                     left: { template: '' },
                     center: {
@@ -136,7 +136,8 @@
                                 deferred.reject();
                             }
 
-                            else if (authenticationService.details.data.id !== +$stateParams.id) {
+                            else if (authenticationService.details.data.id !== +$stateParams.id &&
+                                     authenticationService.details.data.permissions.upload) {
                                 $state.go(authenticationService.details.data.type,
                                     { id: authenticationService.details.data.id });
                                 deferred.reject();
