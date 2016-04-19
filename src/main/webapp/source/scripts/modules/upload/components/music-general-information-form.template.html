@@ -4,7 +4,7 @@
          ng-class="{ 'has-success': ctrl.generalForm.title.$valid && ctrl.generalForm.$submitted,
                      'has-error': ctrl.generalForm.title.$invalid && ctrl.generalForm.$submitted }">
         <label for="general-title" class="col-xs-2">
-            Song Title:
+            Song Title
         </label>
         <div class="col-xs-10">
             <input type="text" name="title" class="form-control" id="general-title"
@@ -26,7 +26,7 @@
             <div class="form-group has-feedback"
                  ng-class="{ 'has-success': artistForm.artist.$valid && ctrl.generalForm.$submitted,
                              'has-error': artistForm.artist.$invalid && ctrl.generalForm.$submitted }">
-                <label class="col-xs-2">Artist<span ng-show="$index">&nbsp;#{{$index + 1}}</span>:</label>
+                <label class="col-xs-2">Artist&nbsp;<span ng-show="$index">#{{$index + 1}}</span></label>
                 <div class="col-xs-8">
                     <input type="text" name="artist" class="form-control" ng-model="artist.name" required />
                     <div class="alert alert-danger" role="alert"
@@ -55,7 +55,7 @@
          ng-class="{ 'has-success': ctrl.generalForm.beatRate.$valid && ctrl.generalForm.$submitted,
                      'has-error': ctrl.generalForm.beatRate.$invalid && ctrl.generalForm.$submitted }">
         <label for="beat-rate" class="col-xs-2">
-            Beat Rate/Minute:
+            Beat Rate/Minute
         </label>
         <div class="col-xs-10">
             <input type="number" name="beatRate" class="form-control" id="beat-rate"
@@ -80,9 +80,9 @@
          ng-class="{ 'has-success': ctrl.generalForm.agreement.$valid && ctrl.generalForm.$submitted,
                      'has-error': ctrl.generalForm.agreement.$invalid && ctrl.generalForm.$submitted }">
         <label  class="col-xs-2">
-            Any Written Agreements <span class="glyphicon glyphicon-question-sign" uib-tooltip="Licenses, etc."></span>:
+            Any Written Agreements <span class="glyphicon glyphicon-question-sign" uib-tooltip="Licenses, etc."></span>
         </label>
-        <div class="col-xs-12">
+        <div class="col-xs-10">
             <label class="radio-inline">
                 <input type="radio" name="agreement" ng-model="ctrl.generalForm.agreement" ng-value="true" required>
                 <span>Yes</span>
@@ -106,7 +106,7 @@
          ng-class="{ 'has-success': ctrl.generalForm.primaryGenre.$valid && ctrl.generalForm.$submitted,
                      'has-error': ctrl.generalForm.primaryGenre.$invalid && ctrl.generalForm.$submitted }">
         <label class="col-xs-2">
-            Primary Genre:
+            Primary Genre
         </label>
         <div class="col-xs-10">
             <select name="primaryGenre" class="form-control" ng-model="ctrl.data.primaryGenre"
@@ -126,7 +126,7 @@
 
     <div class="form-group" ng-show="ctrl.data.primaryGenre">
         <label class="col-xs-2">
-            Secondary Genre:
+            Secondary Genre
         </label>
         <div class="col-xs-10">
             <select name="secondaryGenre" class="form-control" ng-model="ctrl.data.secondaryGenre"
