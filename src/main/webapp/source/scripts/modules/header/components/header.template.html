@@ -28,7 +28,7 @@
                 <ul class="nav navbar-nav"
                     ng-show="ctrl.authService.details.isAuth && ctrl.authService.details.data.permissions.upload">
                     <li>
-                        <a ui-sref="ctrl.uploadLink.href">
+                        <a ui-sref="{{ctrl.uploadLink.href}}">
                             <span ng-bind="ctrl.uploadLink.text"></span>
                         </a>
                     </li>
@@ -51,6 +51,17 @@
         </div>
     </nav>
     <div class="container">
-        <img src="dist/fonts/gll-logo.jpg" />
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                <img src="dist/fonts/gll-logo.jpg" class="img-responsive" />
+            </div>
+            <div class="col-xs-12 col-sm-8">
+                <h2>
+                    <span>Green Line Licensing</span>
+                    <br>
+                    <small>Something that should amaze and attract musicians and underline this unique project</small>
+                </h2>
+            </div>
+        </div>
     </div>
 </header>
