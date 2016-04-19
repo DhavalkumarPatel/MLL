@@ -5,30 +5,34 @@ describe("Music File Uploader Controller:", function() {
 
     let ctrl, q;
 
-    let directData = {
-        fileInformation: {
-            isDirect: true,
-            file: { name: 'sample.mp3', size: 1000 }
-        },
-        generalInformation: {},
-        ownershipInformation: {},
-        soundInformation: {}
-    };
-
-    let cloudData = {
-        fileInformation: {
-            isDirect: false,
-            file: { name: 'sample.mp3', link: 'http://someurl.com' }
-        },
-        generalInformation: {},
-        ownershipInformation: {},
-        soundInformation: {}
-    };
+    let directData, cloudData;
 
     beforeEach(inject(function($controller, $q) {
         ctrl = $controller('MusicFileUploaderController', {}, { });
         q = $q;
     }));
+
+    beforeEach(function() {
+        directData = {
+            fileInformation: {
+                isDirect: true,
+                file: { name: 'sample.mp3', size: 1000 }
+            },
+            generalInformation: {},
+            ownershipInformation: {},
+            soundInformation: {}
+        };
+
+        cloudData = {
+            fileInformation: {
+                isDirect: false,
+                file: { name: 'sample.mp3', link: 'http://someurl.com' }
+            },
+            generalInformation: {},
+            ownershipInformation: {},
+            soundInformation: {}
+        };
+    });
 
     it("'musicForms' should be injected", function() {
         expect(ctrl.forms).toBeDefined();
@@ -64,60 +68,67 @@ describe("Music File Uploader Controller:", function() {
     it("'next' call should set the 2nd form as active", function () {
         ctrl.next();
 
-        expect(ctrl.forms.current).toBe(1);
+        expect(ctrl.forms.currentId).toBe(1);
 
         expect(ctrl.forms.data[0].isActive).toBeFalsy();
-        expect(ctrl.forms.data[0].isDisabled).toBeFalsy();
 
         expect(ctrl.forms.data[1].isActive).toBeTruthy();
-        expect(ctrl.forms.data[1].isDisabled).toBeFalsy();
 
         expect(ctrl.forms.data[2].isActive).toBeFalsy();
-        expect(ctrl.forms.data[2].isDisabled).toBeTruthy();
     });
 
     it("2nd call to 'next' function should set the 3rd form as active", function () {
         ctrl.next();
 
-        expect(ctrl.forms.current).toBe(2);
+        expect(ctrl.forms.currentId).toBe(2);
 
         expect(ctrl.forms.data[0].isActive).toBeFalsy();
-        expect(ctrl.forms.data[0].isDisabled).toBeFalsy();
 
         expect(ctrl.forms.data[1].isActive).toBeFalsy();
-        expect(ctrl.forms.data[1].isDisabled).toBeFalsy();
 
         expect(ctrl.forms.data[2].isActive).toBeTruthy();
-        expect(ctrl.forms.data[2].isDisabled).toBeFalsy();
 
         expect(ctrl.forms.data[3].isActive).toBeFalsy();
-        expect(ctrl.forms.data[3].isDisabled).toBeTruthy();
     });
 
-    it("'previous' call should set the 1st form as active", function () {
+    it("'previous' call should set the 2nd form as active", function () {
         ctrl.previous();
 
-        expect(ctrl.forms.current).toBe(1);
+        expect(ctrl.forms.currentId).toBe(1);
 
         expect(ctrl.forms.data[0].isActive).toBeFalsy();
-        expect(ctrl.forms.data[0].isDisabled).toBeFalsy();
 
         expect(ctrl.forms.data[1].isActive).toBeTruthy();
-        expect(ctrl.forms.data[1].isDisabled).toBeFalsy();
 
         expect(ctrl.forms.data[2].isActive).toBeFalsy();
-        expect(ctrl.forms.data[2].isDisabled).toBeFalsy();
     });
 
-    it("4 other calls to 'next' function should trigger 'submit' function", function () {
-        spyOn(ctrl, 'submit');
+    it("'again' call should set the 1st form as active", function () {
+        ctrl.again();
 
-        ctrl.next();
-        ctrl.next();
-        ctrl.next();
-        ctrl.next();
+        expect(ctrl.forms.currentId).toBe(0);
 
-        expect(ctrl.submit).toHaveBeenCalled();
+        expect(ctrl.forms.data[0].isActive).toBeTruthy();
+
+        expect(ctrl.forms.data[1].isActive).toBeFalsy();
+    });
+
+    it("'again' call should clear file information", function () {
+        ctrl.data = cloudData;
+
+        ctrl.again();
+
+        expect(ctrl.data.fileInformation.file).toBeNull();
+        expect(ctrl.data.fileInformation.name).toBe('');
+    });
+
+    it("'again' call should clear general information", function () {
+        ctrl.data = directData;
+        ctrl.data.generalInformation.title = 'Song Title';
+
+        ctrl.again();
+
+        expect(ctrl.data.generalInformation.title).toBe('');
     });
 
     it("'submit' function should trigger 'submitCloud' on 'uploadService'", function () {

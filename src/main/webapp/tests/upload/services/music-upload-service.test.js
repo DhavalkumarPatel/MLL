@@ -5,9 +5,8 @@ describe('Music Upload Service:', function () {
 
     let httpBackend, service;
 
-    let directData = { isDirect: true, file: {} },
-        cloudData = { isDirect: true, file: 'http://someurl.org' },
-        respondData;
+    let directData = { isDirect: true, file: {} };
+    let cloudData = { isDirect: false, file: 'http://someurl.org' };
 
     let url;
 
@@ -17,41 +16,48 @@ describe('Music Upload Service:', function () {
 
     beforeEach(inject(function ($injector) {
         httpBackend = $injector.get('$httpBackend');
-        httpBackend.when('POST', url.direct).respond('ok');
-        httpBackend.when('POST', url.cloud, {
-            'Content-Type': undefined
-        }).respond('ok');
     }));
 
     beforeEach(inject(function (musicUploadService) {
         service = musicUploadService;
-
-        service.submitCloud(cloudData).then(function (data) {
-            respondData = data;
-        });
-
-        service.submitDirect(directData, 'file').then(function (data) {
-            respondData = data;
-        });
     }));
 
-    it("'submitDirect' should respond with 'ok'", function () {
-        service.submitDirect(directData, 'file').then(function (data) {
-            respondData = data;
-        });
-
-        httpBackend.flush();
-
-        expect(respondData.data).toEqual('ok');
+    afterEach(function() {
+        httpBackend.verifyNoOutstandingExpectation();
+        httpBackend.verifyNoOutstandingRequest();
     });
 
-    it("'submitCloud' should respond with 'ok'", function () {
-        service.submitCloud(cloudData).then(function (data) {
-            respondData = data;
-        });
+    it("'submitDirect' should fire POST request", function () {
+        httpBackend.expectPOST(url.direct, new FormData()).respond({});
+
+        service.submitDirect({});
 
         httpBackend.flush();
+    });
 
-        expect(respondData.data).toEqual('ok');
+    it("'submitCloud' should fire POST request", function () {
+        httpBackend.expectPOST(url.cloud, {}).respond({});
+
+        service.submitCloud({});
+
+        httpBackend.flush();
+    });
+
+    it("'submitCloud' should fire POST request with passed data", function () {
+        httpBackend.expectPOST(url.cloud, cloudData).respond({});
+
+        service.submitCloud(cloudData);
+
+        httpBackend.flush();
+    });
+
+    it("'submitDirect' should fire POST request with appropriate headers", function () {
+        httpBackend.expectPOST(url.direct, new FormData(), function(headers) {
+            return headers['Content-Type'] === undefined;
+        }).respond({});
+
+        service.submitDirect({});
+
+        httpBackend.flush();
     });
 });

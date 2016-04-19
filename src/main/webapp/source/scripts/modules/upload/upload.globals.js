@@ -8,13 +8,15 @@
         'Metal', 'Rock', 'Singer / Songwriter', 'Folk / Americana', 'Funk' ].sort();
 
     let musicForms = {
-        current: 0,
+        currentId: 0,
+        submitFormId: 4,
         data: [
-            { title: 'License Agreement', isActive: true, isDisabled: false },
-            { title: 'Song Selection', isActive: false, isDisabled: true },
-            { title: 'General Information', isActive: false, isDisabled: true },
-            { title: 'Ownership Information', isActive: false, isDisabled: true },
-            { title: 'Sound Ownership Information', isActive: false, isDisabled: true }
+            { title: 'License Agreement', isActive: true },
+            { title: 'Song Selection', isActive: false },
+            { title: 'General Information', isActive: false },
+            { title: 'Ownership Information', isActive: false },
+            { title: 'Sound Ownership Information', isActive: false },
+            { title: 'Summary', isActive: false }
         ]
     };
 
@@ -41,7 +43,8 @@
             soundOwners: [
                 { name: '', primaryEmail: '', primaryPhone: '', secondaryPhone: '' }
             ]
-        }
+        },
+        serverInformation: { }
     };
 
     let musicSize = 10 * 1024 * 1024;

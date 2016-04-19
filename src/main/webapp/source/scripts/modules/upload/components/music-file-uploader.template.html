@@ -1,6 +1,6 @@
 <div>
     <uib-tabset active="ctrl.forms.current" justified="true" type="pills">
-        <uib-tab index="0" heading="{{ctrl.forms.data[0].title}}" disable="ctrl.forms.data[0].isDisabled">
+        <uib-tab index="0" heading="{{ctrl.forms.data[0].title}}" disable="true">
             <mll-music-agreement-form on-next="ctrl.next()"></mll-music-agreement-form>
         </uib-tab>
         <uib-tab index="1" heading="{{ctrl.forms.data[1].title}}" disable="ctrl.forms.data[1].isDisabled">
@@ -21,9 +21,14 @@
         </uib-tab>
         <uib-tab index="4" heading="{{ctrl.forms.data[4].title}}" disable="ctrl.forms.data[4].isDisabled">
             <mll-music-sound-information-form data="ctrl.data.soundInformation"
-                                              on-next="ctrl.next()"
+                                              on-next="ctrl.submit()"
                                               on-previous="ctrl.previous()" >
             </mll-music-sound-information-form>
+        </uib-tab>
+        <uib-tab index="5" heading="{{ctrl.forms.data[5].title}}" disable="ctrl.forms.data[5].isDisabled">
+            <mll-music-summary-form data="ctrl.data.serverInformation"
+                                    on-again="ctrl.again()" >
+            </mll-music-summary-form>
         </uib-tab>
     </uib-tabset>
 </div>

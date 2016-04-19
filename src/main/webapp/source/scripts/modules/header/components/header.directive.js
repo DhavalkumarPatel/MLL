@@ -11,11 +11,7 @@
             scope: {},
             controller: 'HeaderController',
             controllerAs: 'ctrl',
-            templateUrl: 'header.template.html',
-            bindToController: {
-                navLinks: '=',
-                homeLink: '='
-            }
+            templateUrl: 'header.template.html'
         };
     }
 

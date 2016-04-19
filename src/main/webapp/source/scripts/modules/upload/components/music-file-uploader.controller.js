@@ -7,32 +7,29 @@
 
     MusicFileUploaderController.$inject = ['musicForms', 'musicData', 'musicUploadService'];
 
-    function MusicFileUploaderController(musicForms, musicData, musicUploadService) {
+    function MusicFileUploaderController(musicForms, musicData, musicUploadService, authService) {
         this.forms = musicForms;
 
         this.data = musicData;
+        this.data.generalInformation.userId = this.userId;
 
         this.uploadService = musicUploadService;
+        this.authService = authService;
 
         this.next = () => {
-            if (this.forms.current < this.forms.data.length - 1) {
-                this.forms.data[this.forms.current].isActive = false;
+            this.forms.data[this.forms.currentId].isActive = false;
 
-                this.forms.current++;
+            this.forms.currentId++;
 
-                this.forms.data[this.forms.current].isActive = true;
-                this.forms.data[this.forms.current].isDisabled = false;
-            }
-
-            else this.submit();
+            this.forms.data[this.forms.currentId].isActive = true;
         };
 
         this.previous = () => {
-            this.forms.data[this.forms.current].isActive = false;
+            this.forms.data[this.forms.currentId].isActive = false;
 
-            this.forms.current--;
+            this.forms.currentId--;
 
-            this.forms.data[this.forms.current].isActive = true;
+            this.forms.data[this.forms.currentId].isActive = true;
         };
 
         this.prepare = (data) => {
@@ -51,27 +48,33 @@
         this.submit = () => {
             let data = this.prepare(this.data);
 
-            if (data.isDirect)
-                this.uploadService.submitDirect(data, 'file')
-                    .then((response) => {
-                        alert('OK');
-                        console.dir(response);
-                    })
-                    .catch((reject) => {
-                        alert('ERROR');
-                        console.dir(reject);
-                    });
+            let promise = (data.isDirect) ? this.uploadService.submitDirect(data, 'file')
+                : this.uploadService.submitCloud(data);
 
-            else
-                this.uploadService.submitCloud(data)
-                    .then((response) => {
-                        alert('OK');
-                        console.dir(response);
-                    })
-                    .catch((reject) => {
-                        alert('ERROR');
-                        console.dir(reject);
-                    });
+            promise.then((response) => {
+                this.data.serverInformation.isUploaded = response.data.isUploaded;
+                this.data.serverInformation.message = response.data.message;
+            })
+            .catch((reject) => {
+                this.data.serverInformation.isUploaded = false;
+                this.data.serverInformation.message = reject;
+            })
+            .finally(() => this.next());
+        };
+
+        this.again = () => {
+            this.forms.data[this.forms.currentId].isActive = false;
+
+            this.forms.currentId = 0;
+
+            this.forms.data[this.forms.currentId].isActive = true;
+
+            /* Clear file information */
+            this.data.fileInformation.file = null;
+            this.data.fileInformation.name = '';
+
+            /* Clear general information */
+            this.data.generalInformation.title = '';
         };
     }
 })(window.angular);

@@ -8,32 +8,28 @@
     musicUploadService.$inject = ['$http', 'musicUrl'];
 
     function musicUploadService($http, musicUrl) {
-        let service = {
-            submitCloud: (data) => {
-                return $http({
-                    url: musicUrl.direct,
-                    method: 'POST',
-                    data: data,
-                    contentType: 'application/json'
-                });
-            },
-
-            submitDirect: (data, fileProp) => {
-                let fd = new FormData();
-
-                Object.keys(data).forEach((key) =>
-                    fd.append(key, (key === fileProp) ? data[key] : JSON.stringify(data[key])));
-
-                return $http.post(musicUrl.cloud, fd, {
-                    transformRequest: angular.identity,
-                    headers: {
-                        'Content-Type': undefined
-                    }
-                });
-            }
+        return {
+            submitCloud: submitCloud,
+            submitDirect: submitDirect
         };
 
-        return service;
+        function submitCloud (data) {
+            return $http.post(musicUrl.direct, data);
+        }
+
+        function submitDirect(data, fileProp) {
+            let fd = new FormData();
+
+            Object.keys(data).forEach((key) =>
+                fd.append(key, (key === fileProp) ? data[key] : JSON.stringify(data[key])));
+
+            return $http.post(musicUrl.cloud, fd, {
+                transformRequest: angular.identity,
+                headers: {
+                    'Content-Type': undefined
+                }
+            });
+        }
     }
 
 })(window.angular);

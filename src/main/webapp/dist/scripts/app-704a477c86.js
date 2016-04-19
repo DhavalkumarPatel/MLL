@@ -34,9 +34,9 @@
             .state('home', {
                 url: '/',
                 views: {
-                    left: { template: 'Home Left Column' },
-                    center: { template: 'Home Center Column' },
-                    right: { template: 'Home Center Column' }
+                    left: { template: '' },
+                    center: { template: '' },
+                    right: { template: '' }
                 }
             })
             .state('userRegistration', {
@@ -65,35 +65,6 @@
                                     deferred.reject();
                                 }
                             });
-
-                        return deferred.promise;
-                    }
-                }
-            })
-            .state('user', {
-                url: '/user/profile/id/:id',
-                views: {
-                    left: { template: 'Profile Information... To Be Implemented...' },
-                    center: { template: 'Community Wall... To Be Implemented...' },
-                    right: {
-                        controller: 'UserFeaturesController as ctrl',
-                        templateProvider: function ($templateCache) {
-                            return $templateCache.get('user-profile-right.view.html');
-                        }
-                    }
-                },
-                resolve: {
-                    userId: function($state, $stateParams, $q, $timeout, authenticationService) {
-                        let deferred = $q.defer();
-
-                        $timeout(() => {
-                            if (!authenticationService.details.isAuth) {
-                                $state.go('login');
-                                deferred.reject();
-                            }
-
-                            else deferred.resolve(+$stateParams.id);
-                        }, 0);
 
                         return deferred.promise;
                     }
@@ -130,17 +101,17 @@
                     }
                 }
             })
-            .state('musician', {
-                url: '/musician/id/:id',
+            .state('user', {
+                url: '/user/profile/id/:id',
                 views: {
-                    left: { template: 'Look, I am a left user registration column!' },
-                    center: {
-                        controller: 'MusicianFeaturesController as ctrl',
+                    left: { template: '' },
+                    center: { template: '' },
+                    right: {
+                        controller: 'UserFeaturesController as ctrl',
                         templateProvider: function ($templateCache) {
-                            return $templateCache.get('musician-profile-center.view.html');
+                            return $templateCache.get('user-profile-right.view.html');
                         }
-                    },
-                    right: { template: 'Look, I am a right user registration column!' }
+                    }
                 },
                 resolve: {
                     userId: function($state, $stateParams, $q, $timeout, authenticationService) {
@@ -149,6 +120,82 @@
                         $timeout(() => {
                             if (!authenticationService.details.isAuth) {
                                 $state.go('login');
+                                deferred.reject();
+                            }
+
+                            else if (!authenticationService.details.data.permissions.browse) {
+                                $state.go(authenticationService.details.data.type,
+                                    { id: authenticationService.details.data.id });
+                                deferred.reject();
+                            }
+
+                            else deferred.resolve(+$stateParams.id);
+                        }, 0);
+
+                        return deferred.promise;
+                    }
+                }
+            })
+            .state('musician', {
+                url: '/musician/id/:id',
+                views: {
+                    left: { template: '' },
+                    center: {
+                        controller: 'MusicianFeaturesController as ctrl',
+                        templateProvider: function ($templateCache) {
+                            return $templateCache.get('musician-profile-center.view.html');
+                        }
+                    },
+                    right: { template: '' }
+                },
+                resolve: {
+                    userId: function($state, $stateParams, $q, $timeout, authenticationService) {
+                        let deferred = $q.defer();
+
+                        $timeout(() => {
+                            if (!authenticationService.details.isAuth) {
+                                $state.go('login');
+                                deferred.reject();
+                            }
+
+                            else if (authenticationService.details.data.id !== +$stateParams.id) {
+                                $state.go(authenticationService.details.data.type,
+                                    { id: authenticationService.details.data.id });
+                                deferred.reject();
+                            }
+
+                            else deferred.resolve(+$stateParams.id);
+                        }, 0);
+
+                        return deferred.promise;
+                    }
+                }
+            })
+            .state('musicianUpload', {
+                url: '/musician/upload',
+                views: {
+                    left: { template: '' },
+                    center: {
+                        controller: 'MusicianUploadController as ctrl',
+                        templateProvider: function ($templateCache) {
+                            return $templateCache.get('musician-upload-center.view.html');
+                        }
+                    },
+                    right: { template: '' }
+                },
+                resolve: {
+                    userId: function($state, $stateParams, $q, $timeout, authenticationService) {
+                        let deferred = $q.defer();
+
+                        $timeout(() => {
+                            if (!authenticationService.details.isAuth) {
+                                $state.go('login');
+                                deferred.reject();
+                            }
+
+                            else if (!authenticationService.details.data.permissions.upload) {
+                                $state.go(authenticationService.details.data.type,
+                                    { id: authenticationService.details.data.id });
                                 deferred.reject();
                             }
 
@@ -170,14 +217,37 @@
                         }
                     },
                     right: { template: '' }
+                },
+                resolve: {
+                    userId: function($state, $q, $timeout, authenticationService) {
+                        let deferred = $q.defer();
+
+                        $timeout(() => {
+                            if (authenticationService.details.isAuth) {
+                                $state.go(authenticationService.details.data.type,
+                                    { id: authenticationService.details.data.id });
+                                deferred.reject();
+                            }
+
+                            else deferred.resolve();
+                        }, 0);
+
+                        return deferred.promise;
+                    }
                 }
             })
             .state('music', {
                 url: '/music',
                 views: {
-                    left: { template: 'Music Left Column' },
-                    center: { template: 'Music Center Column' },
-                    right: { template: 'Music Right Column' }
+                    left: { template: '' },
+                    center: { template:
+                        `<div class="well well-lg">
+                            <h4>
+                                Oops... This feature is still under development. We do appreciate your patience.
+                            </h4>
+                        </div>`
+                    },
+                    right: { template: '' }
                 },
                 resolve: {
                     data: function($state, $q, $timeout, authenticationService) {
@@ -189,9 +259,49 @@
                                 deferred.reject();
                             }
 
-                            else {
-                                deferred.resolve([]);
+                            else if (!authenticationService.details.data.permissions.browse) {
+                                $state.go(authenticationService.details.data.type,
+                                    { id: authenticationService.details.data.id });
+                                deferred.reject();
                             }
+
+                            else deferred.resolve();
+                        }, 0);
+
+                        return deferred.promise;
+                    }
+                }
+            })
+            .state('people', {
+                url: '/people',
+                views: {
+                    left: { template: '' },
+                    center: { template:
+                        `<div class="well well-lg">
+                            <h4>
+                                Oops... This feature is still under development. We do appreciate your patience.
+                            </h4>
+                        </div>`
+                    },
+                    right: { template: '' }
+                },
+                resolve: {
+                    data: function($state, $q, $timeout, authenticationService) {
+                        let deferred = $q.defer();
+
+                        $timeout(() => {
+                            if (!authenticationService.details.isAuth) {
+                                $state.go('login');
+                                deferred.reject();
+                            }
+
+                            else if (!authenticationService.details.data.permissions.browse) {
+                                $state.go(authenticationService.details.data.type,
+                                    { id: authenticationService.details.data.id });
+                                deferred.reject();
+                            }
+
+                            else deferred.resolve();
                         }, 0);
 
                         return deferred.promise;
@@ -199,11 +309,6 @@
                 }
             });
     }
-
-    function accessCheck(){
-
-    }
-
 })(window.angular);
 (function (angular) {
     'use strict';
@@ -212,15 +317,7 @@
         .module('mllApp')
         .controller('ApplicationController', ApplicationController);
 
-    function ApplicationController() {
-        this.homeLink = { text: 'Home', href: '/profile' };
-
-        this.navigationLinks = [
-            { text: 'People', href: 'people' },
-            { text: 'Music', href: 'music' }
-        ];
-    }
-
+    function ApplicationController() { }
 })(window.angular);
 
 (function (angular) {
@@ -249,14 +346,26 @@
 (function(angular){
     'use strict';
 
+    let homeLink = { text: 'Home' };
+
     let loginLink = { text: 'Log In', href: 'login' };
 
     let logoutLink = { text: 'Log Out' };
 
+    let uploadLink = { text: 'Upload', href: 'upload' };
+
+    let navigationLinks = [
+        { text: 'People', href: 'people' },
+        { text: 'Music', href: 'music' }
+    ];
+
     angular
         .module('mllApp.header')
+        .constant('homeLink', homeLink)
         .constant('loginLink', loginLink)
-        .constant('logoutLink', logoutLink);
+        .constant('logoutLink', logoutLink)
+        .constant('uploadLink', uploadLink)
+        .constant('navigationLinks', navigationLinks);
 })(window.angular);
 (function (angular){
     'use strict';
@@ -265,19 +374,29 @@
         .module('mllApp.header')
         .controller('HeaderController', HeaderController);
 
-    HeaderController.$inject = ['$state', 'loginLink', 'logoutLink', 'authenticationService'];
+    HeaderController.$inject =
+        ['$state', 'homeLink', 'loginLink', 'logoutLink', 'uploadLink', 'navigationLinks', 'authenticationService'];
 
-    function HeaderController($state, loginLink, logoutLink, authenticationService) {
+    function HeaderController($state, homeLink, loginLink, logoutLink, uploadLink, navLinks, authenticationService) {
+
         this.authService = authenticationService;
 
+        this.homeLink = homeLink;
         this.loginLink = loginLink;
         this.logoutLink = logoutLink;
+        this.uploadLink = uploadLink;
+
+        this.navLinks = navLinks;
 
         this.logout = () => {
             this.authService.clear();
 
             $state.go('login');
-        }
+        };
+
+        this.home = () => {
+            $state.go(this.authService.details.data.type, { id: this.authService.details.data.id });
+        };
     }
 })(window.angular);
 
@@ -294,11 +413,7 @@
             scope: {},
             controller: 'HeaderController',
             controllerAs: 'ctrl',
-            templateUrl: 'header.template.html',
-            bindToController: {
-                navLinks: '=',
-                homeLink: '='
-            }
+            templateUrl: 'header.template.html'
         };
     }
 
@@ -876,7 +991,7 @@
 (function (angular) {
     'use strict';
 
-    angular.module('mllApp.upload', ['mllApp.picker', 'mllApp.templates', 'ui.bootstrap']);
+    angular.module('mllApp.upload', ['mllApp.shared', 'mllApp.picker', 'mllApp.templates', 'ui.bootstrap']);
 
 })(window.angular);
 (function(angular){
@@ -889,13 +1004,15 @@
         'Metal', 'Rock', 'Singer / Songwriter', 'Folk / Americana', 'Funk' ].sort();
 
     let musicForms = {
-        current: 0,
+        currentId: 0,
+        submitFormId: 4,
         data: [
-            { title: 'License Agreement', isActive: true, isDisabled: false },
-            { title: 'Song Selection', isActive: false, isDisabled: true },
-            { title: 'General Information', isActive: false, isDisabled: true },
-            { title: 'Ownership Information', isActive: false, isDisabled: true },
-            { title: 'Sound Ownership Information', isActive: false, isDisabled: true }
+            { title: 'License Agreement', isActive: true },
+            { title: 'Song Selection', isActive: false },
+            { title: 'General Information', isActive: false },
+            { title: 'Ownership Information', isActive: false },
+            { title: 'Sound Ownership Information', isActive: false },
+            { title: 'Summary', isActive: false }
         ]
     };
 
@@ -922,7 +1039,8 @@
             soundOwners: [
                 { name: '', primaryEmail: '', primaryPhone: '', secondaryPhone: '' }
             ]
-        }
+        },
+        serverInformation: { }
     };
 
     let musicSize = 10 * 1024 * 1024;
@@ -941,6 +1059,19 @@
         .constant('musicSize', musicSize)
         .constant('musicUrl', musicUrl);
 })(window.angular);
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.upload')
+        .controller('MusicianUploadController', MusicianUploadController);
+
+    MusicianUploadController.$inject = ['userId'];
+
+    function MusicianUploadController(userId) {
+        this.userId = userId;
+    }
+})(window.angular);
 (function(angular){
     'use strict';
 
@@ -951,32 +1082,28 @@
     musicUploadService.$inject = ['$http', 'musicUrl'];
 
     function musicUploadService($http, musicUrl) {
-        let service = {
-            submitCloud: (data) => {
-                return $http({
-                    url: musicUrl.direct,
-                    method: 'POST',
-                    data: data,
-                    contentType: 'application/json'
-                });
-            },
-
-            submitDirect: (data, fileProp) => {
-                let fd = new FormData();
-
-                Object.keys(data).forEach((key) =>
-                    fd.append(key, (key === fileProp) ? data[key] : JSON.stringify(data[key])));
-
-                return $http.post(musicUrl.cloud, fd, {
-                    transformRequest: angular.identity,
-                    headers: {
-                        'Content-Type': undefined
-                    }
-                });
-            }
+        return {
+            submitCloud: submitCloud,
+            submitDirect: submitDirect
         };
 
-        return service;
+        function submitCloud (data) {
+            return $http.post(musicUrl.direct, data);
+        }
+
+        function submitDirect(data, fileProp) {
+            let fd = new FormData();
+
+            Object.keys(data).forEach((key) =>
+                fd.append(key, (key === fileProp) ? data[key] : JSON.stringify(data[key])));
+
+            return $http.post(musicUrl.cloud, fd, {
+                transformRequest: angular.identity,
+                headers: {
+                    'Content-Type': undefined
+                }
+            });
+        }
     }
 
 })(window.angular);
@@ -1208,12 +1335,6 @@
 
         this.removeOwner = (i) => this.data.soundOwners.splice(i, 1);
 
-        this.copyOwners = () => {
-            if (this.isIdentical) {
-                this.data.soundOwners = angular.copy(this.ownersFn());
-            }
-        };
-
         this.submit = () => {
             if (this.soundForm.$invalid) { this.soundForm.$submitted = true; }
             else this.onNext();
@@ -1239,7 +1360,6 @@
             controllerAs: 'ctrl',
             bindToController: {
                 data: '=',
-                ownersFn: '&',
                 onNext: '&',
                 onPrevious: '&'
             },
@@ -1252,36 +1372,72 @@
 
     angular
         .module('mllApp.upload')
+        .controller('MusicSummaryFormController', MusicSummaryFormController);
+
+    MusicSummaryFormController.$inject = ['$state', 'authenticationService'];
+
+    function MusicSummaryFormController($state, authenticationService) {
+        this.authService = authenticationService;
+
+        this.quit = () => {
+            $state.go(this.authService.details.data.type, { id: this.authService.details.data.id });
+        };
+    }
+})(window.angular);
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.upload')
+        .directive('mllMusicSummaryForm', mllMusicSummaryForm);
+
+    function mllMusicSummaryForm() {
+        return {
+            restrict: 'AE',
+            replace: true,
+            scope: {},
+            controller: 'MusicSummaryFormController',
+            controllerAs: 'ctrl',
+            bindToController: {
+                data: '=',
+                onAgain: '&'
+            },
+            templateUrl: 'music-summary-form.template.html'
+        };
+    }
+})(window.angular);
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('mllApp.upload')
         .controller('MusicFileUploaderController', MusicFileUploaderController);
 
     MusicFileUploaderController.$inject = ['musicForms', 'musicData', 'musicUploadService'];
 
-    function MusicFileUploaderController(musicForms, musicData, musicUploadService) {
+    function MusicFileUploaderController(musicForms, musicData, musicUploadService, authService) {
         this.forms = musicForms;
 
         this.data = musicData;
+        this.data.generalInformation.userId = this.userId;
 
         this.uploadService = musicUploadService;
+        this.authService = authService;
 
         this.next = () => {
-            if (this.forms.current < this.forms.data.length - 1) {
-                this.forms.data[this.forms.current].isActive = false;
+            this.forms.data[this.forms.currentId].isActive = false;
 
-                this.forms.current++;
+            this.forms.currentId++;
 
-                this.forms.data[this.forms.current].isActive = true;
-                this.forms.data[this.forms.current].isDisabled = false;
-            }
-
-            else this.submit();
+            this.forms.data[this.forms.currentId].isActive = true;
         };
 
         this.previous = () => {
-            this.forms.data[this.forms.current].isActive = false;
+            this.forms.data[this.forms.currentId].isActive = false;
 
-            this.forms.current--;
+            this.forms.currentId--;
 
-            this.forms.data[this.forms.current].isActive = true;
+            this.forms.data[this.forms.currentId].isActive = true;
         };
 
         this.prepare = (data) => {
@@ -1300,27 +1456,33 @@
         this.submit = () => {
             let data = this.prepare(this.data);
 
-            if (data.isDirect)
-                this.uploadService.submitDirect(data, 'file')
-                    .then((response) => {
-                        alert('OK');
-                        console.dir(response);
-                    })
-                    .catch((reject) => {
-                        alert('ERROR');
-                        console.dir(reject);
-                    });
+            let promise = (data.isDirect) ? this.uploadService.submitDirect(data, 'file')
+                : this.uploadService.submitCloud(data);
 
-            else
-                this.uploadService.submitCloud(data)
-                    .then((response) => {
-                        alert('OK');
-                        console.dir(response);
-                    })
-                    .catch((reject) => {
-                        alert('ERROR');
-                        console.dir(reject);
-                    });
+            promise.then((response) => {
+                this.data.serverInformation.isUploaded = response.data.isUploaded;
+                this.data.serverInformation.message = response.data.message;
+            })
+            .catch((reject) => {
+                this.data.serverInformation.isUploaded = false;
+                this.data.serverInformation.message = reject;
+            })
+            .finally(() => this.next());
+        };
+
+        this.again = () => {
+            this.forms.data[this.forms.currentId].isActive = false;
+
+            this.forms.currentId = 0;
+
+            this.forms.data[this.forms.currentId].isActive = true;
+
+            /* Clear file information */
+            this.data.fileInformation.file = null;
+            this.data.fileInformation.name = '';
+
+            /* Clear general information */
+            this.data.generalInformation.title = '';
         };
     }
 })(window.angular);
@@ -1337,7 +1499,10 @@
             scope: {},
             controller: 'MusicFileUploaderController',
             controllerAs: 'ctrl',
-            templateUrl: 'music-file-uploader.template.html'
+            templateUrl: 'music-file-uploader.template.html',
+            bindToController: {
+                userId: '='
+            }
         };
     }
 })(window.angular);

@@ -3,21 +3,20 @@
 
     angular
         .module('mllApp.upload')
-        .directive('mllMusicSoundInformationForm', mllMusicSoundInformationForm);
+        .directive('mllMusicSummaryForm', mllMusicSummaryForm);
 
-    function mllMusicSoundInformationForm() {
+    function mllMusicSummaryForm() {
         return {
             restrict: 'AE',
             replace: true,
             scope: {},
-            controller: 'MusicSoundInformationFormController',
+            controller: 'MusicSummaryFormController',
             controllerAs: 'ctrl',
             bindToController: {
                 data: '=',
-                onNext: '&',
-                onPrevious: '&'
+                onAgain: '&'
             },
-            templateUrl: 'music-sound-information-form.template.html'
+            templateUrl: 'music-summary-form.template.html'
         };
     }
 })(window.angular);

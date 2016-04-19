@@ -12,9 +12,9 @@
             .state('home', {
                 url: '/',
                 views: {
-                    left: { template: 'Home Left Column' },
-                    center: { template: 'Home Center Column' },
-                    right: { template: 'Home Center Column' }
+                    left: { template: '' },
+                    center: { template: '' },
+                    right: { template: '' }
                 }
             })
             .state('userRegistration', {
@@ -43,35 +43,6 @@
                                     deferred.reject();
                                 }
                             });
-
-                        return deferred.promise;
-                    }
-                }
-            })
-            .state('user', {
-                url: '/user/profile/id/:id',
-                views: {
-                    left: { template: 'Profile Information... To Be Implemented...' },
-                    center: { template: 'Community Wall... To Be Implemented...' },
-                    right: {
-                        controller: 'UserFeaturesController as ctrl',
-                        templateProvider: function ($templateCache) {
-                            return $templateCache.get('user-profile-right.view.html');
-                        }
-                    }
-                },
-                resolve: {
-                    userId: function($state, $stateParams, $q, $timeout, authenticationService) {
-                        let deferred = $q.defer();
-
-                        $timeout(() => {
-                            if (!authenticationService.details.isAuth) {
-                                $state.go('login');
-                                deferred.reject();
-                            }
-
-                            else deferred.resolve(+$stateParams.id);
-                        }, 0);
 
                         return deferred.promise;
                     }
@@ -108,17 +79,17 @@
                     }
                 }
             })
-            .state('musician', {
-                url: '/musician/id/:id',
+            .state('user', {
+                url: '/user/profile/id/:id',
                 views: {
-                    left: { template: 'Look, I am a left user registration column!' },
-                    center: {
-                        controller: 'MusicianFeaturesController as ctrl',
+                    left: { template: '' },
+                    center: { template: '' },
+                    right: {
+                        controller: 'UserFeaturesController as ctrl',
                         templateProvider: function ($templateCache) {
-                            return $templateCache.get('musician-profile-center.view.html');
+                            return $templateCache.get('user-profile-right.view.html');
                         }
-                    },
-                    right: { template: 'Look, I am a right user registration column!' }
+                    }
                 },
                 resolve: {
                     userId: function($state, $stateParams, $q, $timeout, authenticationService) {
@@ -127,6 +98,82 @@
                         $timeout(() => {
                             if (!authenticationService.details.isAuth) {
                                 $state.go('login');
+                                deferred.reject();
+                            }
+
+                            else if (!authenticationService.details.data.permissions.browse) {
+                                $state.go(authenticationService.details.data.type,
+                                    { id: authenticationService.details.data.id });
+                                deferred.reject();
+                            }
+
+                            else deferred.resolve(+$stateParams.id);
+                        }, 0);
+
+                        return deferred.promise;
+                    }
+                }
+            })
+            .state('musician', {
+                url: '/musician/id/:id',
+                views: {
+                    left: { template: '' },
+                    center: {
+                        controller: 'MusicianFeaturesController as ctrl',
+                        templateProvider: function ($templateCache) {
+                            return $templateCache.get('musician-profile-center.view.html');
+                        }
+                    },
+                    right: { template: '' }
+                },
+                resolve: {
+                    userId: function($state, $stateParams, $q, $timeout, authenticationService) {
+                        let deferred = $q.defer();
+
+                        $timeout(() => {
+                            if (!authenticationService.details.isAuth) {
+                                $state.go('login');
+                                deferred.reject();
+                            }
+
+                            else if (authenticationService.details.data.id !== +$stateParams.id) {
+                                $state.go(authenticationService.details.data.type,
+                                    { id: authenticationService.details.data.id });
+                                deferred.reject();
+                            }
+
+                            else deferred.resolve(+$stateParams.id);
+                        }, 0);
+
+                        return deferred.promise;
+                    }
+                }
+            })
+            .state('musicianUpload', {
+                url: '/musician/upload',
+                views: {
+                    left: { template: '' },
+                    center: {
+                        controller: 'MusicianUploadController as ctrl',
+                        templateProvider: function ($templateCache) {
+                            return $templateCache.get('musician-upload-center.view.html');
+                        }
+                    },
+                    right: { template: '' }
+                },
+                resolve: {
+                    userId: function($state, $stateParams, $q, $timeout, authenticationService) {
+                        let deferred = $q.defer();
+
+                        $timeout(() => {
+                            if (!authenticationService.details.isAuth) {
+                                $state.go('login');
+                                deferred.reject();
+                            }
+
+                            else if (!authenticationService.details.data.permissions.upload) {
+                                $state.go(authenticationService.details.data.type,
+                                    { id: authenticationService.details.data.id });
                                 deferred.reject();
                             }
 
@@ -148,14 +195,37 @@
                         }
                     },
                     right: { template: '' }
+                },
+                resolve: {
+                    userId: function($state, $q, $timeout, authenticationService) {
+                        let deferred = $q.defer();
+
+                        $timeout(() => {
+                            if (authenticationService.details.isAuth) {
+                                $state.go(authenticationService.details.data.type,
+                                    { id: authenticationService.details.data.id });
+                                deferred.reject();
+                            }
+
+                            else deferred.resolve();
+                        }, 0);
+
+                        return deferred.promise;
+                    }
                 }
             })
             .state('music', {
                 url: '/music',
                 views: {
-                    left: { template: 'Music Left Column' },
-                    center: { template: 'Music Center Column' },
-                    right: { template: 'Music Right Column' }
+                    left: { template: '' },
+                    center: { template:
+                        `<div class="well well-lg">
+                            <h4>
+                                Oops... This feature is still under development. We do appreciate your patience.
+                            </h4>
+                        </div>`
+                    },
+                    right: { template: '' }
                 },
                 resolve: {
                     data: function($state, $q, $timeout, authenticationService) {
@@ -167,9 +237,49 @@
                                 deferred.reject();
                             }
 
-                            else {
-                                deferred.resolve([]);
+                            else if (!authenticationService.details.data.permissions.browse) {
+                                $state.go(authenticationService.details.data.type,
+                                    { id: authenticationService.details.data.id });
+                                deferred.reject();
                             }
+
+                            else deferred.resolve();
+                        }, 0);
+
+                        return deferred.promise;
+                    }
+                }
+            })
+            .state('people', {
+                url: '/people',
+                views: {
+                    left: { template: '' },
+                    center: { template:
+                        `<div class="well well-lg">
+                            <h4>
+                                Oops... This feature is still under development. We do appreciate your patience.
+                            </h4>
+                        </div>`
+                    },
+                    right: { template: '' }
+                },
+                resolve: {
+                    data: function($state, $q, $timeout, authenticationService) {
+                        let deferred = $q.defer();
+
+                        $timeout(() => {
+                            if (!authenticationService.details.isAuth) {
+                                $state.go('login');
+                                deferred.reject();
+                            }
+
+                            else if (!authenticationService.details.data.permissions.browse) {
+                                $state.go(authenticationService.details.data.type,
+                                    { id: authenticationService.details.data.id });
+                                deferred.reject();
+                            }
+
+                            else deferred.resolve();
                         }, 0);
 
                         return deferred.promise;
@@ -177,9 +287,4 @@
                 }
             });
     }
-
-    function accessCheck(){
-
-    }
-
 })(window.angular);
