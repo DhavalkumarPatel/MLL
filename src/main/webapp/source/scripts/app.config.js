@@ -152,6 +152,7 @@
             })
             .state('musicianUpload', {
                 url: '/musician/upload',
+                cache: false,
                 views: {
                     left: { template: '' },
                     center: {
