@@ -200,7 +200,7 @@
                                 deferred.reject();
                             }
 
-                            else deferred.resolve(+$stateParams.id);
+                            else deferred.resolve(+authenticationService.details.data.id);
                         }, 0);
 
                         return deferred.promise;

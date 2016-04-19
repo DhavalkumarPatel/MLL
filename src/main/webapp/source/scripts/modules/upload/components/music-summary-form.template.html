@@ -3,9 +3,12 @@
         <div class="col-xs-12">
             <div class="alert" ng-class="{ 'alert-success' : ctrl.data.isUploaded, 'alert-danger' : !ctrl.data.isUploaded }"
                  role="alert">
-            <span>
-                <i class="fa fa-thumbs-o-up fa-5x" aria-hidden="true"></i>
-            </span>
+                <span ng-show="ctrl.data.isUploaded">
+                    <i class="fa fa-thumbs-o-up fa-2x" aria-hidden="true"></i>
+                </span>
+                <span ng-show="!ctrl.data.isUploaded">
+                    <i class="fa fa-thumbs-o-down fa-2x" aria-hidden="true"></i>
+                </span>
                 <span ng-bind="ctrl.data.message"></span>
             </div>
         </div>

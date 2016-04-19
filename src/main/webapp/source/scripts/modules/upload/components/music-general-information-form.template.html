@@ -79,26 +79,28 @@
     <div class="form-group has-feedback"
          ng-class="{ 'has-success': ctrl.generalForm.agreement.$valid && ctrl.generalForm.$submitted,
                      'has-error': ctrl.generalForm.agreement.$invalid && ctrl.generalForm.$submitted }">
-        <label  class="col-xs-3">
-            Any Written Agreements :
+        <label  class="col-xs-2">
+            Any Written Agreements <span class="glyphicon glyphicon-question-sign" uib-tooltip="Licenses, etc."></span>:
         </label>
-
-        <label class="radio-inline"><input type="radio" name="agreement"
-                                           ng-model="ctrl.isChecked" value>Yes</label>
-        <label class="radio-inline"><input type="radio" name="agreement"
-                                            ng-model="ctrl.isChecked" ng-value="false"> No</label>
-
+        <div class="col-xs-12">
+            <label class="radio-inline">
+                <input type="radio" name="agreement" ng-model="ctrl.generalForm.agreement" ng-value="true" required>
+                <span>Yes</span>
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="agreement" ng-model="ctrl.generalForm.agreement" ng-value="false" required>
+                <span>No</span>
+            </label>
+        </div>
 
         <div class="alert alert-danger" role="alert"
              ng-show="ctrl.generalForm.agreement.$invalid && ctrl.generalForm.$submitted">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                 <span ng-show="ctrl.generalForm.agreement.$error.required">
-                    Please, Say yes or no
+                    Please, specify whether you have any additional agreements or no!
                 </span>
         </div>
-
     </div>
-
 
     <div class="form-group has-feedback"
          ng-class="{ 'has-success': ctrl.generalForm.primaryGenre.$valid && ctrl.generalForm.$submitted,

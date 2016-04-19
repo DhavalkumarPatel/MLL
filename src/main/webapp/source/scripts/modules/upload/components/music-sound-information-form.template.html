@@ -33,7 +33,7 @@
                 <label class="col-xs-3">Primary Phone</label>
                 <div class="col-xs-7">
                     <input type="text" name="primaryPhone" class="form-control" ng-model="soundOwner.primaryPhone"
-                           ng-pattern="/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/" required />
+                           ng-pattern="/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/" placeholder="123-123-1234" required />
                     <div class="alert alert-danger" role="alert"
                          ng-show="masterForm.primaryPhone.$invalid && ctrl.soundForm.$submitted">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
