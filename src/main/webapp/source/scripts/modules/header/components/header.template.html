@@ -28,7 +28,7 @@
                 <ul class="nav navbar-nav"
                     ng-show="ctrl.authService.details.isAuth && ctrl.authService.details.data.permissions.upload">
                     <li>
-                        <a ui-sref="{{ctrl.uploadLink.href}}">
+                        <a ng-click="ctrl.upload()">
                             <span ng-bind="ctrl.uploadLink.text"></span>
                         </a>
                     </li>
@@ -51,6 +51,6 @@
         </div>
     </nav>
     <div class="container">
-        <h1>Media Licensing Lab</h1>
+        <img src="./fonts/gll-logo.jpg" />
     </div>
 </header>

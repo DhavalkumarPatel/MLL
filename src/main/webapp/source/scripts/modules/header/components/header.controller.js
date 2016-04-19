@@ -22,11 +22,15 @@
         this.logout = () => {
             this.authService.clear();
 
-            $state.go('login');
+            $state.go(loginLink.href);
         };
 
         this.home = () => {
             $state.go(this.authService.details.data.type, { id: this.authService.details.data.id });
+        };
+
+        this.upload = () => {
+            $state.go(uploadLink.href, {}, { reload: true });
         };
     }
 })(window.angular);

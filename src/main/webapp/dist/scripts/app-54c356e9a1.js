@@ -392,11 +392,15 @@
         this.logout = () => {
             this.authService.clear();
 
-            $state.go('login');
+            $state.go(loginLink.href);
         };
 
         this.home = () => {
             $state.go(this.authService.details.data.type, { id: this.authService.details.data.id });
+        };
+
+        this.upload = () => {
+            $state.go(uploadLink.href, {}, { reload: true });
         };
     }
 })(window.angular);
@@ -775,10 +779,14 @@
         .module('mllApp.home')
         .controller('MusicianFeaturesController', MusicianFeaturesController);
 
-    MusicianFeaturesController.$inject = ['userId'];
+    MusicianFeaturesController.$inject = ['userId', '$state'];
 
-    function MusicianFeaturesController(userId) {
+    function MusicianFeaturesController(userId, $state) {
         this.userId = userId;
+
+        this.upload = () => {
+            $state.go('musicianUpload', {}, { reload: true });
+        };
     }
 })(window.angular);
 (function (angular) {

@@ -71,6 +71,8 @@ gulp.task('fonts', () => {
         .pipe(gulp.dest('./dist/fonts'));
     gulp.src('./bower_components/bootstrap/dist/fonts/**/*.{ttf,woff,eof,svg}*')
         .pipe(gulp.dest('./dist/fonts'));
+    gulp.src('./source/fonts/*.*')
+        .pipe(gulp.dest('./dist/fonts'));
 });
 
 /*
