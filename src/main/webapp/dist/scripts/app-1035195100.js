@@ -353,7 +353,7 @@
 
     let logoutLink = { text: 'Log Out' };
 
-    let uploadLink = { text: 'Upload', href: 'upload' };
+    let uploadLink = { text: 'Upload', href: 'musicianUpload' };
 
     let navigationLinks = [
         { text: 'People', href: 'people' },
