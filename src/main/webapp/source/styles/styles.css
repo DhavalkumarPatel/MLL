@@ -86,3 +86,8 @@ html, body {
 .tooltip.tooltip-alert-error .tooltip-arrow {
     background-color: #f2dede;
 }
+
+.form-group .control-label:after {
+    content:"*";
+    color:red;
+}

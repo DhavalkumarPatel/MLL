@@ -3,7 +3,7 @@
     <div class="form-group has-feedback"
          ng-class="{ 'has-success': ctrl.generalForm.title.$valid && ctrl.generalForm.$submitted,
                      'has-error': ctrl.generalForm.title.$invalid && ctrl.generalForm.$submitted }">
-        <label for="general-title" class="col-xs-2">
+        <label for="general-title" class="col-xs-2 control-label">
             Song Title
         </label>
         <div class="col-xs-10">
@@ -84,11 +84,11 @@
         </label>
         <div class="col-xs-10">
             <label class="radio-inline">
-                <input type="radio" name="agreement" ng-model="ctrl.generalForm.agreement" ng-value="true" required>
+                <input type="radio" name="agreement" ng-model="ctrl.data.agreement" ng-value="true" required>
                 <span>Yes</span>
             </label>
             <label class="radio-inline">
-                <input type="radio" name="agreement" ng-model="ctrl.generalForm.agreement" ng-value="false" required>
+                <input type="radio" name="agreement" ng-model="ctrl.data.agreement" ng-value="false" required>
                 <span>No</span>
             </label>
         </div>
