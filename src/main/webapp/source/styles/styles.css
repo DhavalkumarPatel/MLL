@@ -87,7 +87,7 @@ html, body {
     background-color: #f2dede;
 }
 
-.form-group .control-label:after {
+.form-group .asterisk-label:after {
     content:"*";
     color:red;
 }

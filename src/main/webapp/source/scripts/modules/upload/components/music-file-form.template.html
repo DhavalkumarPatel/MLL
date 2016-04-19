@@ -1,5 +1,5 @@
 <form class="form-horizontal form-tab" novalidate>
-    <legend></legend>
+    <legend>Song Selection</legend>
     <div class="col-xs-12">
         <div>
             <mll-file-selector formats="ctrl.formats" on-select-hdd="ctrl.selectHdd(fileInformation)"
@@ -28,4 +28,6 @@
             <button class="btn btn-block btn-primary" ng-click="ctrl.submit()">Next</button>
         </div>
     </div>
+
+    {{ ctrl.data || json }}
 </form>

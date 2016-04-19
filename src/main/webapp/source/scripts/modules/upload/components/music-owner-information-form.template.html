@@ -6,7 +6,7 @@
             <div class="form-group has-feedback"
                  ng-class="{ 'has-success': writerForm.name.$valid && ctrl.ownerForm.$submitted,
                              'has-error': writerForm.name.$invalid && ctrl.ownerForm.$submitted }">
-                <label class="col-xs-3">Name</label>
+                <label class="col-xs-3 asterisk-label">Name</label>
                 <div class="col-xs-7">
                     <input type="text" name="name" class="form-control" ng-model="songwriter.name" required />
                     <div class="alert alert-danger" role="alert"
@@ -30,7 +30,7 @@
             <div class="form-group has-feedback"
                  ng-class="{ 'has-success': writerForm.primaryPhone.$valid && ctrl.ownerForm.$submitted,
                              'has-error': writerForm.primaryPhone.$invalid && ctrl.ownerForm.$submitted }">
-                <label class="col-xs-3">Primary Phone</label>
+                <label class="col-xs-3 asterisk-label">Primary Phone</label>
                 <div class="col-xs-7">
                     <input type="text" name="primaryPhone" class="form-control" ng-model="songwriter.primaryPhone"
                            ng-pattern="/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/" placeholder="123-123-1234" required />
@@ -67,7 +67,7 @@
             <div class="form-group has-feedback"
                  ng-class="{ 'has-success': writerForm.primaryEmail.$valid && ctrl.ownerForm.$submitted,
                              'has-error': writerForm.primaryEmail.$invalid && ctrl.ownerForm.$submitted }">
-                <label class="col-xs-3">Primary E-mail</label>
+                <label class="col-xs-3 asterisk-label">Primary E-mail</label>
                 <div class="col-xs-7">
                     <input type="email" name="primaryEmail" class="form-control"
                            ng-model="songwriter.primaryEmail" required />
