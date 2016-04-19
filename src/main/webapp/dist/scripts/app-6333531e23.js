@@ -1194,7 +1194,13 @@
 
         this.submit = () => {
             if (this.form.invalid) this.form.submitted = true;
-            else this.onNext();
+            else {
+                if (this.data === null) {
+                    this.form.invalid = true;
+                    this.form.submitted = true;
+                }
+                else this.onNext();
+            }
         };
 
         this.reset = () => this.onPrevious();
