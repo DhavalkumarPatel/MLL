@@ -5,7 +5,9 @@
             <mll-file-selector formats="ctrl.formats" on-select-hdd="ctrl.selectHdd(fileInformation)"
                                on-select-dropbox="ctrl.selectDropbox(fileInformation)"></mll-file-selector>
 
-            <input typ="text" class="form-control" ng-model="data.name" placeholder="Selected File" disabled>
+            <div class="form-control">
+                <input typ="text" class="form-control" ng-model="data.file.name" placeholder="Selected File" disabled>
+            </div>
 
             <div class=" form-group alert alert-danger" role="alert" ng-show="ctrl.form.invalid && ctrl.form.submitted">
                 <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>

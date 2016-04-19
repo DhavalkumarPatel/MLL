@@ -71,7 +71,6 @@
 
             /* Clear file information */
             this.data.fileInformation.file = null;
-            this.data.fileInformation.name = '';
 
             /* Clear general information */
             this.data.generalInformation.title = '';

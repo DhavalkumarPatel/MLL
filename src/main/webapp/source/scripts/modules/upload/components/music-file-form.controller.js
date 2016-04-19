@@ -47,7 +47,7 @@
         this.submit = () => {
             if (this.form.invalid) this.form.submitted = true;
             else {
-                if (this.data === null) {
+                if (this.data.file === null) {
                     this.form.invalid = true;
                     this.form.submitted = true;
                 }
