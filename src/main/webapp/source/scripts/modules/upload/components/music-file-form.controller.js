@@ -8,8 +8,8 @@
     MusicFileFormController.$inject = ['musicFormats', 'musicSize'];
 
     function MusicFileFormController(musicFormats, musicSize) {
-        this.size = musicSize;
-        this.formats = musicFormats;
+        this.size = angular.copy(musicSize);
+        this.formats = angular.copy(musicFormats);
 
         // Replication of Angular Form Behaviour
         this.form = {

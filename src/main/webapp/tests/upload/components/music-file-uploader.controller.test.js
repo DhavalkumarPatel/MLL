@@ -79,6 +79,7 @@ describe("Music File Uploader Controller:", function() {
 
     it("2nd call to 'next' function should set the 3rd form as active", function () {
         ctrl.next();
+        ctrl.next();
 
         expect(ctrl.forms.currentId).toBe(2);
 
@@ -92,6 +93,9 @@ describe("Music File Uploader Controller:", function() {
     });
 
     it("'previous' call should set the 2nd form as active", function () {
+        ctrl.next();
+        ctrl.next();
+
         ctrl.previous();
 
         expect(ctrl.forms.currentId).toBe(1);

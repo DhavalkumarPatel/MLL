@@ -8,9 +8,9 @@
     MusicFileUploaderController.$inject = ['musicForms', 'musicData', 'musicUploadService'];
 
     function MusicFileUploaderController(musicForms, musicData, musicUploadService, authService) {
-        this.forms = musicForms;
+        this.forms = angular.copy(musicForms);
 
-        this.data = musicData;
+        this.data = angular.copy(musicData);
         this.data.generalInformation.userId = this.userId;
 
         this.uploadService = musicUploadService;

@@ -5,13 +5,9 @@
         .module('mllApp.home')
         .controller('MusicianFeaturesController', MusicianFeaturesController);
 
-    MusicianFeaturesController.$inject = ['userId', '$state'];
+    MusicianFeaturesController.$inject = ['userId'];
 
-    function MusicianFeaturesController(userId, $state) {
+    function MusicianFeaturesController(userId) {
         this.userId = userId;
-
-        this.upload = () => {
-            $state.go('musicianUpload', {}, { reload: true });
-        };
     }
 })(window.angular);

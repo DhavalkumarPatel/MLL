@@ -9,7 +9,7 @@
 
     function MusicGeneralInformationFormController(musicGenres) {
 
-        this.genres = musicGenres;
+        this.genres = angular.copy(musicGenres);
 
         this.addArtist = () => this.data.artists.push({ name: '' });
 

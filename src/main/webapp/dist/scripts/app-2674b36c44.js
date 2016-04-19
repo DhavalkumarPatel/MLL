@@ -174,7 +174,6 @@
             })
             .state('musicianUpload', {
                 url: '/musician/upload',
-                cache: false,
                 views: {
                     left: { template: '' },
                     center: {
@@ -780,14 +779,10 @@
         .module('mllApp.home')
         .controller('MusicianFeaturesController', MusicianFeaturesController);
 
-    MusicianFeaturesController.$inject = ['userId', '$state'];
+    MusicianFeaturesController.$inject = ['userId'];
 
-    function MusicianFeaturesController(userId, $state) {
+    function MusicianFeaturesController(userId) {
         this.userId = userId;
-
-        this.upload = () => {
-            $state.go('musicianUpload', {}, { reload: true });
-        };
     }
 })(window.angular);
 (function (angular) {
@@ -1165,8 +1160,8 @@
     MusicFileFormController.$inject = ['musicFormats', 'musicSize'];
 
     function MusicFileFormController(musicFormats, musicSize) {
-        this.size = musicSize;
-        this.formats = musicFormats;
+        this.size = angular.copy(musicSize);
+        this.formats = angular.copy(musicFormats);
 
         // Replication of Angular Form Behaviour
         this.form = {
@@ -1254,7 +1249,7 @@
 
     function MusicGeneralInformationFormController(musicGenres) {
 
-        this.genres = musicGenres;
+        this.genres = angular.copy(musicGenres);
 
         this.addArtist = () => this.data.artists.push({ name: '' });
 
@@ -1437,9 +1432,9 @@
     MusicFileUploaderController.$inject = ['musicForms', 'musicData', 'musicUploadService'];
 
     function MusicFileUploaderController(musicForms, musicData, musicUploadService, authService) {
-        this.forms = musicForms;
+        this.forms = angular.copy(musicForms);
 
-        this.data = musicData;
+        this.data = angular.copy(musicData);
         this.data.generalInformation.userId = this.userId;
 
         this.uploadService = musicUploadService;
