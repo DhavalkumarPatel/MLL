@@ -1189,6 +1189,10 @@
         this.selectDropbox = (fileInformation) => {
             this.form.invalid = false;
 
+            this.form.errors.size = false;
+            this.form.errors.format = false;
+            this.form.errors.required = false;
+
             this.data = fileInformation;
         };
 
@@ -1198,6 +1202,7 @@
                 if (this.data.file === null) {
                     this.form.invalid = true;
                     this.form.submitted = true;
+                    this.form.errors.required = true;
                 }
                 else this.onNext();
             }
