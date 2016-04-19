@@ -136,7 +136,14 @@ describe("Music File Form Controller:", function() {
         expect(ctrl.onNext.calls.any()).toBeFalsy();
     });
 
-    it("'submit' function shouldn't call 'onNext'", function() {
+    it("'submit' function should call 'onNext'", function() {
+        let fileInformation = {
+            isDirect: false,
+            file: {name: 'sample.mp3', size: 5 * 1024 * 1024, type: 'audio/mp3'}
+        };
+
+        ctrl.selectDropbox(fileInformation);
+
         spyOn(ctrl, 'onNext');
 
         ctrl.form.invalid = false;

@@ -119,7 +119,6 @@ describe("Music File Uploader Controller:", function() {
         ctrl.again();
 
         expect(ctrl.data.fileInformation.file).toBeNull();
-        expect(ctrl.data.fileInformation.name).toBe('');
     });
 
     it("'again' call should clear general information", function () {
