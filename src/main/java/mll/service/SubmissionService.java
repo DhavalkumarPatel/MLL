@@ -252,7 +252,7 @@ public class SubmissionService
 	    
 	    if(null != generalInformation.get("userId"))
 	    {
-	    	song.setUserId((Integer)generalInformation.get("userId"));
+	    	song.setUserId(((Long)generalInformation.get("userId")).intValue());
 	    }
 	    else
 	    {
